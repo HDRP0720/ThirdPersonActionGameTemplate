@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     moveDirection = cameraTransform.forward * inputHandler.vertical;
     moveDirection += cameraTransform.right * inputHandler.horizontal;
     moveDirection.Normalize();
+    moveDirection.y = 0;
 
     moveDirection *= movementSpeed;
 
