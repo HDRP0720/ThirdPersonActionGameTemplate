@@ -39,6 +39,13 @@ public class PlayerController : MonoBehaviour
 
     inputHandler.TickInput(delta);
 
+    HandleMovement(delta);
+    
+    HandleRollingAndSprinting(delta);
+  }
+
+  public void HandleMovement(float delta)
+  {
     moveDirection = cameraTransform.forward * inputHandler.vertical;
     moveDirection += cameraTransform.right * inputHandler.horizontal;
     moveDirection.Normalize();
@@ -51,10 +58,9 @@ public class PlayerController : MonoBehaviour
 
     animatorHandler.UpdateAnimatorValue(inputHandler.moveAmount, 0);
 
-    if(animatorHandler.CanRotate)
+    if (animatorHandler.CanRotate)
       HandleRotation(delta);
   }
-  
   private void HandleRotation(float delta)
   {
     Vector3 targetDir = Vector3.zero;
@@ -66,12 +72,35 @@ public class PlayerController : MonoBehaviour
     targetDir.Normalize();
     targetDir.y = 0;
 
-    if(targetDir == Vector3.zero)
-      targetDir = transform.forward;    
+    if (targetDir == Vector3.zero)
+      targetDir = transform.forward;
 
     Quaternion tr = Quaternion.LookRotation(targetDir);
     Quaternion targetRotation = Quaternion.Slerp(myTransform.rotation, tr, rotationSpeed * delta);
 
     myTransform.rotation = targetRotation;
+  }
+
+  public void HandleRollingAndSprinting(float delta)
+  {
+    if (animatorHandler.animator.GetBool("isInteracting")) return;
+
+    if (inputHandler.rollFlag)
+    {
+      moveDirection = cameraTransform.forward * inputHandler.vertical;
+      moveDirection += cameraTransform.right * inputHandler.horizontal;
+
+      if(inputHandler.moveAmount > 0)
+      {
+        animatorHandler.PlayTargetAnimation("Rolling", true);
+        moveDirection.y = 0;
+        Quaternion rollRotation = Quaternion.LookRotation(moveDirection);
+        myTransform.rotation = rollRotation;
+      }
+      else
+      {
+        animatorHandler.PlayTargetAnimation("Backstep", true);
+      }
+    }
   }
 }

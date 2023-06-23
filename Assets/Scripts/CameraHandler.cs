@@ -43,6 +43,7 @@ public class CameraHandler : MonoBehaviour
   public void FollowTarget(float delta)
   {
     // Vector3 targetPosition = Vector3.Lerp(myTranform.position, targetTransform.position, delta / followSpeed);
+
     Vector3 targetPosition = Vector3.SmoothDamp(myTranform.position, targetTransform.position, ref cameraFollowVelocity, delta / followSpeed);
     myTranform.position = targetPosition;
 
@@ -83,7 +84,5 @@ public class CameraHandler : MonoBehaviour
 
     targetRotation = Quaternion.Euler(rotation);
     cameraPivotTransform.localRotation = targetRotation;
-  }
-
-  
+  }  
 }
