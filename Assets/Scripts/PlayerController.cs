@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
   [Header("Stats")]
   [SerializeField] private float movementSpeed = 5f;
+  [SerializeField] private float sprintSpeed = 7f;
   [SerializeField] private float rotationSpeed = 10f;
 
   [HideInInspector]
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
   private InputHandler inputHandler;
   private Transform cameraTransform;
   private Vector3 moveDirection;
+  private bool isSprinting;
 
   private AnimatorHandler animatorHandler;
 
@@ -37,6 +39,8 @@ public class PlayerController : MonoBehaviour
   {
     float delta = Time.deltaTime;
 
+    isSprinting = inputHandler.b_Input;
+
     inputHandler.TickInput(delta);
 
     HandleMovement(delta);
@@ -46,17 +50,30 @@ public class PlayerController : MonoBehaviour
 
   public void HandleMovement(float delta)
   {
+    if(inputHandler.rollFlag) return;
+
     moveDirection = cameraTransform.forward * inputHandler.vertical;
     moveDirection += cameraTransform.right * inputHandler.horizontal;
     moveDirection.Normalize();
     moveDirection.y = 0;
 
-    moveDirection *= movementSpeed;
+    float speed  = movementSpeed;
+
+    if(inputHandler.sprintFlag)
+    {
+      speed = sprintSpeed;
+      isSprinting = true;
+      moveDirection *= speed;
+    }
+    else
+    {
+      moveDirection *= speed;
+    }
 
     Vector3 projectedVelocity = Vector3.ProjectOnPlane(moveDirection, normalVector);
     rb.velocity = projectedVelocity;
 
-    animatorHandler.UpdateAnimatorValue(inputHandler.moveAmount, 0);
+    animatorHandler.UpdateAnimatorValue(inputHandler.moveAmount, 0, isSprinting);
 
     if (animatorHandler.CanRotate)
       HandleRotation(delta);

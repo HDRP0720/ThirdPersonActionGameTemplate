@@ -1,7 +1,8 @@
 # Third Person Action Game Template
 
 ## Set Up Animations
-Both animation need to change Rig from Generic to Humanoid
+Both animations need to change Rig from Generic to Humanoid
+
 ### For Rolling Animation
 * Root Transform Rotation `Bake into Pose` check with Offset -25
 * Root Transform Position(Y) `Bake into Pose` check

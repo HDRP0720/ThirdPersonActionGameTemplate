@@ -23,7 +23,7 @@ public class AnimatorHandler : MonoBehaviour
     horizontal = Animator.StringToHash("Horizontal");
   }
 
-  public void UpdateAnimatorValue(float verticalMovement, float horizontalMovement)
+  public void UpdateAnimatorValue(float verticalMovement, float horizontalMovement, bool isSprinting)
   {
     #region Clamp Vertical Input Value
     float v = 0;
@@ -52,6 +52,12 @@ public class AnimatorHandler : MonoBehaviour
     else
       h = 0;
     #endregion
+
+    if(isSprinting)
+    {
+      v = 2;
+      h = horizontalMovement;
+    }
 
     animator.SetFloat(vertical, v, 0.1f, Time.deltaTime);
     animator.SetFloat(horizontal, h, 0.1f, Time.deltaTime);
