@@ -14,27 +14,11 @@ public class InputHandler : MonoBehaviour
   public bool rollFlag;
   public bool sprintFlag;
   public float rollInputTimer;
-  public bool isInteracting;
 
   private PlayerControls inputActions;
-  private CameraHandler cameraHandler;
 
   private Vector2 movementInput;
-  private Vector2 cameraInput;
-
-  private void Awake()
-  {
-    cameraHandler = CameraHandler.instance;
-  }
-  private void FixedUpdate() 
-  {
-    float delta = Time.deltaTime;
-    if(cameraHandler != null)
-    {
-      cameraHandler.FollowTarget(delta);
-      cameraHandler.HandleCameraRotation(delta, mouseX, mouseY);
-    }
-  }
+  private Vector2 cameraInput; 
 
   private void OnEnable() 
   {

@@ -465,8 +465,8 @@ GameObject:
   - component: {fileID: 479365175}
   - component: {fileID: 479365174}
   - component: {fileID: 479365179}
-  - component: {fileID: 479365180}
   - component: {fileID: 479365176}
+  - component: {fileID: 479365180}
   - component: {fileID: 479365178}
   - component: {fileID: 479365181}
   m_Layer: 10
@@ -542,7 +542,8 @@ MonoBehaviour:
   mouseY: 0
   b_Input: 0
   rollFlag: 0
-  isInteracting: 0
+  sprintFlag: 0
+  rollInputTimer: 0
 --- !u!114 &479365178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,8 +557,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  inputHandler: {fileID: 0}
-  playerRigidbody: {fileID: 0}
   CanRotate: 1
 --- !u!95 &479365179
 Animator:
@@ -593,6 +592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 5
+  sprintSpeed: 7
   rotationSpeed: 10
   myTransform: {fileID: 0}
   normalCamera: {fileID: 0}
@@ -608,6 +608,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2e97f02482b584e800418a0b4a1fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInteracting: 0
+  isSprinting: 0
 --- !u!1 &549003232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1126,7 +1128,7 @@ MonoBehaviour:
   targetTransform: {fileID: 479365173}
   cameraTransform: {fileID: 330585546}
   cameraPivotTransform: {fileID: 1968060878}
-  lookSpeed: 0.1
+  lookSpeed: 0.07
   followSpeed: 0.1
   privotSpeed: 0.03
   minimumPivot: -35
