@@ -4,26 +4,33 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+  [HideInInspector]
+  public Transform myTransform;
+  public GameObject normalCamera; // lock on camera
+  public Vector3 moveDirection;
+
+  [Header("Ground & Air Detection Stats")]
+  [SerializeField] private float groundDetectionRayStartPoint = 0.5f;
+  [SerializeField] private float minimumHeightToBeginFall = 1f;
+  [SerializeField] private float groundDirectionRayDistance = 0.2f;
+  LayerMask ignoreForGroundCheck;
+  public float inAirTimer;
+
   [Header("Movement Stats")]
   [SerializeField] private float movementSpeed = 5f;
   [SerializeField] private float sprintSpeed = 7f;
   [SerializeField] private float rotationSpeed = 10f;
-
-  [HideInInspector]
-  public Transform myTransform;
-
-  public GameObject normalCamera; // lock on camera  
+  [SerializeField] private float fallingSpeed = 80f;  
 
   private Rigidbody rb;
   private InputHandler inputHandler;
   private Transform cameraTransform;
-  private Vector3 moveDirection;
 
   private PlayerManager playerManager;
   private AnimatorHandler animatorHandler;
 
-  Vector3 normalVector;
-  Vector3 targetPosition;
+  private Vector3 normalVector;
+  private Vector3 targetPosition;
 
   private void Start() 
   {
@@ -35,11 +42,16 @@ public class PlayerController : MonoBehaviour
     playerManager = GetComponent<PlayerManager>();
     animatorHandler = GetComponent<AnimatorHandler>();
     animatorHandler.Init();
+
+    playerManager.isGrounded = true;
+    ignoreForGroundCheck = ~(1 << 8 | 1 << 11);
   }
 
   public void HandleMovement(float delta)
   {
     if(inputHandler.rollFlag) return;
+
+    if(playerManager.isInteracting) return;
 
     moveDirection = cameraTransform.forward * inputHandler.vertical;
     moveDirection += cameraTransform.right * inputHandler.horizontal;
@@ -108,5 +120,86 @@ public class PlayerController : MonoBehaviour
         animatorHandler.PlayTargetAnimation("Backstep", true);
       }
     }
+  }
+
+  public void HandleFalling(float delta, Vector3 moveDirection)
+  {
+    playerManager.isGrounded = false;
+    RaycastHit hit;
+    Vector3 rayOrigin = myTransform.position;
+    rayOrigin.y += groundDetectionRayStartPoint;
+
+    if(Physics.Raycast(rayOrigin, myTransform.forward, out hit, 0.4f))    
+      moveDirection = Vector3.zero;    
+
+    if(playerManager.isInAir)
+    {
+      rb.AddForce(Vector3.down * fallingSpeed);
+      rb.AddForce(moveDirection * fallingSpeed / 10f);
+    }
+
+    Vector3 dir = moveDirection;
+    dir.Normalize();
+    rayOrigin += dir * groundDirectionRayDistance;
+
+    targetPosition = myTransform.position;
+
+    Debug.DrawRay(rayOrigin, Vector3.down * minimumHeightToBeginFall, Color.red, 0.1f, false);
+
+    if(Physics.Raycast(rayOrigin, Vector3.down, out hit, minimumHeightToBeginFall, ignoreForGroundCheck))
+    {
+      normalVector = hit.normal;
+      Vector3 tp = hit.point;
+      playerManager.isGrounded = true;
+      targetPosition.y = tp.y;
+
+      if(playerManager.isInAir)
+      {
+        if(inAirTimer > 0.5f)
+        {
+          Debug.Log($"You were in the air for {inAirTimer}");
+          animatorHandler.PlayTargetAnimation("Landing", true);
+          inAirTimer = 0;
+        }
+        else
+        {
+          animatorHandler.PlayTargetAnimation("Locomotion", false);
+          inAirTimer = 0;
+        }
+
+        playerManager.isInAir = false;
+      }
+    }
+    else
+    {
+      if(playerManager.isGrounded)
+        playerManager.isGrounded = false;
+
+      if(playerManager.isInAir == false)
+      {
+        if(playerManager.isInteracting == false)
+        {
+          animatorHandler.PlayTargetAnimation("Falling", true);
+        }
+
+        Vector3 vel = rb.velocity;
+        vel.Normalize();
+        rb.velocity = vel * (movementSpeed / 2);
+        playerManager.isInAir = true;
+      }
+    }
+
+    if(playerManager.isGrounded)
+    {
+      if(playerManager.isInteracting || inputHandler.moveAmount > 0)
+      {
+        myTransform.position = Vector3.Lerp(myTransform.position, targetPosition, Time.deltaTime);
+      }
+      else
+      {
+        myTransform.position = targetPosition;
+      }
+    }
+
   }
 }

@@ -8,6 +8,8 @@ public class PlayerManager : MonoBehaviour
 
   [Header("# Player Flags")]
   public bool isSprinting;
+  public bool isInAir;
+  public bool isGrounded;
 
   private InputHandler inputHandler;
   private CameraHandler cameraHandler;
@@ -36,6 +38,8 @@ public class PlayerManager : MonoBehaviour
     playerController.HandleMovement(delta);
 
     playerController.HandleRollingAndSprinting(delta);
+
+    playerController.HandleFalling(delta, playerController.moveDirection);
   } 
 
   private void FixedUpdate()
@@ -50,15 +54,11 @@ public class PlayerManager : MonoBehaviour
 
   private void LateUpdate() 
   {
-    // float delta = Time.deltaTime;
-    // if (cameraHandler != null)
-    // {
-    //   cameraHandler.FollowTarget(delta);
-    //   cameraHandler.HandleCameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
-    // }
-
     inputHandler.rollFlag = false;
     inputHandler.sprintFlag = false;
     isSprinting = inputHandler.b_Input;
+
+    if(isInAir)
+      playerController.inAirTimer += Time.deltaTime;
   }
 }
