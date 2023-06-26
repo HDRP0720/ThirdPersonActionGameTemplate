@@ -37,6 +37,10 @@ Both animations need to change Rig from Generic to Humanoid
   * Standing Dodge Backward (For Backstep Animation)
   * Fall A Loop (For Falling Animation)
   * Falling To Landing (For Landing Animation)
+
   * Sword And Shield Slash (For One Handed Light Attack Animation)  
   * Sword And Shield Attack (For One Handed Heavy Attack Animation)
   * One Hand Sword Combo (For One Handed Light Attack Combo)
+
+  * Sword And Shield Impact (For Damage animation)
+  * Sword And Shield Death (For Dead animation)
