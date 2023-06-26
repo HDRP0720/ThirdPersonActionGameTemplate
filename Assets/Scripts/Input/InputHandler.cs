@@ -14,6 +14,11 @@ public class InputHandler : MonoBehaviour
   public bool rb_Input;
   public bool rt_Input;
 
+  public bool d_Pad_Up;
+  public bool d_Pad_Down;  
+  public bool d_Pad_Left;
+  public bool d_Pad_Right;
+
   public bool rollFlag;
   public bool sprintFlag;
   public bool comboFlag;
@@ -55,6 +60,7 @@ public class InputHandler : MonoBehaviour
     MoveInput(delta);
     HandleRollInput(delta);
     HandleAttackInput(delta);
+    HandleQuickSlotsInput();
   }
 
   private void MoveInput(float delta)
@@ -121,6 +127,23 @@ public class InputHandler : MonoBehaviour
       if (playerManager.canDoCombo) return;
 
       playerAttackState.HandleHeavyAttack(playerInventory.rightWeapon);
+    }
+  }
+
+  private void HandleQuickSlotsInput()
+  {
+    // inputActions.PlayerQuickslots.DPadUp.performed += i => d_Pad_Up = true;
+    // inputActions.PlayerQuickslots.DPadDown.performed += i => d_Pad_Down = true;
+    inputActions.PlayerQuickslots.DPadLeft.performed += i => d_Pad_Left = true;
+    inputActions.PlayerQuickslots.DPadRight.performed += i => d_Pad_Right = true;
+
+    if(d_Pad_Right)
+    {
+      playerInventory.ChangeRightWeapon();
+    }
+    else if(d_Pad_Left)
+    {
+      playerInventory.ChangeLeftWeapon();
     }
   }
 }

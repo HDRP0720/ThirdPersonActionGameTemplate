@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9296bba7e3ff4674ba7e2492d6020afd, type: 3}
+  m_Name: Machete
+  m_EditorClassIdentifier: 
+  itemIcon: {fileID: 0}
+  itemName: Machete
+  weaponPrefab: {fileID: 2745618341847366099, guid: 31ec0f83f5022e84d91e49cb76545c5a,
+    type: 3}
+  isUnarmed: 0
+  OH_Light_Attack_1: OH_Light_Attack_01
+  OH_Light_Attack_2: OH_Light_Attack_02
+  OH_Heavy_Attack_1: OH_Heavy_Attack_01
