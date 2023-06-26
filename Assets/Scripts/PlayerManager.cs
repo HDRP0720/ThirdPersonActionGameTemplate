@@ -18,7 +18,7 @@ public class PlayerManager : MonoBehaviour
 
   private void Awake()
   {
-    cameraHandler = CameraHandler.instance;
+    cameraHandler = FindObjectOfType<CameraHandler>();
   }
 
   private void Start() 

@@ -46,6 +46,9 @@ public class PlayerController : MonoBehaviour
 
     playerManager.isGrounded = true;
     ignoreForGroundCheck = ~(1 << 8 | 1 << 11);
+
+    Cursor.lockState = CursorLockMode.Locked;
+    Cursor.visible = false;
   }
 
   public void HandleMovement(float delta)
@@ -199,6 +202,15 @@ public class PlayerController : MonoBehaviour
       }
     }
 
+    if(playerManager.isInteracting || inputHandler.moveAmount > 0)
+    {
+      myTransform.position = Vector3.Lerp(myTransform.position, targetPosition, Time.deltaTime / 0.1f);
+    }
+    else
+    {
+      myTransform.position = targetPosition;
+    }
+
     if(playerManager.isGrounded)
     {
       if(playerManager.isInteracting || inputHandler.moveAmount > 0)
@@ -210,6 +222,5 @@ public class PlayerController : MonoBehaviour
         myTransform.position = targetPosition;
       }
     }
-
   }
 }
