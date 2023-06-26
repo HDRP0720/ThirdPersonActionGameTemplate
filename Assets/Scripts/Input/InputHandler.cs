@@ -16,19 +16,22 @@ public class InputHandler : MonoBehaviour
 
   public bool rollFlag;
   public bool sprintFlag;
+  public bool comboFlag;
   public float rollInputTimer;
 
-  private PlayerControls inputActions;
-  private PlayerInventory playerInventory;
+  private PlayerControls inputActions;  
+  private PlayerManager playerManager;
   private PlayerAttackState playerAttackState;
+  private PlayerInventory playerInventory;
 
   private Vector2 movementInput;
   private Vector2 cameraInput;
 
   private void Awake() 
-  {
-    playerInventory = GetComponent<PlayerInventory>();
+  {   
+    playerManager = GetComponent<PlayerManager>();
     playerAttackState = GetComponent<PlayerAttackState>();
+    playerInventory = GetComponent<PlayerInventory>();
   }
 
   private void OnEnable() 
@@ -92,11 +95,32 @@ public class InputHandler : MonoBehaviour
     inputActions.PlayerActions.RT.performed += i => rt_Input = true;
 
     // RB Input handles the RIGHT hand weapon's light attack
-    if(rb_Input)    
-      playerAttackState.HandleLightAttack(playerInventory.rightWeapon);
+    if(rb_Input)
+    {
+      if(playerManager.canDoCombo)
+      {
+        comboFlag = true;
+        playerAttackState.HandleWeaponCombo(playerInventory.rightWeapon);
+        comboFlag = false;
+      }
+      else
+      {
+        if(playerManager.isInteracting) return;
+
+        if(playerManager.canDoCombo) return;
+
+        playerAttackState.HandleLightAttack(playerInventory.rightWeapon);
+      }  
+    }
 
     // RT Input handles the RIGHT hand weapon's heavy attack
     if(rt_Input)
+    {
+      if (playerManager.isInteracting) return;
+
+      if (playerManager.canDoCombo) return;
+
       playerAttackState.HandleHeavyAttack(playerInventory.rightWeapon);
+    }
   }
 }
