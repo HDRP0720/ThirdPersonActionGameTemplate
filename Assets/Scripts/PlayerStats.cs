@@ -8,7 +8,12 @@ public class PlayerStats : MonoBehaviour
   public int maxHealth;
   public int currentHealth;
 
+  public int staminaLevel = 10;
+  public int maxStamina;
+  public int currentStamina;
+
   public HealthBarUI healthBarUI;
+  public StaminaBarUI staminaBarUI;
 
   private AnimatorHandler animatorHandler;
 
@@ -18,10 +23,19 @@ public class PlayerStats : MonoBehaviour
   }
   private void Start() 
   {
+    // Set Health Stats
     maxHealth = SetMaxHealthFromHealthLevel();
-    currentHealth = maxHealth;
+    currentHealth = maxHealth;   
 
     healthBarUI.SetMaxHealth(maxHealth);
+    healthBarUI.SetCurrentHealth(currentHealth);
+
+    // Set Stamina Stats
+    maxStamina = SetMaxStaminaFromStaminaLevel();
+    currentStamina = maxStamina;
+
+    staminaBarUI.SetMaxStamina(maxStamina);
+    staminaBarUI.SetCurrentStamina(currentStamina);
   }
 
   private int SetMaxHealthFromHealthLevel()
@@ -29,6 +43,13 @@ public class PlayerStats : MonoBehaviour
     maxHealth = healthLevel * 10;
 
     return maxHealth;
+  }
+
+  private int SetMaxStaminaFromStaminaLevel()
+  {
+    maxStamina = staminaLevel * 10;
+
+    return maxStamina;
   }
 
   public void TakeDamage(int damage)
@@ -44,5 +65,12 @@ public class PlayerStats : MonoBehaviour
       currentHealth = 0;
       animatorHandler.PlayTargetAnimation("Dead_01", true);
     }
+  }
+
+  public void TakeStamina(int amount)
+  {
+    currentStamina -= amount;
+
+    staminaBarUI.SetCurrentStamina(currentStamina);
   }
 }
