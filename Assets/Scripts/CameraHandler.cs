@@ -9,6 +9,7 @@ public class CameraHandler : MonoBehaviour
   public Transform targetTransform;
   public Transform cameraTransform;
   public Transform cameraPivotTransform;
+  public LayerMask ignoreLayers;
 
   public float lookSpeed = 0.08f;
   public float followSpeed = 0.1f;
@@ -23,7 +24,6 @@ public class CameraHandler : MonoBehaviour
 
   private Transform myTranform;
   private Vector3 cameraTransformPosition;
-  private LayerMask ignoreLayers;  
 
   private float defaultPosition;
   private float targetPosition;
