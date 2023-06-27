@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9296bba7e3ff4674ba7e2492d6020afd, type: 3}
   m_Name: Straightsword
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: c29ef97b9ded83f4bbedfe4fc5716b87, type: 3}
   itemName: Straightsword
   weaponPrefab: {fileID: 5958254220968776463, guid: 1d26bac05fb341f41a25dcaf08400a43,
     type: 3}

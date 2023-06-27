@@ -13,4 +13,5 @@ public class WeaponItem : Item
   public string OH_Light_Attack_2;
 
   [Space] public string OH_Heavy_Attack_1;
+
 }

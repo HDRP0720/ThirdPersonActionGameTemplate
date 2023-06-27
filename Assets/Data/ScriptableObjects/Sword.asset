@@ -10,13 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9296bba7e3ff4674ba7e2492d6020afd, type: 3}
-  m_Name: Machete
+  m_Name: Sword
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 0}
-  itemName: Machete
-  weaponPrefab: {fileID: 2745618341847366099, guid: 31ec0f83f5022e84d91e49cb76545c5a,
+  itemIcon: {fileID: 21300000, guid: 65deaf19ab9a02646a13c2ea5b6272fb, type: 3}
+  itemName: Sword
+  weaponPrefab: {fileID: 6513388752968119868, guid: c15d189de935e824bb44a5fbc3795f3b,
     type: 3}
   isUnarmed: 0
   OH_Light_Attack_1: OH_Light_Attack_01
   OH_Light_Attack_2: OH_Light_Attack_02
   OH_Heavy_Attack_1: OH_Heavy_Attack_01
+  baseStamina: 20
+  lightAttackMultiplier: 1
+  heavyAttackMultiplier: 2
