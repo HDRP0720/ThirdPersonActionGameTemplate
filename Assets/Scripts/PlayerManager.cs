@@ -12,10 +12,13 @@ public class PlayerManager : MonoBehaviour
   public bool isGrounded;
   public bool canDoCombo;
 
+  [HideInInspector]
+  public InteractableUI interactableUI;
+
   private InputHandler inputHandler;
   private CameraHandler cameraHandler;
   private PlayerController playerController;
-  private Animator animator;
+  private Animator animator;  
 
   private void Awake()
   {
@@ -27,6 +30,8 @@ public class PlayerManager : MonoBehaviour
     inputHandler = GetComponent<InputHandler>();
     playerController = GetComponent<PlayerController>();
     animator = GetComponent<Animator>();
+
+    interactableUI = FindObjectOfType<InteractableUI>();
   }
   private void Update() 
   {
@@ -87,8 +92,8 @@ public class PlayerManager : MonoBehaviour
         if(interactableObject != null)
         {
           string interactableText = interactableObject.interactableText;          
-          // TODO: Set the ui text to the interactable object's text
-          // TODO: Set the text pop up to true
+          interactableUI.interactableTextField.text = interactableText;
+          interactableUI.interactionPopup.SetActive(true);
 
           if(inputHandler.a_Input)
           {
@@ -96,6 +101,14 @@ public class PlayerManager : MonoBehaviour
           }
         }
       }
+    }
+    else
+    {
+      if (interactableUI.interactionPopup != null)
+        interactableUI.interactionPopup.SetActive(false);      
+
+      if(interactableUI.itemPopup != null && inputHandler.a_Input)      
+        interactableUI.itemPopup.SetActive(false);      
     }
   }
 }

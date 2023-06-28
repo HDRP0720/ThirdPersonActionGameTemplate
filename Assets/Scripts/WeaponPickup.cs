@@ -24,6 +24,10 @@ public class WeaponPickup : Interactable
     animatorHandler.PlayTargetAnimation("PickupItem", true);
     playerInventory.weaponsInventory.Add(weapon);
 
+    playerManager.interactableUI.itemTextField.text = weapon.itemName;
+    playerManager.interactableUI.itemImage.sprite = weapon.itemIcon;
+    playerManager.interactableUI.itemPopup.SetActive(true);
+
     Destroy(gameObject);
   }
 }
