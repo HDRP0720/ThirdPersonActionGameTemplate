@@ -47,8 +47,8 @@ public class PlayerController : MonoBehaviour
     playerManager.isGrounded = true;
     ignoreForGroundCheck = ~(1 << 8 | 1 << 11);
 
-    Cursor.lockState = CursorLockMode.Locked;
-    Cursor.visible = false;
+    // Cursor.lockState = CursorLockMode.Locked;
+    // Cursor.visible = false;
   }
 
   public void HandleMovement(float delta)
