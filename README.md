@@ -44,3 +44,6 @@ Both animations need to change Rig from Generic to Humanoid
 
   * Sword And Shield Impact (For Damage animation)
   * Sword And Shield Death (For Dead animation)
+
+  * Picking Up (For PickupItem animation)
+  * Running Jump (For Jump animation)

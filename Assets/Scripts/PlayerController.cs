@@ -223,4 +223,24 @@ public class PlayerController : MonoBehaviour
       }
     }
   }
+
+  public void HandleJumping()
+  {
+    if(playerManager.isInteracting) return;
+
+    if(inputHandler.jump_Input)
+    {
+      if(inputHandler.moveAmount > 0)
+      {
+        moveDirection = cameraTransform.forward * inputHandler.vertical;
+        moveDirection += cameraTransform.right * inputHandler.horizontal;
+
+        animatorHandler.PlayTargetAnimation("Jump", true);
+
+        moveDirection.y = 0;
+        Quaternion jumpRotation = Quaternion.LookRotation(moveDirection);
+        myTransform.rotation = jumpRotation;
+      }
+    }
+  }
 }

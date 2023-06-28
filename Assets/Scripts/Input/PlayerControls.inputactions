@@ -136,9 +136,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "A",
+                    "name": "Loot",
                     "type": "Button",
                     "id": "a68b7e64-edec-4b48-8376-500a106c1842",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "67cdeca0-13bb-4aa0-b164-efbe6ace6a6f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -197,7 +206,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "A",
+                    "action": "Loot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94e6e66a-0d32-4dd7-b406-31091263ce6f",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
