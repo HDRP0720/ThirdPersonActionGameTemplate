@@ -175,10 +175,18 @@ public class InputHandler : MonoBehaviour
     if(inventory_Input)
     {
       inventoryFlag = !inventoryFlag;
-      if(inventoryFlag)      
-        uiManager.OpenSelectableWindow();      
-      else      
-        uiManager.CloseSelectableWindow();      
+      if(inventoryFlag)
+      {
+        uiManager.OpenSelectableWindow();
+        uiManager.UpdateUI();
+        uiManager.hudWindow.SetActive(false);
+      }
+      else
+      {
+        uiManager.CloseSelectableWindow();
+        uiManager.CloseAllInventoryWindows();
+        uiManager.hudWindow.SetActive(true);
+      }
     }
   }
 }
