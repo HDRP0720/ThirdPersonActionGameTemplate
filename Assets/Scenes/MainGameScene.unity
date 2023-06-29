@@ -19827,6 +19827,9 @@ MonoBehaviour:
   ignoreLayers:
     serializedVersion: 2
     m_Bits: 0
+  environmentLayer:
+    serializedVersion: 2
+    m_Bits: 0
   lookSpeed: 0.01
   followSpeed: 0.1
   privotSpeed: 0.03
@@ -19835,6 +19838,8 @@ MonoBehaviour:
   cameraSphereRadius: 0.2
   cameraCollisionOffset: 0.2
   minimumCollisionOffset: 0.2
+  lockedPivotPosition: 2.25
+  unlockedPivotPosition: 1.65
   availableTargets: []
   nearestLockOnTarget: {fileID: 0}
   currentLockOnTarget: {fileID: 0}

@@ -86,7 +86,7 @@ public class InputHandler : MonoBehaviour
 
   public void TickInput(float delta)
   {
-    MoveInput(delta);
+    HandleMoveInput(delta);
     HandleRollInput(delta);
     HandleAttackInput(delta);
     HandleQuickSlotsInput();
@@ -94,7 +94,7 @@ public class InputHandler : MonoBehaviour
     HandleLockOnInput();
   }
 
-  private void MoveInput(float delta)
+  private void HandleMoveInput(float delta)
   {
     horizontal = movementInput.x;
     vertical = movementInput.y;
@@ -229,5 +229,7 @@ public class InputHandler : MonoBehaviour
         cameraHandler.currentLockOnTarget = cameraHandler.rightLockOnTarget;
       }
     }
+
+    cameraHandler.SetCameraHeight();
   }
 }

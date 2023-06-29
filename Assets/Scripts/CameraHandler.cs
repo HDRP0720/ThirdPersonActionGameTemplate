@@ -11,6 +11,7 @@ public class CameraHandler : MonoBehaviour
   public Transform cameraTransform;
   public Transform cameraPivotTransform;
   public LayerMask ignoreLayers;
+  public LayerMask environmentLayer;
 
   [Header("# Camera movement")]
   public float lookSpeed = 0.01f;
@@ -23,6 +24,8 @@ public class CameraHandler : MonoBehaviour
   public float cameraSphereRadius = 0.2f;
   public float cameraCollisionOffset = 0.2f;
   public float minimumCollisionOffset = 0.2f;
+  public float lockedPivotPosition = 2.25f;
+  public float unlockedPivotPosition = 1.65f;
 
   [Header("For Lock-On System")]
   public List<CharacterManager> availableTargets = new List<CharacterManager>();
@@ -44,6 +47,7 @@ public class CameraHandler : MonoBehaviour
   private Vector3 cameraFollowVelocity = Vector3.zero;
 
   private InputHandler inputHandler;
+  private PlayerManager playerManager;
 
   private void Awake() 
   {
@@ -54,6 +58,11 @@ public class CameraHandler : MonoBehaviour
 
     targetTransform = FindObjectOfType<PlayerManager>().transform;
     inputHandler = FindObjectOfType<InputHandler>();
+    playerManager = FindObjectOfType<PlayerManager>();
+  }
+  private void Start() 
+  {
+    environmentLayer = LayerMask.NameToLayer("Environment");
   }
 
   public void FollowTarget(float delta)
@@ -140,12 +149,24 @@ public class CameraHandler : MonoBehaviour
         Vector3 lockTargetDirection = characterManager.transform.position - targetTransform.position;
         float distanceFromTarget = Vector3.Distance(targetTransform.position, characterManager.transform.position);
         float viewableAngle = Vector3.Angle(lockTargetDirection, cameraTransform.forward);
+        RaycastHit hit;
 
         if(characterManager.transform.root != targetTransform.transform.root 
           && viewableAngle > -50 && viewableAngle < 50 
           && distanceFromTarget <= maximumLockOnDistance)
         {
-          availableTargets.Add(characterManager);
+          if(Physics.Linecast(playerManager.lockOnTransform.position, characterManager.lockOnTransform.position, out hit))
+          {
+            Debug.DrawLine(playerManager.lockOnTransform.position, characterManager.lockOnTransform.position);
+            if(hit.transform.gameObject.layer == environmentLayer)
+            {
+              // TODO: cannot lock onto target, object in the way
+            }
+            else
+            {
+              availableTargets.Add(characterManager);
+            }
+          }
         }
       }
     }
@@ -185,5 +206,17 @@ public class CameraHandler : MonoBehaviour
     availableTargets.Clear();
     currentLockOnTarget = null;
     nearestLockOnTarget = null;
+  }
+
+  public void SetCameraHeight()
+  {
+    Vector3 velocity = Vector3.zero;
+    Vector3 newLockedPosition = new Vector3(0, lockedPivotPosition);
+    Vector3 newUnlockedPosition = new Vector3(0, unlockedPivotPosition);
+
+    if(currentLockOnTarget != null)    
+      cameraPivotTransform.localPosition = Vector3.SmoothDamp(cameraPivotTransform.localPosition, newLockedPosition, ref velocity, Time.deltaTime);    
+    else    
+      cameraPivotTransform.localPosition = Vector3.SmoothDamp(cameraPivotTransform.localPosition, newUnlockedPosition, ref velocity, Time.deltaTime);    
   }
 }
