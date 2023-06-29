@@ -11,7 +11,7 @@ public class CameraHandler : MonoBehaviour
   public Transform cameraPivotTransform;
   public LayerMask ignoreLayers;
 
-  public float lookSpeed = 0.08f;
+  public float lookSpeed = 0.01f;
   public float followSpeed = 0.1f;
   public float privotSpeed = 0.03f;
 

@@ -10,13 +10,13 @@ public class InputHandler : MonoBehaviour
   public float mouseX;
   public float mouseY;
 
-  public bool a_Input;
   public bool b_Input;
   public bool rb_Input;
   public bool rt_Input;
-  public bool inventory_Input;
 
+  public bool loot_Input;
   public bool jump_Input;
+  public bool inventory_Input;
 
   public bool d_Pad_Up;
   public bool d_Pad_Down;  
@@ -53,7 +53,17 @@ public class InputHandler : MonoBehaviour
     {
       inputActions = new PlayerControls();
       inputActions.PlayerMovement.Movement.performed += inputActions => movementInput = inputActions.ReadValue<Vector2>();
-      inputActions.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
+      inputActions.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>(); 
+
+      inputActions.PlayerActions.RB.performed += i => rb_Input = true;
+      inputActions.PlayerActions.RT.performed += i => rt_Input = true;
+
+      inputActions.PlayerQuickslots.DPadLeft.performed += i => d_Pad_Left = true;
+      inputActions.PlayerQuickslots.DPadRight.performed += i => d_Pad_Right = true;
+
+      inputActions.PlayerActions.Loot.performed += i => loot_Input = true;
+      inputActions.PlayerActions.Jump.performed += i => jump_Input = true;
+      inputActions.PlayerActions.Inventory.performed += i => inventory_Input = true;
     }
 
     inputActions.Enable();
@@ -69,8 +79,6 @@ public class InputHandler : MonoBehaviour
     HandleRollInput(delta);
     HandleAttackInput(delta);
     HandleQuickSlotsInput();
-    HandleInteractingButtonInput();
-    HandleJumpInput();
     HandleInventoryInput();
   }
 
@@ -88,11 +96,11 @@ public class InputHandler : MonoBehaviour
   private void HandleRollInput(float delta)
   {
     b_Input = inputActions.PlayerActions.Roll.phase == UnityEngine.InputSystem.InputActionPhase.Performed;
-
+    sprintFlag = b_Input;
+    
     if(b_Input)
     {
       rollInputTimer += delta;
-      sprintFlag = true;
     }
     else
     {
@@ -108,9 +116,6 @@ public class InputHandler : MonoBehaviour
 
   private void HandleAttackInput(float delta)
   {
-    inputActions.PlayerActions.RB.performed += i => rb_Input = true;
-    inputActions.PlayerActions.RT.performed += i => rt_Input = true;
-
     // RB Input handles the RIGHT hand weapon's light attack
     if(rb_Input)
     {
@@ -143,11 +148,6 @@ public class InputHandler : MonoBehaviour
 
   private void HandleQuickSlotsInput()
   {
-    // inputActions.PlayerQuickslots.DPadUp.performed += i => d_Pad_Up = true;
-    // inputActions.PlayerQuickslots.DPadDown.performed += i => d_Pad_Down = true;
-    inputActions.PlayerQuickslots.DPadLeft.performed += i => d_Pad_Left = true;
-    inputActions.PlayerQuickslots.DPadRight.performed += i => d_Pad_Right = true;
-
     if(d_Pad_Right)
     {
       playerInventory.ChangeRightWeapon();
@@ -158,20 +158,8 @@ public class InputHandler : MonoBehaviour
     }
   }
 
-  private void HandleInteractingButtonInput()
-  {
-    inputActions.PlayerActions.Loot.performed += i => a_Input = true;   
-  }
-
-  private void HandleJumpInput()
-  {
-    inputActions.PlayerActions.Jump.performed += i => jump_Input = true;
-  }
-
   private void HandleInventoryInput()
   {
-    inputActions.PlayerActions.Inventory.performed += i => inventory_Input = true;
-
     if(inventory_Input)
     {
       inventoryFlag = !inventoryFlag;

@@ -33,41 +33,30 @@ public class PlayerManager : MonoBehaviour
 
     interactableUI = FindObjectOfType<InteractableUI>();
   }
+  private void FixedUpdate()
+  {
+    float delta = Time.deltaTime;
+    playerController.HandleMovement(delta);
+    playerController.HandleFalling(delta, playerController.moveDirection);
+  }
   private void Update() 
   {
     float delta = Time.deltaTime;
-
     isInteracting = animator.GetBool("isInteracting");
     canDoCombo = animator.GetBool("canDoCombo");
     animator.SetBool("isInAir", isInAir);
 
     inputHandler.TickInput(delta);
-
-    playerController.HandleMovement(delta);
-
     playerController.HandleRollingAndSprinting(delta);
-
-    playerController.HandleFalling(delta, playerController.moveDirection);
-
     playerController.HandleJumping();
 
     CheckForInteractableObject();
-  } 
-
-  private void FixedUpdate()
-  {
-    float delta = Time.deltaTime;
-    if (cameraHandler != null)
-    {
-      cameraHandler.FollowTarget(delta);
-      cameraHandler.HandleCameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
-    }
   }
-
   private void LateUpdate() 
   {
+    float delta = Time.deltaTime;
+
     inputHandler.rollFlag = false;
-    inputHandler.sprintFlag = false;
 
     inputHandler.rb_Input = false;
     inputHandler.rt_Input = false;
@@ -77,13 +66,18 @@ public class PlayerManager : MonoBehaviour
     inputHandler.d_Pad_Left = false;
     inputHandler.d_Pad_Right = false;
 
-    inputHandler.a_Input = false;
-
+    inputHandler.loot_Input = false;
     inputHandler.jump_Input = false;
     inputHandler.inventory_Input = false;
 
     if(isInAir)
       playerController.inAirTimer += Time.deltaTime;
+
+    if (cameraHandler != null)
+    {
+      cameraHandler.FollowTarget(delta);
+      cameraHandler.HandleCameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
+    }
   }
 
   public void CheckForInteractableObject()
@@ -101,7 +95,7 @@ public class PlayerManager : MonoBehaviour
           interactableUI.interactableTextField.text = interactableText;
           interactableUI.interactionPopup.SetActive(true);
 
-          if(inputHandler.a_Input)
+          if(inputHandler.loot_Input)
           {
             hit.collider.GetComponent<Interactable>().Interact(this);
           }
@@ -113,7 +107,7 @@ public class PlayerManager : MonoBehaviour
       if (interactableUI.interactionPopup != null)
         interactableUI.interactionPopup.SetActive(false);      
 
-      if(interactableUI.itemPopup != null && inputHandler.a_Input)      
+      if(interactableUI.itemPopup != null && inputHandler.loot_Input)      
         interactableUI.itemPopup.SetActive(false);      
     }
   }

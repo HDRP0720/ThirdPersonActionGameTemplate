@@ -6152,7 +6152,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &479365175
@@ -6186,12 +6186,12 @@ MonoBehaviour:
   moveAmount: 0
   mouseX: 0
   mouseY: 0
-  a_Input: 0
   b_Input: 0
   rb_Input: 0
   rt_Input: 0
-  inventory_Input: 0
+  loot_Input: 0
   jump_Input: 0
+  inventory_Input: 0
   d_Pad_Up: 0
   d_Pad_Down: 0
   d_Pad_Left: 0
@@ -6259,7 +6259,7 @@ MonoBehaviour:
   movementSpeed: 5
   sprintSpeed: 7
   rotationSpeed: 10
-  fallingSpeed: 80
+  fallingSpeed: 250
 --- !u!114 &479365181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10810,7 +10810,7 @@ MonoBehaviour:
   ignoreLayers:
     serializedVersion: 2
     m_Bits: 0
-  lookSpeed: 0.08
+  lookSpeed: 0.01
   followSpeed: 0.1
   privotSpeed: 0.03
   minimumPivot: -35

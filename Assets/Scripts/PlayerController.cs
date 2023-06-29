@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
   [SerializeField] private float movementSpeed = 5f;
   [SerializeField] private float sprintSpeed = 7f;
   [SerializeField] private float rotationSpeed = 10f;
-  [SerializeField] private float fallingSpeed = 80f;  
+  [SerializeField] private float fallingSpeed = 250f;  
 
   private Rigidbody rb;
   private InputHandler inputHandler;
