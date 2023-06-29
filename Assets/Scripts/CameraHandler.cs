@@ -28,6 +28,9 @@ public class CameraHandler : MonoBehaviour
   public List<CharacterManager> availableTargets = new List<CharacterManager>();
   public Transform nearestLockOnTarget;
   public Transform currentLockOnTarget;
+  public Transform leftLockOnTarget;
+  public Transform rightLockOnTarget;
+
   public float maximumLockOnDistance = 30f;
 
   private Transform myTranform;
@@ -124,6 +127,8 @@ public class CameraHandler : MonoBehaviour
   public void HandleLockOn()
   {
     float shotestDistance = Mathf.Infinity;
+    float shortestDistanceOfLeftTarget = Mathf.Infinity;
+    float shortestDistanceOfRightTarget = Mathf.Infinity;
 
     Collider[] colliders = Physics.OverlapSphere(targetTransform.position, 26);
 
@@ -152,6 +157,25 @@ public class CameraHandler : MonoBehaviour
       {
         shotestDistance = distanceFromTarget;
         nearestLockOnTarget = availableTargets[k].lockOnTransform;
+      }
+
+      if(inputHandler.lockOnFlag)
+      {
+        Vector3 relativeEnemyPosition = currentLockOnTarget.InverseTransformPoint(availableTargets[k].transform.position);
+        var distanceFromLeftTarget = currentLockOnTarget.transform.position.x - availableTargets[k].transform.position.x;
+        var distanceFromRightTarget = currentLockOnTarget.transform.position.x + availableTargets[k].transform.position.x;
+
+        if(relativeEnemyPosition.x > 0.00 && distanceFromLeftTarget < shortestDistanceOfLeftTarget)
+        {
+          shortestDistanceOfLeftTarget = distanceFromLeftTarget;
+          leftLockOnTarget = availableTargets[k].lockOnTransform;
+        }
+
+        if (relativeEnemyPosition.x < 0.00 && distanceFromLeftTarget < shortestDistanceOfRightTarget)
+        {
+          shortestDistanceOfRightTarget = distanceFromLeftTarget;
+          rightLockOnTarget = availableTargets[k].lockOnTransform;
+        }
       }
     }
   }

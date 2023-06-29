@@ -11,13 +11,15 @@ public class InputHandler : MonoBehaviour
   public float mouseY;
 
   public bool b_Input;
-  public bool rb_Input;
-  public bool rt_Input;
+  public bool lightAttack_Input;
+  public bool heavyAttack_Input;
 
   public bool loot_Input;
   public bool jump_Input;
   public bool inventory_Input;
   public bool lockOn_Input;
+  public bool lockOnLeft_Input;
+  public bool lockOnRight_Input;
 
   public bool d_Pad_Up;
   public bool d_Pad_Down;  
@@ -61,8 +63,8 @@ public class InputHandler : MonoBehaviour
       inputActions.PlayerMovement.Movement.performed += inputActions => movementInput = inputActions.ReadValue<Vector2>();
       inputActions.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>(); 
 
-      inputActions.PlayerActions.RB.performed += i => rb_Input = true;
-      inputActions.PlayerActions.RT.performed += i => rt_Input = true;
+      inputActions.PlayerActions.LightAttack.performed += i => lightAttack_Input = true;
+      inputActions.PlayerActions.HeavyAttack.performed += i => heavyAttack_Input = true;
 
       inputActions.PlayerQuickslots.DPadLeft.performed += i => d_Pad_Left = true;
       inputActions.PlayerQuickslots.DPadRight.performed += i => d_Pad_Right = true;
@@ -71,6 +73,8 @@ public class InputHandler : MonoBehaviour
       inputActions.PlayerActions.Jump.performed += i => jump_Input = true;
       inputActions.PlayerActions.Inventory.performed += i => inventory_Input = true;
       inputActions.PlayerActions.LockOn.performed += i => lockOn_Input = true;
+      inputActions.PlayerActions.LockOnLeftTarget.performed += i => lockOnLeft_Input = true;
+      inputActions.PlayerActions.LockOnRightTarget.performed += i => lockOnRight_Input = true;
     }
 
     inputActions.Enable();
@@ -125,7 +129,7 @@ public class InputHandler : MonoBehaviour
   private void HandleAttackInput(float delta)
   {
     // RB Input handles the RIGHT hand weapon's light attack
-    if(rb_Input)
+    if(lightAttack_Input)
     {
       if(playerManager.canDoCombo)
       {
@@ -144,7 +148,7 @@ public class InputHandler : MonoBehaviour
     }
 
     // RT Input handles the RIGHT hand weapon's heavy attack
-    if(rt_Input)
+    if(heavyAttack_Input)
     {
       if (playerManager.isInteracting) return;
 
@@ -190,8 +194,6 @@ public class InputHandler : MonoBehaviour
   {
     if(lockOn_Input && !lockOnFlag)
     {
-      cameraHandler.ClearLockOnTargets();
-
       lockOn_Input = false;
       cameraHandler.HandleLockOn();
       if(cameraHandler.nearestLockOnTarget != null)
@@ -206,6 +208,26 @@ public class InputHandler : MonoBehaviour
       lockOnFlag = false;
 
       cameraHandler.ClearLockOnTargets();
+    }
+
+    if(lockOnFlag && lockOnLeft_Input)
+    {
+      lockOnLeft_Input = false;
+      cameraHandler.HandleLockOn();
+      if(cameraHandler.leftLockOnTarget !=null)
+      {
+        cameraHandler.currentLockOnTarget = cameraHandler.leftLockOnTarget;
+      }
+    }
+
+    if (lockOnFlag && lockOnRight_Input)
+    {
+      lockOnRight_Input = false;
+      cameraHandler.HandleLockOn();
+      if (cameraHandler.rightLockOnTarget != null)
+      {
+        cameraHandler.currentLockOnTarget = cameraHandler.rightLockOnTarget;
+      }
     }
   }
 }

@@ -58,8 +58,8 @@ public class PlayerManager : CharacterManager
 
     inputHandler.rollFlag = false;
 
-    inputHandler.rb_Input = false;
-    inputHandler.rt_Input = false;
+    inputHandler.lightAttack_Input = false;
+    inputHandler.heavyAttack_Input = false;
 
     inputHandler.d_Pad_Up = false;
     inputHandler.d_Pad_Down = false;
