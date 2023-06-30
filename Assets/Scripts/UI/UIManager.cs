@@ -5,12 +5,19 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
   public PlayerInventory playerInventory;
-  EquipmentWindowUI equipmentWindowUI;
+  public EquipmentWindowUI equipmentWindowUI;
 
   [Header("UI Windows")]
   public GameObject hudWindow;
   public GameObject selectableWindow;
-  public GameObject weaponInventoryWindow;  
+  public GameObject equipmentWindow;
+  public GameObject weaponInventoryWindow;
+
+  [Header("Equipment Window Slot Selected")]
+  public bool rightHandSlot01Selected;
+  public bool rightHandSlot02Selected;
+  public bool leftHandSlot01Selected;
+  public bool leftHandSlot02Selected;
 
   [Header("Weapon Inventory")]
   public GameObject weaponInventorySlotPrefab;
@@ -20,7 +27,7 @@ public class UIManager : MonoBehaviour
 
   private void Awake() 
   {
-    equipmentWindowUI = FindObjectOfType<EquipmentWindowUI>();
+
   }
   private void Start() 
   {
@@ -62,6 +69,16 @@ public class UIManager : MonoBehaviour
 
   public void CloseAllInventoryWindows()
   {
+    ResetAllSelectedSlots();
     weaponInventoryWindow.SetActive(false);
+    equipmentWindow.SetActive(false);
+  }
+
+  public void ResetAllSelectedSlots()
+  {
+    rightHandSlot01Selected = false;
+    rightHandSlot02Selected = false;
+    leftHandSlot01Selected = false;
+    leftHandSlot02Selected = false;
   }
 }
