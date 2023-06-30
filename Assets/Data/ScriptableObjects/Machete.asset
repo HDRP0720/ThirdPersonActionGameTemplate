@@ -17,6 +17,7 @@ MonoBehaviour:
   weaponPrefab: {fileID: 2745618341847366099, guid: 31ec0f83f5022e84d91e49cb76545c5a,
     type: 3}
   isUnarmed: 0
+  TH_Idle: TH_Idle_01
   OH_Light_Attack_1: OH_Light_Attack_01
   OH_Light_Attack_2: OH_Light_Attack_02
   OH_Heavy_Attack_1: OH_Heavy_Attack_01

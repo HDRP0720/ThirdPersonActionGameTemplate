@@ -13,12 +13,17 @@ public class WeaponSlotManager : MonoBehaviour
   private DamageCollider rightHandDamageCollider;  
 
   private QuickSlotsUI quickSlotsUI;
+
+  private InputHandler inputHandler;
+  private AnimatorHandler animatorHandler;
   private PlayerStats playerStats;
 
   private void Awake() 
   {
     quickSlotsUI = FindObjectOfType<QuickSlotsUI>();
+    inputHandler = GetComponent<InputHandler>();
     playerStats = GetComponent<PlayerStats>();
+    animatorHandler = GetComponent<AnimatorHandler>();
     
     WeaponHolderSlot[] weaponHolderSlots = GetComponentsInChildren<WeaponHolderSlot>();
     foreach(WeaponHolderSlot weaponSlot in weaponHolderSlots)
@@ -40,6 +45,16 @@ public class WeaponSlotManager : MonoBehaviour
     }
     else
     {
+      if(inputHandler.twoHandFlag)
+      {
+        // TODO: Move current left hand weapon to the back or diable it   
+        animatorHandler.animator.CrossFade(weaponItem.TH_Idle, 0.2f);
+      }
+      else
+      {
+        animatorHandler.animator.CrossFade("Both Arms Empty", 0.2f);
+      }
+
       rightHandSlot.LoadWeaponModel(weaponItem);
       LoadRightWeaponDamageCollider();
       quickSlotsUI.UpdateWeaponQuickSlotUI(false, weaponItem);
@@ -89,6 +104,5 @@ public class WeaponSlotManager : MonoBehaviour
     playerStats.TakeStamina(Mathf.RoundToInt(attackingWeapon.baseStamina * attackingWeapon.heavyAttackMultiplier));
   }
   #endregion
-
 
 }

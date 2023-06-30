@@ -210,6 +210,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TwoHand"",
+                    ""type"": ""Button"",
+                    ""id"": ""a86e22b6-cac3-493b-8bee-35be62941240"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -342,6 +351,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""LockOnRightTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""87a121d8-849e-49c7-a593-57fd75e53f25"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TwoHand"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -497,6 +517,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_LockOn = m_PlayerActions.FindAction("LockOn", throwIfNotFound: true);
         m_PlayerActions_LockOnLeftTarget = m_PlayerActions.FindAction("LockOnLeftTarget", throwIfNotFound: true);
         m_PlayerActions_LockOnRightTarget = m_PlayerActions.FindAction("LockOnRightTarget", throwIfNotFound: true);
+        m_PlayerActions_TwoHand = m_PlayerActions.FindAction("TwoHand", throwIfNotFound: true);
         // Player Quickslots
         m_PlayerQuickslots = asset.FindActionMap("Player Quickslots", throwIfNotFound: true);
         m_PlayerQuickslots_DPadUp = m_PlayerQuickslots.FindAction("D-Pad Up", throwIfNotFound: true);
@@ -627,6 +648,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_LockOn;
     private readonly InputAction m_PlayerActions_LockOnLeftTarget;
     private readonly InputAction m_PlayerActions_LockOnRightTarget;
+    private readonly InputAction m_PlayerActions_TwoHand;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -640,6 +662,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @LockOn => m_Wrapper.m_PlayerActions_LockOn;
         public InputAction @LockOnLeftTarget => m_Wrapper.m_PlayerActions_LockOnLeftTarget;
         public InputAction @LockOnRightTarget => m_Wrapper.m_PlayerActions_LockOnRightTarget;
+        public InputAction @TwoHand => m_Wrapper.m_PlayerActions_TwoHand;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -676,6 +699,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @LockOnRightTarget.started += instance.OnLockOnRightTarget;
             @LockOnRightTarget.performed += instance.OnLockOnRightTarget;
             @LockOnRightTarget.canceled += instance.OnLockOnRightTarget;
+            @TwoHand.started += instance.OnTwoHand;
+            @TwoHand.performed += instance.OnTwoHand;
+            @TwoHand.canceled += instance.OnTwoHand;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -707,6 +733,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @LockOnRightTarget.started -= instance.OnLockOnRightTarget;
             @LockOnRightTarget.performed -= instance.OnLockOnRightTarget;
             @LockOnRightTarget.canceled -= instance.OnLockOnRightTarget;
+            @TwoHand.started -= instance.OnTwoHand;
+            @TwoHand.performed -= instance.OnTwoHand;
+            @TwoHand.canceled -= instance.OnTwoHand;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -810,6 +839,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnLockOn(InputAction.CallbackContext context);
         void OnLockOnLeftTarget(InputAction.CallbackContext context);
         void OnLockOnRightTarget(InputAction.CallbackContext context);
+        void OnTwoHand(InputAction.CallbackContext context);
     }
     public interface IPlayerQuickslotsActions
     {

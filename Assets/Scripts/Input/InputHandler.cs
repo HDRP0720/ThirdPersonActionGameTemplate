@@ -10,7 +10,8 @@ public class InputHandler : MonoBehaviour
   public float mouseX;
   public float mouseY;
 
-  public bool b_Input;
+  public bool roll_Input;
+  public bool twoHand_Input;
   public bool lightAttack_Input;
   public bool heavyAttack_Input;
 
@@ -27,6 +28,7 @@ public class InputHandler : MonoBehaviour
   public bool d_Pad_Right;
 
   public bool rollFlag;
+  public bool twoHandFlag;
   public bool sprintFlag;
   public bool comboFlag;
   public bool inventoryFlag;
@@ -38,6 +40,7 @@ public class InputHandler : MonoBehaviour
   private PlayerManager playerManager;
   private PlayerAttackState playerAttackState;
   private PlayerInventory playerInventory;
+  private WeaponSlotManager weaponSlotManager;
 
   private CameraHandler cameraHandler;
   private UIManager uiManager;
@@ -50,6 +53,7 @@ public class InputHandler : MonoBehaviour
     playerManager = GetComponent<PlayerManager>();
     playerAttackState = GetComponent<PlayerAttackState>();
     playerInventory = GetComponent<PlayerInventory>();
+    weaponSlotManager = GetComponent<WeaponSlotManager>();
 
     cameraHandler = FindObjectOfType<CameraHandler>();
     uiManager = FindObjectOfType<UIManager>();
@@ -62,7 +66,8 @@ public class InputHandler : MonoBehaviour
       inputActions = new PlayerControls();
       inputActions.PlayerMovement.Movement.performed += inputActions => movementInput = inputActions.ReadValue<Vector2>();
       inputActions.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>(); 
-
+      
+      inputActions.PlayerActions.TwoHand.performed += i => twoHand_Input = true;
       inputActions.PlayerActions.LightAttack.performed += i => lightAttack_Input = true;
       inputActions.PlayerActions.HeavyAttack.performed += i => heavyAttack_Input = true;
 
@@ -92,6 +97,7 @@ public class InputHandler : MonoBehaviour
     HandleQuickSlotsInput();
     HandleInventoryInput();
     HandleLockOnInput();
+    HandleTwoHandInput();
   }
 
   private void HandleMoveInput(float delta)
@@ -107,10 +113,10 @@ public class InputHandler : MonoBehaviour
 
   private void HandleRollInput(float delta)
   {
-    b_Input = inputActions.PlayerActions.Roll.phase == UnityEngine.InputSystem.InputActionPhase.Performed;
-    sprintFlag = b_Input;
+    roll_Input = inputActions.PlayerActions.Roll.phase == UnityEngine.InputSystem.InputActionPhase.Performed;
+    sprintFlag = roll_Input;
 
-    if(b_Input)
+    if(roll_Input)
     {
       rollInputTimer += delta;
     }
@@ -231,5 +237,26 @@ public class InputHandler : MonoBehaviour
     }
 
     cameraHandler.SetCameraHeight();
+  }
+
+  private void HandleTwoHandInput()
+  {
+    if(twoHand_Input)
+    {
+      twoHand_Input = false;
+      twoHandFlag = !twoHandFlag;
+
+      if(twoHandFlag)
+      {
+        // TODO: Change to Two Hand mode
+        weaponSlotManager.LoadWeaponOnSlot(playerInventory.rightWeapon, false);
+      }
+      else
+      {
+        // TODO: Change to one Hand mode
+        weaponSlotManager.LoadWeaponOnSlot(playerInventory.leftWeapon, true);
+        weaponSlotManager.LoadWeaponOnSlot(playerInventory.rightWeapon, false);
+      }
+    }
   }
 }

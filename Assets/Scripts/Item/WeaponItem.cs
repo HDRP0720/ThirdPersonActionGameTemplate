@@ -8,6 +8,9 @@ public class WeaponItem : Item
   public GameObject weaponPrefab;
   public bool isUnarmed;
 
+  [Header("Idle Animations")]
+  public string TH_Idle;
+
   [Header("One Handed Attack Animations")]
   public string OH_Light_Attack_1;
   public string OH_Light_Attack_2;

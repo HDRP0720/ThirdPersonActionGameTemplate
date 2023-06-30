@@ -7794,7 +7794,8 @@ MonoBehaviour:
   moveAmount: 0
   mouseX: 0
   mouseY: 0
-  b_Input: 0
+  roll_Input: 0
+  twoHand_Input: 0
   lightAttack_Input: 0
   heavyAttack_Input: 0
   loot_Input: 0
@@ -7808,6 +7809,7 @@ MonoBehaviour:
   d_Pad_Left: 0
   d_Pad_Right: 0
   rollFlag: 0
+  twoHandFlag: 0
   sprintFlag: 0
   comboFlag: 0
   inventoryFlag: 0
@@ -7920,11 +7922,11 @@ MonoBehaviour:
   leftWeapon: {fileID: 11400000, guid: dc0a4576cd01e8445bf937704c02593d, type: 2}
   unarmedWeapon: {fileID: 11400000, guid: 2cb13363f59d8204d894a5fa7017b812, type: 2}
   weaponsInRightHandSlots:
-  - {fileID: 11400000, guid: dc0a4576cd01e8445bf937704c02593d, type: 2}
   - {fileID: 11400000, guid: 92d3ce33f420f784bb509d9d69f3ba70, type: 2}
+  - {fileID: 11400000, guid: 2cb13363f59d8204d894a5fa7017b812, type: 2}
   weaponsInLeftHandSlots:
-  - {fileID: 11400000, guid: dc0a4576cd01e8445bf937704c02593d, type: 2}
-  - {fileID: 11400000, guid: c0f40d0854b528a4382033694f852046, type: 2}
+  - {fileID: 11400000, guid: 2cb13363f59d8204d894a5fa7017b812, type: 2}
+  - {fileID: 11400000, guid: 2cb13363f59d8204d894a5fa7017b812, type: 2}
   currentRightWeaponIndex: 0
   currentLeftWeaponIndex: 0
   weaponsInventory: []
