@@ -9,7 +9,7 @@ public class EnemyManager : CharacterManager
   public float minimumDetectionAngle = -50f;
   public float maximumDetetionAngle = 50f;
 
-  bool isPerformingAction;
+  public bool isPerformingAction;
 
   private EnemyMoveState enemyMoveState; 
 
@@ -17,7 +17,7 @@ public class EnemyManager : CharacterManager
   {
     enemyMoveState = GetComponent<EnemyMoveState>();
   }
-  private void Update() 
+  private void FixedUpdate() 
   {
     HandleCurrentAction();
   }
@@ -27,6 +27,10 @@ public class EnemyManager : CharacterManager
     if(enemyMoveState.currentTarget == null)
     {
       enemyMoveState.HandleDetection();
+    }
+    else
+    {
+      enemyMoveState.HandleMoveToTarget();
     }
   }
 }
