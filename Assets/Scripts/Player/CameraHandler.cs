@@ -14,7 +14,7 @@ public class CameraHandler : MonoBehaviour
   public LayerMask environmentLayer;
 
   [Header("# Camera movement")]
-  public float lookSpeed = 0.01f;
+  public float lookSpeed = 0.02f;
   public float followSpeed = 0.1f;
   public float privotSpeed = 0.03f;
 

@@ -8,9 +8,6 @@ public class IdleState : State
 
   public PursueTargetState pursueTargetState;
 
-  // TODO: Look for a potential target
-  // TODO: Switch to the pursue target state if target is found
-  // TODO: if not return this state
   public override State Tick(EnemyManager enemyManager, EnemyStats enemyStats, EnemyAnimatorManager enemyAnimatorManager)
   {
     #region Handle Enemy Target Detection
@@ -30,15 +27,13 @@ public class IdleState : State
     }
     #endregion
     
-    #region Handle Switching To Next State 
-    if(enemyManager.currentTarget != null)
-    {
-      return pursueTargetState;
-    }
-    else
-    {
+    #region Handle Switching To Next State
+
+    if(enemyManager.currentTarget != null)    
+      return pursueTargetState;    
+    else    
       return this;
-    }
+    
     #endregion
   }
 }
