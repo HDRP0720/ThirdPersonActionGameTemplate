@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class EnemyMoveState : MonoBehaviour
 {
-  public CharacterStats currentTarget;
   public LayerMask detectionLayer;
 
   public float rotationSpeed = 15f;
@@ -29,31 +28,13 @@ public class EnemyMoveState : MonoBehaviour
     navMeshAgent.enabled = false;
     enemyRigidBody.isKinematic = false;
   }
-  
-  public void HandleDetection()
-  {
-    Collider[] colliders = Physics.OverlapSphere(transform.position, enemyManager.detectionRadius, detectionLayer);
-    for (int i = 0; i < colliders.Length; i++)
-    {
-      CharacterStats characterStats = colliders[i].transform.GetComponent<CharacterStats>();
-      if(characterStats != null)
-      {
-        Vector3 targetDirection = characterStats.transform.position - transform.position;
-        float viewableAngle = Vector3.Angle(targetDirection, transform.forward);
-        if(viewableAngle > enemyManager.minimumDetectionAngle && viewableAngle < enemyManager.maximumDetetionAngle)
-        {
-          currentTarget = characterStats;
-        }
-      }
-    }
-  }
 
   public void HandleMoveToTarget()
   {
     if(enemyManager.isPerformingAction) return;
     
-    Vector3 targetDirection = currentTarget.transform.position - transform.position;
-    distanceFromTarget = Vector3.Distance(currentTarget.transform.position, transform.position);
+    Vector3 targetDirection = enemyManager.currentTarget.transform.position - transform.position;
+    distanceFromTarget = Vector3.Distance(enemyManager.currentTarget.transform.position, transform.position);
     float viewableAngle = Vector3.Angle(targetDirection, transform.forward);
 
     if(enemyManager.isPerformingAction)
@@ -83,7 +64,7 @@ public class EnemyMoveState : MonoBehaviour
     if(enemyManager.isPerformingAction)
     {
       // Rotate manually
-      Vector3 direction = currentTarget.transform.position - transform.position;
+      Vector3 direction = enemyManager.currentTarget.transform.position - transform.position;
       direction.y = 0;
       direction.Normalize();
 
@@ -100,7 +81,7 @@ public class EnemyMoveState : MonoBehaviour
       Vector3 targetVelocity = enemyRigidBody.velocity;
 
       navMeshAgent.enabled = true;
-      navMeshAgent.SetDestination(currentTarget.transform.position);
+      navMeshAgent.SetDestination(enemyManager.currentTarget.transform.position);
       enemyRigidBody.velocity = targetVelocity;
       transform.rotation = Quaternion.Slerp(transform.rotation, navMeshAgent.transform.rotation, rotationSpeed / Time.deltaTime);
     }
