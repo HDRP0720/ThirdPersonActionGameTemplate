@@ -24,9 +24,9 @@ public class AmbushState : State
       if(characterStats != null)
       {
         Vector3 targetDirection = characterStats.transform.position - enemyManager.transform.position;
-        enemyManager.viewableAngle = Vector3.Angle(targetDirection, enemyManager.transform.forward);
-        if(enemyManager.viewableAngle > enemyManager.minimumDetectionAngle
-          && enemyManager.viewableAngle < enemyManager.maximumDetetionAngle)
+        float viewableAngle = Vector3.Angle(targetDirection, enemyManager.transform.forward);
+        if(viewableAngle > enemyManager.minimumDetectionAngle
+          && viewableAngle < enemyManager.maximumDetetionAngle)
         {
           enemyManager.currentTarget = characterStats;
           isSleeping = false;

@@ -16,16 +16,14 @@ public class EnemyManager : CharacterManager
   public float currentRecoveryTime = 0;
 
   public State currentState;
-  
+
   [HideInInspector] public NavMeshAgent navMeshAgent;
 
   public CharacterStats currentTarget;
-  public float distanceFromTarget;
   public bool isPerformingAction;
   public bool isInteracting;
 
   [HideInInspector] public Rigidbody enemyRigidBody;
-  [HideInInspector] public float viewableAngle;
 
   private EnemyMoveState enemyMoveState;
   private EnemyAnimatorManager enemyAnimatorManager;
