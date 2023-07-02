@@ -51,3 +51,5 @@ Both animations need to change Rig from Generic to Humanoid
 
   * Picking Up (For PickupItem animation)
   * Running Jump (For Jump animation)
+
+  * Zombie Stand Up (For Sleep & WakeUp animations)

@@ -16,11 +16,13 @@ public class EnemyManager : CharacterManager
   public float currentRecoveryTime = 0;
 
   public State currentState;
-  public NavMeshAgent navMeshAgent;
+  
+  [HideInInspector] public NavMeshAgent navMeshAgent;
 
   public CharacterStats currentTarget;
   public float distanceFromTarget;
   public bool isPerformingAction;
+  public bool isInteracting;
 
   [HideInInspector] public Rigidbody enemyRigidBody;
   [HideInInspector] public float viewableAngle;
@@ -49,6 +51,8 @@ public class EnemyManager : CharacterManager
   private void Update() 
   {
     HandleRecoveryTimer();
+
+    isInteracting = enemyAnimatorManager.animator.GetBool("isInteracting");
   }
 
   private void HandleStateMachine()
