@@ -85,6 +85,16 @@ public class AnimatorHandler : AnimatorManager
     animator.SetBool("canDoCombo", false);
   }
 
+  public void EnableIsInvulnerable()
+  {
+    animator.SetBool("isInvulnerable", true);
+  }
+
+  public void DisableIsInvulnerable()
+  {
+    animator.SetBool("isInvulnerable", false);
+  }
+
   private void OnAnimatorMove()
   {
     if (playerManager.isInteracting == false) return;
