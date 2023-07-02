@@ -11,6 +11,8 @@ public class PlayerManager : CharacterManager
   public bool isInAir;
   public bool isGrounded;
   public bool canDoCombo;
+  public bool isUsingRightHand;
+  public bool isUsingLeftHand;
 
   [HideInInspector]
   public InteractableUI interactableUI;
@@ -42,10 +44,14 @@ public class PlayerManager : CharacterManager
   private void Update() 
   {
     float delta = Time.deltaTime;
+
     isInteracting = animator.GetBool("isInteracting");
     canDoCombo = animator.GetBool("canDoCombo");
+    isUsingLeftHand = animator.GetBool("isUsingLeftHand");
+    isUsingRightHand = animator.GetBool("isUsingRightHand");
+    
     animator.SetBool("isInAir", isInAir);
-
+    
     inputHandler.TickInput(delta);
     playerController.HandleRollingAndSprinting(delta);
     playerController.HandleJumping();

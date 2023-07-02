@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
   public GameObject normalCamera; // lock on camera
   public Vector3 moveDirection;
 
+  public CapsuleCollider characterCollider;
+  public CapsuleCollider characterCollisionBlockerCollider;
+
   [Header("Ground & Air Detection Stats")]
   [SerializeField] private float groundDetectionRayStartPoint = 0.5f;
   [SerializeField] private float minimumHeightToBeginFall = 1f;
@@ -51,6 +54,8 @@ public class PlayerController : MonoBehaviour
 
     playerManager.isGrounded = true;
     ignoreForGroundCheck = ~(1 << 8 | 1 << 11);
+
+    Physics.IgnoreCollision(characterCollider, characterCollisionBlockerCollider, true);
 
     // Cursor.lockState = CursorLockMode.Locked;
     // Cursor.visible = false;

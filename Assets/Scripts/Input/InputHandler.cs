@@ -38,6 +38,7 @@ public class InputHandler : MonoBehaviour
 
   private PlayerControls inputActions;  
   private PlayerManager playerManager;
+  private AnimatorHandler animatorHandler;
   private PlayerAttackState playerAttackState;
   private PlayerInventory playerInventory;
   private WeaponSlotManager weaponSlotManager;
@@ -51,6 +52,7 @@ public class InputHandler : MonoBehaviour
   private void Awake() 
   {   
     playerManager = GetComponent<PlayerManager>();
+    animatorHandler = GetComponent<AnimatorHandler>();
     playerAttackState = GetComponent<PlayerAttackState>();
     playerInventory = GetComponent<PlayerInventory>();
     weaponSlotManager = GetComponent<WeaponSlotManager>();
@@ -149,6 +151,7 @@ public class InputHandler : MonoBehaviour
 
         if(playerManager.canDoCombo) return;
 
+        animatorHandler.animator.SetBool("isUsingRightHand", true);
         playerAttackState.HandleLightAttack(playerInventory.rightWeapon);
       }  
     }
@@ -160,6 +163,7 @@ public class InputHandler : MonoBehaviour
 
       if (playerManager.canDoCombo) return;
 
+      animatorHandler.animator.SetBool("isUsingRightHand", true);
       playerAttackState.HandleHeavyAttack(playerInventory.rightWeapon);
     }
   }
