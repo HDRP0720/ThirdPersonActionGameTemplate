@@ -52,6 +52,7 @@ Both animations need to change Rig from Generic to Humanoid
   * Great Sword Jump Attack (For Two Handed Heavy Attack Animation) 
 
   * Picking Up (For PickupItem animation)
+  * Shrugging ()
   * Running Jump (For Jump animation)
 
   * Zombie Stand Up (For Sleep & WakeUp animations)

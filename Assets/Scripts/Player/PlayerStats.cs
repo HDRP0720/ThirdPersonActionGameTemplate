@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerStats : CharacterStats
 {
   public HealthBarUI healthBarUI;
+  public ManaBarUI manaBarUI;
   public StaminaBarUI staminaBarUI;
 
   public float staminaRegenerationAmount = 1;
@@ -27,6 +28,13 @@ public class PlayerStats : CharacterStats
     healthBarUI.SetMaxHealth(maxHealth);
     healthBarUI.SetCurrentHealth(currentHealth);
 
+    // Set Mana Stats
+    maxMana = SetMaxManaFromManaLevel();
+    currentMana = maxMana;
+
+    manaBarUI.SetMaxMana(maxMana);
+    manaBarUI.SetCurrentMana(currentMana);
+
     // Set Stamina Stats
     maxStamina = SetMaxStaminaFromStaminaLevel();
     currentStamina = maxStamina;
@@ -40,6 +48,13 @@ public class PlayerStats : CharacterStats
     maxHealth = healthLevel * 10;
 
     return maxHealth;
+  }
+
+  private float SetMaxManaFromManaLevel()
+  {
+    maxMana = manaLevel * 10;
+
+    return maxMana;
   }
 
   private float SetMaxStaminaFromStaminaLevel()
@@ -92,6 +107,16 @@ public class PlayerStats : CharacterStats
         staminaBarUI.SetCurrentStamina(Mathf.RoundToInt(currentStamina));
       }
     }   
+  }
+
+  public void DeductMana(int manaCost)
+  {
+    currentMana -= manaCost;
+
+    if(currentMana < 0)
+      currentMana = 0;
+
+    manaBarUI.SetCurrentMana(currentMana);
   }
 
   public void HealPlayer(int healAmount)

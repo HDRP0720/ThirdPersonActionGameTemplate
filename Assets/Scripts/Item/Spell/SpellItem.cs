@@ -9,6 +9,9 @@ public class SpellItem : Item
 
   public string spellAnimation;
 
+  [Header("# Mana Cost")]
+  public int manaCost;
+
   [Header("# Spell Type")]
   public bool isFaithSpell;
   public bool isMagicSpell;
@@ -20,10 +23,12 @@ public class SpellItem : Item
   public virtual void AttemptToCastSpell(AnimatorHandler animatorHandler, PlayerStats playerStats)
   {
     Debug.Log("You attempt to cast a spell");
+
   }
 
   public virtual void SucessfullyCastSpell(AnimatorHandler animatorHandler, PlayerStats playerStats)
   {
     Debug.Log("You successfully cast a spell");
+    playerStats.DeductMana(manaCost);
   }
 }
