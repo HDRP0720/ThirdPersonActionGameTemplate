@@ -35,6 +35,8 @@ public class EnemyManager : CharacterManager
     enemyMoveState = GetComponent<EnemyMoveState>();
     enemyAnimatorManager = GetComponent<EnemyAnimatorManager>();
     enemyStats = GetComponent<EnemyStats>();
+    backStabCollider = GetComponentInChildren<BackStabCollider>();
+
     navMeshAgent = GetComponentInChildren<NavMeshAgent>();
     navMeshAgent.enabled = false;
   }

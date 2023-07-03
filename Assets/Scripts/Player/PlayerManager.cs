@@ -27,6 +27,7 @@ public class PlayerManager : CharacterManager
   private void Awake()
   {
     cameraHandler = FindObjectOfType<CameraHandler>();
+    backStabCollider = GetComponentInChildren<BackStabCollider>();
   }
 
   private void Start() 

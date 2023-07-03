@@ -18,6 +18,8 @@ public class InputHandler : MonoBehaviour
   public bool loot_Input;
   public bool jump_Input;
   public bool inventory_Input;
+  public bool criticalAttack_Input;
+
   public bool lockOn_Input;
   public bool lockOnLeft_Input;
   public bool lockOnRight_Input;
@@ -35,6 +37,8 @@ public class InputHandler : MonoBehaviour
   public bool lockOnFlag;
 
   public float rollInputTimer;
+
+  public Transform criticalAttackRayCastStartPoint;
 
   private PlayerControls inputActions;  
   private PlayerManager playerManager;
@@ -80,6 +84,8 @@ public class InputHandler : MonoBehaviour
       inputActions.PlayerActions.Loot.performed += i => loot_Input = true;
       inputActions.PlayerActions.Jump.performed += i => jump_Input = true;
       inputActions.PlayerActions.Inventory.performed += i => inventory_Input = true;
+      inputActions.PlayerActions.CriticalAttack.performed += i => criticalAttack_Input = true;
+
       inputActions.PlayerActions.LockOn.performed += i => lockOn_Input = true;
       inputActions.PlayerActions.LockOnLeftTarget.performed += i => lockOnLeft_Input = true;
       inputActions.PlayerActions.LockOnRightTarget.performed += i => lockOnRight_Input = true;
@@ -101,6 +107,7 @@ public class InputHandler : MonoBehaviour
     HandleInventoryInput();
     HandleLockOnInput();
     HandleTwoHandInput();
+    HandleCriticalAttackInput();
   }
 
   private void HandleMoveInput(float delta)
@@ -248,6 +255,16 @@ public class InputHandler : MonoBehaviour
         weaponSlotManager.LoadWeaponOnSlot(playerInventory.leftWeapon, true);
         weaponSlotManager.LoadWeaponOnSlot(playerInventory.rightWeapon, false);
       }
+    }
+  }
+
+  private void HandleCriticalAttackInput()
+  {
+    if(criticalAttack_Input)
+    {
+      criticalAttack_Input = false;
+
+      playerAttackState.AttemptBackStabOrRiposte();
     }
   }
 }
