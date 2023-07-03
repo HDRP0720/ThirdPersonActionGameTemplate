@@ -34,7 +34,7 @@ public class PlayerManager : CharacterManager
     inputHandler = GetComponent<InputHandler>();
     playerController = GetComponent<PlayerController>();
     playerStats = GetComponent<PlayerStats>();
-    animator = GetComponent<Animator>();
+    animator = GetComponentInChildren<Animator>();
 
     interactableUI = FindObjectOfType<InteractableUI>();
   }

@@ -16,7 +16,7 @@ public class PlayerStats : CharacterStats
   private void Awake()
   {
     playerManager = GetComponent<PlayerManager>();
-    animatorHandler = GetComponent<AnimatorHandler>();
+    animatorHandler = GetComponentInChildren<AnimatorHandler>();
   }
   private void Start() 
   {

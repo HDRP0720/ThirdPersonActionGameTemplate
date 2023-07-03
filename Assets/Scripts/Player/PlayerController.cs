@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
     myTransform = transform;
 
     playerManager = GetComponent<PlayerManager>();
-    animatorHandler = GetComponent<AnimatorHandler>();
+    animatorHandler = GetComponentInChildren<AnimatorHandler>();
     animatorHandler.Init();
 
     playerManager.isGrounded = true;

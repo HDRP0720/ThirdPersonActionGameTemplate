@@ -24,10 +24,10 @@ public class WeaponSlotManager : MonoBehaviour
   {
     quickSlotsUI = FindObjectOfType<QuickSlotsUI>();
 
-    inputHandler = GetComponent<InputHandler>();
+    inputHandler = GetComponentInParent<InputHandler>();
     playerManager = GetComponentInParent<PlayerManager>();
-    animatorHandler = GetComponent<AnimatorHandler>();
-    playerStats = GetComponent<PlayerStats>();   
+    animatorHandler = GetComponentInParent<AnimatorHandler>();
+    playerStats = GetComponentInParent<PlayerStats>();   
     
     WeaponHolderSlot[] weaponHolderSlots = GetComponentsInChildren<WeaponHolderSlot>();
     foreach(WeaponHolderSlot weaponSlot in weaponHolderSlots)

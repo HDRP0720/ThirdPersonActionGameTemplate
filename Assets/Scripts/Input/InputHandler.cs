@@ -51,11 +51,12 @@ public class InputHandler : MonoBehaviour
 
   private void Awake() 
   {   
-    playerManager = GetComponent<PlayerManager>();
-    animatorHandler = GetComponent<AnimatorHandler>();
-    playerAttackState = GetComponent<PlayerAttackState>();
+    playerManager = GetComponent<PlayerManager>();    
     playerInventory = GetComponent<PlayerInventory>();
-    weaponSlotManager = GetComponent<WeaponSlotManager>();
+
+    animatorHandler = GetComponentInChildren<AnimatorHandler>();
+    playerAttackState = GetComponentInChildren<PlayerAttackState>();   
+    weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
 
     cameraHandler = FindObjectOfType<CameraHandler>();
     uiManager = FindObjectOfType<UIManager>();
@@ -139,21 +140,7 @@ public class InputHandler : MonoBehaviour
     // RB Input handles the RIGHT hand weapon's light attack
     if(lightAttack_Input)
     {
-      if(playerManager.canDoCombo)
-      {
-        comboFlag = true;
-        playerAttackState.HandleWeaponCombo(playerInventory.rightWeapon);
-        comboFlag = false;
-      }
-      else
-      {
-        if(playerManager.isInteracting) return;
-
-        if(playerManager.canDoCombo) return;
-
-        animatorHandler.animator.SetBool("isUsingRightHand", true);
-        playerAttackState.HandleLightAttack(playerInventory.rightWeapon);
-      }  
+      playerAttackState.HandleLightAction();
     }
 
     // RT Input handles the RIGHT hand weapon's heavy attack

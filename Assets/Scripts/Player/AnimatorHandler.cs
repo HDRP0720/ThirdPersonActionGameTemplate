@@ -8,7 +8,7 @@ public class AnimatorHandler : AnimatorManager
 
   private PlayerManager playerManager;
   private InputHandler inputHandler;
-  private Rigidbody playerRigidbody;  
+  private Rigidbody playerRigidbody;
 
   private int vertical;
   private int horizontal;
@@ -17,9 +17,9 @@ public class AnimatorHandler : AnimatorManager
   {
     animator = GetComponent<Animator>();
 
-    playerManager = GetComponent<PlayerManager>();
-    inputHandler = GetComponent<InputHandler>();       
-    playerRigidbody = GetComponent<Rigidbody>();
+    playerManager = GetComponentInParent<PlayerManager>();
+    inputHandler = GetComponentInParent<InputHandler>();       
+    playerRigidbody = GetComponentInParent<Rigidbody>();
 
     vertical = Animator.StringToHash("Vertical");
     horizontal = Animator.StringToHash("Horizontal");

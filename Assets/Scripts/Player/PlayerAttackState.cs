@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerAttackState : MonoBehaviour
 {
+  private PlayerManager playerManager;
+  private PlayerInventory playerInventory;
   private AnimatorHandler animatorHandler;
   private InputHandler inputHandler;
   private WeaponSlotManager weaponSlotManager;
@@ -12,8 +14,11 @@ public class PlayerAttackState : MonoBehaviour
 
   private void Awake() 
   {
-    animatorHandler = GetComponent<AnimatorHandler>();
-    inputHandler = GetComponent<InputHandler>();
+    playerManager = GetComponentInParent<PlayerManager>();
+    playerInventory = GetComponentInParent<PlayerInventory>();
+    animatorHandler = GetComponentInParent<AnimatorHandler>();
+    inputHandler = GetComponentInParent<InputHandler>();
+    
     weaponSlotManager= GetComponent<WeaponSlotManager>();
   }
 
@@ -61,4 +66,51 @@ public class PlayerAttackState : MonoBehaviour
         animatorHandler.PlayTargetAnimation(weapon.TH_Light_Attack_2, true);
     }    
   }  
+
+  #region Input Actions
+  public void HandleLightAction()
+  {
+    if(playerInventory.rightWeapon.isMeleeWeapon)
+    {
+      PerformLightMeleeAction();
+    }
+    else if(playerInventory.rightWeapon.isSpellCaster || playerInventory.rightWeapon.isFaithCaster || playerInventory.rightWeapon.isPyroCaster)
+    {
+      PerformLightMagicAction(playerInventory.rightWeapon);
+    }   
+  }
+  #endregion
+
+  #region Attack Actions
+  private void PerformLightMeleeAction()
+  {
+    if (playerManager.canDoCombo)
+    {
+      inputHandler.comboFlag = true;
+      HandleWeaponCombo(playerInventory.rightWeapon);
+      inputHandler.comboFlag = false;
+    }
+    else
+    {
+      if (playerManager.isInteracting) return;
+
+      if (playerManager.canDoCombo) return;
+
+      animatorHandler.animator.SetBool("isUsingRightHand", true);
+      HandleLightAttack(playerInventory.rightWeapon);
+    }
+  }
+
+  private void PerformLightMagicAction(WeaponItem weapon)
+  {
+    if(weapon.isFaithCaster)
+    {
+      if(playerInventory.currentSpell != null && playerInventory.currentSpell.isFaithSpell)
+      {
+        // TODO: CHeck for MP
+        // TODO: Attempt to cast spell
+      }
+    }
+  }
+  #endregion
 }
