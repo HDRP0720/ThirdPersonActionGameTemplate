@@ -42,12 +42,14 @@ Both animations need to change Rig from Generic to Humanoid
   * Sword And Shield Slash (For One Handed Light Attack `Combo` Animation)
   * Sword And Shield Attack (For One Handed Heavy Attack Animation)
 
-  * Great Sword Slash (For Two Handed Light Attack Animation)
-  * Great Sword Slash (For Two Handed Light Attack `Combo` Animation)
-  * Great Sword Jump Attack (For Two Handed Heavy Attack Animation)
-
   * Sword And Shield Impact (For Damage animation)
   * Sword And Shield Death (For Dead animation)
+
+  * Sword And Shield Casting(For Heal Spell Animation)
+
+  * Great Sword Slash (For Two Handed Light Attack Animation)
+  * Great Sword Slash (For Two Handed Light Attack `Combo` Animation)
+  * Great Sword Jump Attack (For Two Handed Heavy Attack Animation) 
 
   * Picking Up (For PickupItem animation)
   * Running Jump (For Jump animation)

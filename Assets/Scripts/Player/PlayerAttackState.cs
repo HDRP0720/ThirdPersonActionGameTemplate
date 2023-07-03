@@ -6,6 +6,7 @@ public class PlayerAttackState : MonoBehaviour
 {
   private PlayerManager playerManager;
   private PlayerInventory playerInventory;
+  private PlayerStats playerStats;
   private AnimatorHandler animatorHandler;
   private InputHandler inputHandler;
   private WeaponSlotManager weaponSlotManager;
@@ -16,7 +17,8 @@ public class PlayerAttackState : MonoBehaviour
   {
     playerManager = GetComponentInParent<PlayerManager>();
     playerInventory = GetComponentInParent<PlayerInventory>();
-    animatorHandler = GetComponentInParent<AnimatorHandler>();
+    playerStats = GetComponentInParent<PlayerStats>();
+    animatorHandler = GetComponent<AnimatorHandler>();
     inputHandler = GetComponentInParent<InputHandler>();
     
     weaponSlotManager= GetComponent<WeaponSlotManager>();
@@ -109,8 +111,14 @@ public class PlayerAttackState : MonoBehaviour
       {
         // TODO: CHeck for MP
         // TODO: Attempt to cast spell
+        playerInventory.currentSpell.AttemptToCastSpell(animatorHandler, playerStats);      
       }
     }
+  }
+
+  private void SuccessfullyCastSpell()
+  {
+    playerInventory.currentSpell.SucessfullyCastSpell(animatorHandler, playerStats);
   }
   #endregion
 }

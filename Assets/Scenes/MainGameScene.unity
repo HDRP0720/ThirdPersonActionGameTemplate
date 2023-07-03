@@ -6401,11 +6401,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 208090d79d91c6c42aa5a9783b5dc344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentSpell: {fileID: 0}
-  rightWeapon: {fileID: 11400000, guid: dc0a4576cd01e8445bf937704c02593d, type: 2}
+  currentSpell: {fileID: 11400000, guid: ea0e0004d19c08b448b52cdd039a36f1, type: 2}
+  rightWeapon: {fileID: 11400000, guid: 9144780c53c7ec141aeacd193a88cc72, type: 2}
   leftWeapon: {fileID: 11400000, guid: dc0a4576cd01e8445bf937704c02593d, type: 2}
   unarmedWeapon: {fileID: 11400000, guid: 2cb13363f59d8204d894a5fa7017b812, type: 2}
   weaponsInRightHandSlots:
+  - {fileID: 11400000, guid: 9144780c53c7ec141aeacd193a88cc72, type: 2}
   - {fileID: 11400000, guid: 92d3ce33f420f784bb509d9d69f3ba70, type: 2}
   - {fileID: 11400000, guid: 2cb13363f59d8204d894a5fa7017b812, type: 2}
   weaponsInLeftHandSlots:
