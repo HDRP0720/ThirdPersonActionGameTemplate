@@ -24,6 +24,8 @@ public class PlayerManager : CharacterManager
   private PlayerAnimatorManager playerAnimatorManager;
   private PlayerStats playerStats;
 
+  private Rigidbody rb;
+
   private void Awake()
   {
     cameraHandler = FindObjectOfType<CameraHandler>();
@@ -35,6 +37,8 @@ public class PlayerManager : CharacterManager
     playerStats = GetComponent<PlayerStats>();
 
     interactableUI = FindObjectOfType<InteractableUI>();
+
+    rb = GetComponent<Rigidbody>();
   }
 
   private void FixedUpdate()
@@ -93,7 +97,8 @@ public class PlayerManager : CharacterManager
       cameraHandler.HandleCameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
     }
   }
-
+  
+  #region  Player Interactions
   public void CheckForInteractableObject()
   {
     RaycastHit hit;
@@ -125,4 +130,12 @@ public class PlayerManager : CharacterManager
         interactableUI.itemPopup.SetActive(false);      
     }
   }
+  public void OpenChestInteraction(Transform playerStandingPosition)
+  {
+    rb.velocity = Vector3.zero;
+
+    transform.position = playerStandingPosition.position;
+    playerAnimatorManager.PlayTargetAnimation("PickupItem", true);
+  }
+  #endregion
 }
