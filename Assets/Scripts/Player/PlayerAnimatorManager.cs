@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAnimatorManager : AnimatorManager
-{  
-  public bool CanRotate;
-
+{
   private PlayerManager playerManager;
   private PlayerStats playerStats;
   private InputHandler inputHandler;
@@ -69,12 +67,12 @@ public class PlayerAnimatorManager : AnimatorManager
 
   public void ActivateRotation()
   {
-    CanRotate = true;
+    animator.SetBool("canRotate", true);
   }
 
   public void StopRotation()
   {
-    CanRotate = false;
+    animator.SetBool("canRotate", false);
   }
 
   public void EnableCombo()

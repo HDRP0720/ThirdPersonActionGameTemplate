@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
   private CameraHandler cameraHandler;
 
   private PlayerManager playerManager;
-  private PlayerAnimatorManager animatorHandler;
+  private PlayerAnimatorManager playerAnimatorManager;
 
   private Vector3 normalVector;
   private Vector3 targetPosition;
@@ -49,8 +49,8 @@ public class PlayerController : MonoBehaviour
     myTransform = transform;
 
     playerManager = GetComponent<PlayerManager>();
-    animatorHandler = GetComponentInChildren<PlayerAnimatorManager>();
-    animatorHandler.Init();
+    playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
+    playerAnimatorManager.Init();
 
     playerManager.isGrounded = true;
     ignoreForGroundCheck = ~(1 << 8 | 1 << 11);
@@ -99,71 +99,72 @@ public class PlayerController : MonoBehaviour
 
     if(inputHandler.lockOnFlag && !inputHandler.sprintFlag)
     {
-      animatorHandler.UpdateAnimatorValue(inputHandler.vertical, inputHandler.horizontal, playerManager.isSprinting);
+      playerAnimatorManager.UpdateAnimatorValue(inputHandler.vertical, inputHandler.horizontal, playerManager.isSprinting);
     }
     else // TODO;
     {
-      animatorHandler.UpdateAnimatorValue(inputHandler.moveAmount, 0, playerManager.isSprinting);
+      playerAnimatorManager.UpdateAnimatorValue(inputHandler.moveAmount, 0, playerManager.isSprinting);
     }
-
-    if (animatorHandler.CanRotate)
-      HandleRotation(delta);
   }
-  private void HandleRotation(float delta)
+
+  public void HandleRotation(float delta)
   {
-    if (inputHandler.lockOnFlag)
+    if (playerAnimatorManager.canRotate)
     {
-      if(inputHandler.sprintFlag || inputHandler.rollFlag)
+      if (inputHandler.lockOnFlag)
       {
-        Vector3 targetDirection = Vector3.zero;
-        targetDirection = cameraTransform.forward * inputHandler.vertical;
-        targetDirection += cameraTransform.right * inputHandler.horizontal;
-        targetDirection.Normalize();
-        targetDirection.y = 0;
+        if (inputHandler.sprintFlag || inputHandler.rollFlag)
+        {
+          Vector3 targetDirection = Vector3.zero;
+          targetDirection = cameraTransform.forward * inputHandler.vertical;
+          targetDirection += cameraTransform.right * inputHandler.horizontal;
+          targetDirection.Normalize();
+          targetDirection.y = 0;
 
-        if (targetDirection == Vector3.zero)
-          targetDirection = transform.forward;
+          if (targetDirection == Vector3.zero)
+            targetDirection = transform.forward;
 
-        Quaternion tr = Quaternion.LookRotation(targetDirection);
-        Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, rotationSpeed * Time.deltaTime);
-        transform.rotation = targetRotation;
+          Quaternion tr = Quaternion.LookRotation(targetDirection);
+          Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, rotationSpeed * Time.deltaTime);
+          transform.rotation = targetRotation;
+        }
+        else
+        {
+          Vector3 rotationDirection = moveDirection;
+          rotationDirection = cameraHandler.currentLockOnTarget.position - transform.position;
+          rotationDirection.y = 0;
+          rotationDirection.Normalize();
+
+          Quaternion tr = Quaternion.LookRotation(rotationDirection);
+          Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, rotationSpeed * Time.deltaTime);
+          transform.rotation = targetRotation;
+        }
       }
       else
       {
-        Vector3 rotationDirection = moveDirection;
-        rotationDirection = cameraHandler.currentLockOnTarget.position - transform.position;
-        rotationDirection.y = 0;
-        rotationDirection.Normalize();
+        Vector3 targetDir = Vector3.zero;
+        float moveOverride = inputHandler.moveAmount;
 
-        Quaternion tr = Quaternion.LookRotation(rotationDirection);
-        Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, rotationSpeed * Time.deltaTime);
-        transform.rotation = targetRotation;
+        targetDir = cameraTransform.forward * inputHandler.vertical;
+        targetDir += cameraTransform.right * inputHandler.horizontal;
+
+        targetDir.Normalize();
+        targetDir.y = 0;
+
+        if (targetDir == Vector3.zero)
+          targetDir = transform.forward;
+
+        Quaternion tr = Quaternion.LookRotation(targetDir);
+        Quaternion targetRotation = Quaternion.Slerp(myTransform.rotation, tr, rotationSpeed * delta);
+
+        myTransform.rotation = targetRotation;
       }
-    }
-    else
-    {
-      Vector3 targetDir = Vector3.zero;
-      float moveOverride = inputHandler.moveAmount;
-
-      targetDir = cameraTransform.forward * inputHandler.vertical;
-      targetDir += cameraTransform.right * inputHandler.horizontal;
-
-      targetDir.Normalize();
-      targetDir.y = 0;
-
-      if (targetDir == Vector3.zero)
-        targetDir = transform.forward;
-
-      Quaternion tr = Quaternion.LookRotation(targetDir);
-      Quaternion targetRotation = Quaternion.Slerp(myTransform.rotation, tr, rotationSpeed * delta);
-
-      myTransform.rotation = targetRotation;
-    }    
+    }        
   }
 
   public void HandleRollingAndSprinting(float delta)
   {
-    if (animatorHandler.animator.GetBool("isInteracting")) return;
+    if (playerAnimatorManager.animator.GetBool("isInteracting")) return;
 
     if (inputHandler.rollFlag)
     {
@@ -172,14 +173,14 @@ public class PlayerController : MonoBehaviour
 
       if(inputHandler.moveAmount > 0)
       {
-        animatorHandler.PlayTargetAnimation("Rolling", true);
+        playerAnimatorManager.PlayTargetAnimation("Rolling", true);
         moveDirection.y = 0;
         Quaternion rollRotation = Quaternion.LookRotation(moveDirection);
         myTransform.rotation = rollRotation;
       }
       else
       {
-        animatorHandler.PlayTargetAnimation("Backstep", true);
+        playerAnimatorManager.PlayTargetAnimation("Backstep", true);
       }
     }
   }
@@ -220,12 +221,12 @@ public class PlayerController : MonoBehaviour
         if(inAirTimer > 0.5f)
         {
           Debug.Log($"You were in the air for {inAirTimer}");
-          animatorHandler.PlayTargetAnimation("Landing", true);
+          playerAnimatorManager.PlayTargetAnimation("Landing", true);
           inAirTimer = 0;
         }
         else
         {
-          animatorHandler.PlayTargetAnimation("Empty", false);
+          playerAnimatorManager.PlayTargetAnimation("Empty", false);
           inAirTimer = 0;
         }
 
@@ -241,7 +242,7 @@ public class PlayerController : MonoBehaviour
       {
         if(playerManager.isInteracting == false)
         {
-          animatorHandler.PlayTargetAnimation("Falling", true);
+          playerAnimatorManager.PlayTargetAnimation("Falling", true);
         }
 
         Vector3 vel = rb.velocity;
@@ -284,7 +285,7 @@ public class PlayerController : MonoBehaviour
         moveDirection = cameraTransform.forward * inputHandler.vertical;
         moveDirection += cameraTransform.right * inputHandler.horizontal;
 
-        animatorHandler.PlayTargetAnimation("Jump", true);
+        playerAnimatorManager.PlayTargetAnimation("Jump", true);
 
         moveDirection.y = 0;
         Quaternion jumpRotation = Quaternion.LookRotation(moveDirection);

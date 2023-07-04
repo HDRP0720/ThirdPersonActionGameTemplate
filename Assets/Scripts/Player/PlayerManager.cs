@@ -21,44 +21,45 @@ public class PlayerManager : CharacterManager
   private InputHandler inputHandler;
   private CameraHandler cameraHandler;
   private PlayerController playerController;
+  private PlayerAnimatorManager playerAnimatorManager;
   private PlayerStats playerStats;
-  private Animator animator;  
 
   private void Awake()
   {
     cameraHandler = FindObjectOfType<CameraHandler>();
     backStabCollider = GetComponentInChildren<BackStabCollider>();
-  }
 
-  private void Start() 
-  {
     inputHandler = GetComponent<InputHandler>();
     playerController = GetComponent<PlayerController>();
+    playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
     playerStats = GetComponent<PlayerStats>();
-    animator = GetComponentInChildren<Animator>();
 
     interactableUI = FindObjectOfType<InteractableUI>();
   }
+
   private void FixedUpdate()
   {
     float delta = Time.deltaTime;
+
     playerController.HandleMovement(delta);
+    playerController.HandleRotation(delta);
     playerController.HandleFalling(delta, playerController.moveDirection);
   }
   private void Update() 
   {
     float delta = Time.deltaTime;
 
-    isInteracting = animator.GetBool("isInteracting");
-    canDoCombo = animator.GetBool("canDoCombo");
-    isUsingLeftHand = animator.GetBool("isUsingLeftHand");
-    isUsingRightHand = animator.GetBool("isUsingRightHand");
-    isInvulnerable = animator.GetBool("isInvulnerable");
-    
-    animator.SetBool("isInAir", isInAir);
-    animator.SetBool("isDead", playerStats.isDead);
+    isInteracting = playerAnimatorManager.animator.GetBool("isInteracting");
+    canDoCombo = playerAnimatorManager.animator.GetBool("canDoCombo");
+    isUsingLeftHand = playerAnimatorManager.animator.GetBool("isUsingLeftHand");
+    isUsingRightHand = playerAnimatorManager.animator.GetBool("isUsingRightHand");
+    isInvulnerable = playerAnimatorManager.animator.GetBool("isInvulnerable");
+
+    playerAnimatorManager.animator.SetBool("isInAir", isInAir);
+    playerAnimatorManager.animator.SetBool("isDead", playerStats.isDead);
     
     inputHandler.TickInput(delta);
+    playerAnimatorManager.canRotate = playerAnimatorManager.animator.GetBool("canRotate");
     playerController.HandleRollingAndSprinting(delta);
     playerController.HandleJumping();
     playerStats.RegenerateStamina();

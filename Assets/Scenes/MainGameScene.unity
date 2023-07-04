@@ -6491,7 +6491,7 @@ MonoBehaviour:
   walkingSpeed: 2.5
   movementSpeed: 5
   sprintSpeed: 7
-  rotationSpeed: 10
+  rotationSpeed: 20
   fallingSpeed: 250
 --- !u!114 &479365181
 MonoBehaviour:
@@ -6508,6 +6508,7 @@ MonoBehaviour:
   lockOnTransform: {fileID: 1228082480}
   backStabBoxCollider: {fileID: 98521438}
   backStabCollider: {fileID: 0}
+  pendingCriticalDamage: 0
   isInteracting: 0
   isSprinting: 0
   isInAir: 0
@@ -12395,6 +12396,7 @@ MonoBehaviour:
   lockOnTransform: {fileID: 117829144}
   backStabBoxCollider: {fileID: 994315481}
   backStabCollider: {fileID: 0}
+  pendingCriticalDamage: 0
   detectionRadius: 10
   minimumDetectionAngle: -50
   maximumDetetionAngle: 50
@@ -12437,6 +12439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  canRotate: 0
 --- !u!114 &1995065294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14463,6 +14466,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackingWeapon: {fileID: 0}
+  leftHandDamageCollider: {fileID: 0}
+  rightHandDamageCollider: {fileID: 0}
 --- !u!4 &1076311419492005560
 Transform:
   m_ObjectHideFlags: 0
@@ -14492,7 +14497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  CanRotate: 1
+  canRotate: 0
 --- !u!4 &1076311419492005562
 Transform:
   m_ObjectHideFlags: 0

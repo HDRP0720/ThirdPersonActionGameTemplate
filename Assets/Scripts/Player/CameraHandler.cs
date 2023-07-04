@@ -54,7 +54,7 @@ public class CameraHandler : MonoBehaviour
     instance = this;
     myTranform = transform;
     defaultPosition = cameraTransform.localPosition.z;
-    ignoreLayers = ~(1 << 8 | 1 << 9 | 1 << 10);
+    ignoreLayers = ~(1 << 8 | 1 << 9 | 1 << 10 | 1 << 13);
 
     targetTransform = FindObjectOfType<PlayerManager>().transform;
     inputHandler = FindObjectOfType<InputHandler>();
