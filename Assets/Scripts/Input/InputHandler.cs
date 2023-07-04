@@ -40,11 +40,14 @@ public class InputHandler : MonoBehaviour
 
   public Transform criticalAttackRayCastStartPoint;
 
-  private PlayerControls inputActions;  
+  private PlayerControls inputActions;
+
   private PlayerManager playerManager;
-  private PlayerAnimatorManager animatorHandler;
-  private PlayerAttackState playerAttackState;
+  private PlayerStats playerStats;
   private PlayerInventory playerInventory;
+
+  private PlayerAnimatorManager playerAnimatorManager;
+  private PlayerAttackState playerAttackState;
   private WeaponSlotManager weaponSlotManager;
 
   private CameraHandler cameraHandler;
@@ -57,9 +60,10 @@ public class InputHandler : MonoBehaviour
   {   
     playerManager = GetComponent<PlayerManager>();    
     playerInventory = GetComponent<PlayerInventory>();
+    playerStats = GetComponent<PlayerStats>();
 
-    animatorHandler = GetComponentInChildren<PlayerAnimatorManager>();
-    playerAttackState = GetComponentInChildren<PlayerAttackState>();   
+    playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
+    playerAttackState = GetComponentInChildren<PlayerAttackState>();
     weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
 
     cameraHandler = FindObjectOfType<CameraHandler>();
@@ -72,7 +76,10 @@ public class InputHandler : MonoBehaviour
     {
       inputActions = new PlayerControls();
       inputActions.PlayerMovement.Movement.performed += inputActions => movementInput = inputActions.ReadValue<Vector2>();
-      inputActions.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>(); 
+      inputActions.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
+
+      inputActions.PlayerActions.Roll.performed += i => roll_Input = true;
+      inputActions.PlayerActions.Roll.canceled += i => roll_Input = false;
       
       inputActions.PlayerActions.TwoHand.performed += i => twoHand_Input = true;
       inputActions.PlayerActions.LightAttack.performed += i => lightAttack_Input = true;
@@ -123,20 +130,25 @@ public class InputHandler : MonoBehaviour
 
   private void HandleRollInput(float delta)
   {
-    roll_Input = inputActions.PlayerActions.Roll.phase == UnityEngine.InputSystem.InputActionPhase.Performed;
-    sprintFlag = roll_Input;
-
     if(roll_Input)
     {
       rollInputTimer += delta;
+
+      if(playerStats.currentStamina <= 0)
+      {
+        roll_Input = false;
+        sprintFlag = false;
+      }
+
+      if(moveAmount > 0.5f && playerStats.currentStamina > 0)      
+        sprintFlag = true;      
     }
     else
     {
-      if(rollInputTimer > 0 && rollInputTimer < 0.5f)
-      {
-        sprintFlag = false;
-        rollFlag = true;
-      }
+      sprintFlag = false;
+
+      if(rollInputTimer > 0 && rollInputTimer < 0.5f)      
+        rollFlag = true;      
 
       rollInputTimer = 0;
     }  
@@ -157,7 +169,7 @@ public class InputHandler : MonoBehaviour
 
       if (playerManager.canDoCombo) return;
 
-      animatorHandler.animator.SetBool("isUsingRightHand", true);
+      playerAnimatorManager.animator.SetBool("isUsingRightHand", true);
       playerAttackState.HandleHeavyAttack(playerInventory.rightWeapon);
     }
   }

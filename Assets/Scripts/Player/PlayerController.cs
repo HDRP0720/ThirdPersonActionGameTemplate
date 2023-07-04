@@ -4,27 +4,32 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-  [HideInInspector]
-  public Transform myTransform;
+  [HideInInspector] public Transform myTransform;
+
   public GameObject normalCamera; // lock on camera
   public Vector3 moveDirection;
 
   public CapsuleCollider characterCollider;
   public CapsuleCollider characterCollisionBlockerCollider;
 
-  [Header("Ground & Air Detection Stats")]
+  [Header("# Ground & Air Detection Stats")]
   [SerializeField] private float groundDetectionRayStartPoint = 0.5f;
   [SerializeField] private float minimumHeightToBeginFall = 1f;
   [SerializeField] private float groundDirectionRayDistance = 0.2f;
   LayerMask ignoreForGroundCheck;
   public float inAirTimer;
 
-  [Header("Movement Stats")]
+  [Header("# Movement Stats")]
   [SerializeField] private float walkingSpeed = 2.5f;
   [SerializeField] private float movementSpeed = 5f;
   [SerializeField] private float sprintSpeed = 7f;
   [SerializeField] private float rotationSpeed = 10f;
-  [SerializeField] private float fallingSpeed = 250f;  
+  [SerializeField] private float fallingSpeed = 250f;
+
+  [Header("# Stamina Cost")]
+  [SerializeField] private int rollStaminaCost = 15;
+  [SerializeField] private int backstepStaminaCost = 12;
+  [SerializeField] private int sprintStaminaCost = 1;
 
   private Rigidbody rb;
   private InputHandler inputHandler;
@@ -32,6 +37,7 @@ public class PlayerController : MonoBehaviour
   private CameraHandler cameraHandler;
 
   private PlayerManager playerManager;
+  private PlayerStats playerStats;
   private PlayerAnimatorManager playerAnimatorManager;
 
   private Vector3 normalVector;
@@ -39,17 +45,19 @@ public class PlayerController : MonoBehaviour
 
   private void Awake() 
   {
+    rb = GetComponent<Rigidbody>();
+    inputHandler = GetComponent<InputHandler>();
     cameraHandler = FindObjectOfType<CameraHandler>();
+
+    playerManager = GetComponent<PlayerManager>();
+    playerStats = GetComponent<PlayerStats>();
+    playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
   }
   private void Start() 
   {
-    rb = GetComponent<Rigidbody>();
-    inputHandler = GetComponent<InputHandler>();
     cameraTransform = Camera.main.transform;
     myTransform = transform;
 
-    playerManager = GetComponent<PlayerManager>();
-    playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
     playerAnimatorManager.Init();
 
     playerManager.isGrounded = true;
@@ -79,6 +87,7 @@ public class PlayerController : MonoBehaviour
       speed = sprintSpeed;
       playerManager.isSprinting = true;
       moveDirection *= speed;
+      playerStats.TakeStamina(sprintStaminaCost);
     }
     else
     {
@@ -164,7 +173,9 @@ public class PlayerController : MonoBehaviour
 
   public void HandleRollingAndSprinting(float delta)
   {
-    if (playerAnimatorManager.animator.GetBool("isInteracting")) return;
+    if(playerAnimatorManager.animator.GetBool("isInteracting")) return;
+
+    if(playerStats.currentStamina <= 0) return;
 
     if (inputHandler.rollFlag)
     {
@@ -177,10 +188,12 @@ public class PlayerController : MonoBehaviour
         moveDirection.y = 0;
         Quaternion rollRotation = Quaternion.LookRotation(moveDirection);
         myTransform.rotation = rollRotation;
+        playerStats.TakeStamina(rollStaminaCost);
       }
       else
       {
         playerAnimatorManager.PlayTargetAnimation("Backstep", true);
+        playerStats.TakeStamina(backstepStaminaCost);
       }
     }
   }
@@ -277,6 +290,8 @@ public class PlayerController : MonoBehaviour
   public void HandleJumping()
   {
     if(playerManager.isInteracting) return;
+
+    if(playerStats.currentStamina <= 0) return;
 
     if(inputHandler.jump_Input)
     {
