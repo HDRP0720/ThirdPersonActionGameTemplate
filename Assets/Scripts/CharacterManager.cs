@@ -10,4 +10,8 @@ public class CharacterManager : MonoBehaviour
   [Header("# Combat Colliders")]
   public BoxCollider backStabBoxCollider;
   [HideInInspector] public BackStabCollider backStabCollider;
+
+  // Damage will be inflicted during an animation event
+  // Used in backstab or riposte animations
+  public int pendingCriticalDamage;
 }

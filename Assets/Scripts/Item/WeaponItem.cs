@@ -8,6 +8,10 @@ public class WeaponItem : Item
   public GameObject weaponPrefab;
   public bool isUnarmed;
 
+  [Header("# Weapon Damage")]
+  public int baseDamage = 25;
+  public int criticalDamageMultiplier = 4;
+
   [Header("# Idle Animations")]
   public string TH_Idle;
 

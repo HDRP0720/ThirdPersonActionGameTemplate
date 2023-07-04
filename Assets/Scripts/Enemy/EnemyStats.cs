@@ -23,6 +23,19 @@ public class EnemyStats : CharacterStats
     return maxHealth;
   }
 
+  public void TakeDamageWithoutAnimation(int damage)
+  {
+    if (isDead) return;
+
+    currentHealth -= damage;  
+
+    if (currentHealth <= 0)
+    {
+      currentHealth = 0;
+      isDead = true;
+    }
+  }
+
   public void TakeDamage(int damage)
   {
     if(isDead) return;

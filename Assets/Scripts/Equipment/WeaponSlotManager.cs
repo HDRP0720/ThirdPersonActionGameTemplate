@@ -6,27 +6,29 @@ public class WeaponSlotManager : MonoBehaviour
 {
   public WeaponItem attackingWeapon;
 
+  public DamageCollider leftHandDamageCollider;
+  public DamageCollider rightHandDamageCollider;
+
   private WeaponHolderSlot leftHandSlot;
   private WeaponHolderSlot rightHandSlot;
-  private WeaponHolderSlot backSlot;
-
-  private DamageCollider leftHandDamageCollider;
-  private DamageCollider rightHandDamageCollider;  
+  private WeaponHolderSlot backSlot; 
 
   private QuickSlotsUI quickSlotsUI;
 
-  private InputHandler inputHandler;
   private PlayerManager playerManager;
-  private AnimatorHandler animatorHandler;
+  private InputHandler inputHandler;  
+  private PlayerAnimatorManager playerAnimatorManager;
+  private PlayerInventory playerInventory;
   private PlayerStats playerStats;
 
-  private void Awake() 
+  private void Awake()
   {
     quickSlotsUI = FindObjectOfType<QuickSlotsUI>();
 
-    inputHandler = GetComponentInParent<InputHandler>();
     playerManager = GetComponentInParent<PlayerManager>();
-    animatorHandler = GetComponentInParent<AnimatorHandler>();
+    inputHandler = GetComponentInParent<InputHandler>();    
+    playerAnimatorManager = GetComponentInParent<PlayerAnimatorManager>();
+    playerInventory = GetComponentInParent<PlayerInventory>();
     playerStats = GetComponentInParent<PlayerStats>();   
     
     WeaponHolderSlot[] weaponHolderSlots = GetComponentsInChildren<WeaponHolderSlot>();
@@ -56,11 +58,11 @@ public class WeaponSlotManager : MonoBehaviour
       {
         backSlot.LoadWeaponModel(leftHandSlot.currentWeapon);
         leftHandSlot.UnloadWeaponAndDestroy();       
-        animatorHandler.animator.CrossFade(weaponItem.TH_Idle, 0.2f);
+        playerAnimatorManager.animator.CrossFade(weaponItem.TH_Idle, 0.2f);
       }
       else
       {
-        animatorHandler.animator.CrossFade("Both Arms Empty", 0.2f);
+        playerAnimatorManager.animator.CrossFade("Both Arms Empty", 0.2f);
         backSlot.UnloadWeaponAndDestroy();
       }
 
@@ -75,11 +77,13 @@ public class WeaponSlotManager : MonoBehaviour
   private void LoadLeftWeaponDamageCollider()
   {
     leftHandDamageCollider = leftHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
+    leftHandDamageCollider.currentWeaponDamage = playerInventory.leftWeapon.baseDamage;
   }
 
   private void LoadRightWeaponDamageCollider()
   {
     rightHandDamageCollider = rightHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
+    rightHandDamageCollider.currentWeaponDamage = playerInventory.rightWeapon.baseDamage;
   }
 
   public void OpenDamageCollider()
@@ -112,5 +116,4 @@ public class WeaponSlotManager : MonoBehaviour
     playerStats.TakeStamina(Mathf.RoundToInt(attackingWeapon.baseStamina * attackingWeapon.heavyAttackMultiplier));
   }
   #endregion
-
 }

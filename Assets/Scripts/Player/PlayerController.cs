@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
   private CameraHandler cameraHandler;
 
   private PlayerManager playerManager;
-  private AnimatorHandler animatorHandler;
+  private PlayerAnimatorManager animatorHandler;
 
   private Vector3 normalVector;
   private Vector3 targetPosition;
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
     myTransform = transform;
 
     playerManager = GetComponent<PlayerManager>();
-    animatorHandler = GetComponentInChildren<AnimatorHandler>();
+    animatorHandler = GetComponentInChildren<PlayerAnimatorManager>();
     animatorHandler.Init();
 
     playerManager.isGrounded = true;

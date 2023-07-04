@@ -18,7 +18,7 @@ public class WeaponPickup : Interactable
   {
     PlayerInventory playerInventory = playerManager.GetComponent<PlayerInventory>();
     Rigidbody playerRigidbody = playerManager.GetComponent<Rigidbody>();
-    AnimatorHandler animatorHandler = playerManager.GetComponent<AnimatorHandler>();
+    PlayerAnimatorManager animatorHandler = playerManager.GetComponent<PlayerAnimatorManager>();
 
     playerRigidbody.velocity = Vector3.zero;
     animatorHandler.PlayTargetAnimation("PickupItem", true);

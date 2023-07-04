@@ -42,7 +42,7 @@ public class InputHandler : MonoBehaviour
 
   private PlayerControls inputActions;  
   private PlayerManager playerManager;
-  private AnimatorHandler animatorHandler;
+  private PlayerAnimatorManager animatorHandler;
   private PlayerAttackState playerAttackState;
   private PlayerInventory playerInventory;
   private WeaponSlotManager weaponSlotManager;
@@ -58,7 +58,7 @@ public class InputHandler : MonoBehaviour
     playerManager = GetComponent<PlayerManager>();    
     playerInventory = GetComponent<PlayerInventory>();
 
-    animatorHandler = GetComponentInChildren<AnimatorHandler>();
+    animatorHandler = GetComponentInChildren<PlayerAnimatorManager>();
     playerAttackState = GetComponentInChildren<PlayerAttackState>();   
     weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
 

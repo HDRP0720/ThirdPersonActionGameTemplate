@@ -9,7 +9,7 @@ public class PlayerAttackState : MonoBehaviour
   private PlayerManager playerManager;
   private PlayerInventory playerInventory;
   private PlayerStats playerStats;
-  private AnimatorHandler animatorHandler;
+  private PlayerAnimatorManager animatorHandler;
   private InputHandler inputHandler;
   private WeaponSlotManager weaponSlotManager;
 
@@ -20,7 +20,7 @@ public class PlayerAttackState : MonoBehaviour
     playerManager = GetComponentInParent<PlayerManager>();
     playerInventory = GetComponentInParent<PlayerInventory>();
     playerStats = GetComponentInParent<PlayerStats>();
-    animatorHandler = GetComponent<AnimatorHandler>();
+    animatorHandler = GetComponent<PlayerAnimatorManager>();
     inputHandler = GetComponentInParent<InputHandler>();
     
     weaponSlotManager= GetComponent<WeaponSlotManager>();
@@ -140,6 +140,8 @@ public class PlayerAttackState : MonoBehaviour
       transform.TransformDirection(Vector3.forward), out hit, 0.5f, backStabLayer))
     {
       CharacterManager enemyCharacterManager = hit.transform.gameObject.GetComponentInParent<CharacterManager>();
+      DamageCollider rightweapon = weaponSlotManager.rightHandDamageCollider;
+
       if(enemyCharacterManager != null)
       {
         // TODO: Manipulate position -> rotation -> animation
@@ -153,6 +155,9 @@ public class PlayerAttackState : MonoBehaviour
         Quaternion tr = Quaternion.LookRotation(rotationDirection);
         Quaternion targetRotation = Quaternion.Slerp(playerManager.transform.rotation, tr, 500 * Time.deltaTime);
         playerManager.transform.rotation = targetRotation;
+
+        int criticalDamage = playerInventory.rightWeapon.criticalDamageMultiplier * rightweapon.currentWeaponDamage;
+        enemyCharacterManager.pendingCriticalDamage = criticalDamage;
 
         animatorHandler.PlayTargetAnimation("BackStab", true);
         enemyCharacterManager.GetComponent<AnimatorManager>().PlayTargetAnimation("BackStabbed", true);

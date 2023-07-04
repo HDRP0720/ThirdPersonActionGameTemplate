@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimatorHandler : AnimatorManager
+public class PlayerAnimatorManager : AnimatorManager
 {  
   public bool CanRotate;
 
   private PlayerManager playerManager;
+  private PlayerStats playerStats;
   private InputHandler inputHandler;
   private Rigidbody playerRigidbody;
 
@@ -18,6 +19,7 @@ public class AnimatorHandler : AnimatorManager
     animator = GetComponent<Animator>();
 
     playerManager = GetComponentInParent<PlayerManager>();
+    playerStats = GetComponentInParent<PlayerStats>();
     inputHandler = GetComponentInParent<InputHandler>();       
     playerRigidbody = GetComponentInParent<Rigidbody>();
 
@@ -93,6 +95,12 @@ public class AnimatorHandler : AnimatorManager
   public void DisableIsInvulnerable()
   {
     animator.SetBool("isInvulnerable", false);
+  }
+
+  public override void TakeCriticalDamageAnimationEvent()
+  {
+    playerStats.TakeDamageWithoutAnimation(playerManager.pendingCriticalDamage);
+    playerManager.pendingCriticalDamage = 0;
   }
 
   private void OnAnimatorMove()

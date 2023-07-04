@@ -33,26 +33,35 @@ Both animations need to change Rig from Generic to Humanoid
 
 ## Mixamo Animations
 * Animations
-  * Stand To Roll (For Rolling Animation)
-  * Standing Dodge Backward (For Backstep Animation)
-  * Fall A Loop (For Falling Animation)
-  * Falling To Landing (For Landing Animation)
+  * For Movements
+    * Stand To Roll (For Rolling Animation)
+    * Standing Dodge Backward (For Backstep Animation)
+    * Fall A Loop (For Falling Animation)
+    * Falling To Landing (For Landing Animation)
+    * Running Jump (For Jump Animation)
 
-  * Sword And Shield Slash (For One Handed Light Attack Animation)
-  * Sword And Shield Slash (For One Handed Light Attack `Combo` Animation)
-  * Sword And Shield Attack (For One Handed Heavy Attack Animation)
+  * For One Hand Attacks
+    * Sword And Shield Slash (For One Handed Light Attack Animation)
+    * Sword And Shield Slash (For One Handed Light Attack `Combo` Animation)
+    * Sword And Shield Attack (For One Handed Heavy Attack Animation)
 
-  * Sword And Shield Impact (For Damage animation)
-  * Sword And Shield Death (For Dead animation)
+  * For Two Hand Attacks
+    * Great Sword Slash (For Two Handed Light Attack Animation)
+    * Great Sword Slash (For Two Handed Light Attack `Combo` Animation)
+    * Great Sword Jump Attack (For Two Handed Heavy Attack Animation)
+  
+  * For Magic Spell
+    * Sword And Shield Casting (For Heal Spell Animation)
+    * Shrugging (For Insufficient Mana Animation)
 
-  * Sword And Shield Casting(For Heal Spell Animation)
+  * For Hit & Dead
+    * Sword And Shield Impact (For Damage Hit Animation)
+    * Sword And Shield Death (For Dead Animation)
 
-  * Great Sword Slash (For Two Handed Light Attack Animation)
-  * Great Sword Slash (For Two Handed Light Attack `Combo` Animation)
-  * Great Sword Jump Attack (For Two Handed Heavy Attack Animation) 
-
-  * Picking Up (For PickupItem animation)
-  * Shrugging ()
-  * Running Jump (For Jump animation)
-
-  * Zombie Stand Up (For Sleep & WakeUp animations)
+  * For Ambush
+    * Stabbing (For BackStab Animation)
+    * Stealth Assassination (For BackStabbed Hit & Dead Animation)
+    
+  * ETC
+    * Picking Up (For PickupItem animation)
+    * Zombie Stand Up (For Sleep & WakeUp animations)

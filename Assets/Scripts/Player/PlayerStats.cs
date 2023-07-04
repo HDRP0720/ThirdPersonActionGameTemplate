@@ -12,12 +12,12 @@ public class PlayerStats : CharacterStats
   public float staminaRegenTimer = 0;
 
   private PlayerManager playerManager;
-  private AnimatorHandler animatorHandler;
+  private PlayerAnimatorManager animatorHandler;
 
   private void Awake()
   {
     playerManager = GetComponent<PlayerManager>();
-    animatorHandler = GetComponentInChildren<AnimatorHandler>();
+    animatorHandler = GetComponentInChildren<PlayerAnimatorManager>();
   }
   private void Start() 
   {
@@ -62,6 +62,19 @@ public class PlayerStats : CharacterStats
     maxStamina = staminaLevel * 10;
 
     return maxStamina;
+  }
+
+  public void TakeDamageWithoutAnimation(int damage)
+  {
+    if (isDead) return;
+
+    currentHealth -= damage;
+
+    if (currentHealth <= 0)
+    {
+      currentHealth = 0;
+      isDead = true;
+    }
   }
 
   public void TakeDamage(int damage)
