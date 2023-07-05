@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class EnemyStats : CharacterStats
 {
-  private Animator animator;
+  public int soulsAwardedOnDeath = 50;
+
+  private EnemyAnimatorManager enemyAnimatorManager;
 
   private void Awake()
-  {
-    animator = GetComponent<Animator>();
+  {    
+    enemyAnimatorManager = GetComponent<EnemyAnimatorManager>();
   }
   private void Start() 
   {
@@ -41,13 +43,17 @@ public class EnemyStats : CharacterStats
     if(isDead) return;
     
     currentHealth -= damage;
-    animator.Play("Damage_01");
+    enemyAnimatorManager.PlayTargetAnimation("Damage_01", true);
 
     if(currentHealth <= 0)
     {
-      currentHealth = 0;
-      animator.Play("Dead_01");
-      isDead = true;
+      HandleDeath();
     }
+  }
+  private void HandleDeath()
+  {
+    currentHealth = 0;
+    enemyAnimatorManager.PlayTargetAnimation("Dead_01", true);
+    isDead = true;
   }
 }

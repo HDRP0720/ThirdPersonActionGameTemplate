@@ -21,6 +21,23 @@ public class EnemyAnimatorManager : AnimatorManager
     enemyManager.pendingCriticalDamage = 0;
   }
 
+  // animation event
+  public void AwardSoulsOnDeath()
+  {
+    SoulCountsUI soulCountsUI = FindObjectOfType<SoulCountsUI>();
+
+    PlayerStats playerStats = FindObjectOfType<PlayerStats>();
+    if (playerStats != null)
+    {
+      playerStats.AddSouls(enemyStats.soulsAwardedOnDeath);
+
+      if (soulCountsUI != null)
+      {
+        soulCountsUI.SetSoulCount(playerStats.soulCount);
+      }
+    }   
+  }
+
   private void OnAnimatorMove()
   {
     float delta = Time.deltaTime;
