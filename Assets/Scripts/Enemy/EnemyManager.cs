@@ -35,7 +35,7 @@ public class EnemyManager : CharacterManager
     enemyMoveState = GetComponent<EnemyMoveState>();
     enemyAnimatorManager = GetComponent<EnemyAnimatorManager>();
     enemyStats = GetComponent<EnemyStats>();
-    backStabCollider = GetComponentInChildren<BackStabCollider>();
+    backStabCollider = GetComponentInChildren<SpecialAttackCollider>();
 
     navMeshAgent = GetComponentInChildren<NavMeshAgent>();
     navMeshAgent.enabled = false;
@@ -67,7 +67,6 @@ public class EnemyManager : CharacterManager
       }
     }
   }
-
   private void SwitchToNextState(State newState)
   {
     currentState = newState;

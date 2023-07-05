@@ -5,11 +5,12 @@ using UnityEngine;
 public class PlayerAttackState : MonoBehaviour
 {
   private LayerMask backStabLayer = 1 << 13;
+  private LayerMask riposteLayer = 1 << 14;
 
   private PlayerManager playerManager;
   private PlayerInventory playerInventory;
   private PlayerStats playerStats;
-  private PlayerAnimatorManager animatorHandler;
+  private PlayerAnimatorManager playerAnimatorManager;
   private InputHandler inputHandler;
   private WeaponSlotManager weaponSlotManager;
 
@@ -20,7 +21,7 @@ public class PlayerAttackState : MonoBehaviour
     playerManager = GetComponentInParent<PlayerManager>();
     playerInventory = GetComponentInParent<PlayerInventory>();
     playerStats = GetComponentInParent<PlayerStats>();
-    animatorHandler = GetComponent<PlayerAnimatorManager>();
+    playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
     inputHandler = GetComponentInParent<InputHandler>();
     
     weaponSlotManager= GetComponent<WeaponSlotManager>();
@@ -34,12 +35,12 @@ public class PlayerAttackState : MonoBehaviour
 
     if(inputHandler.twoHandFlag)
     {
-      animatorHandler.PlayTargetAnimation(weapon.TH_Light_Attack_1, true);
+      playerAnimatorManager.PlayTargetAnimation(weapon.TH_Light_Attack_1, true);
       lastAttack = weapon.TH_Light_Attack_1;
     }
     else
     {
-      animatorHandler.PlayTargetAnimation(weapon.OH_Light_Attack_1, true);
+      playerAnimatorManager.PlayTargetAnimation(weapon.OH_Light_Attack_1, true);
       lastAttack = weapon.OH_Light_Attack_1;
     }
   }
@@ -52,12 +53,12 @@ public class PlayerAttackState : MonoBehaviour
 
     if (inputHandler.twoHandFlag)
     {
-      animatorHandler.PlayTargetAnimation(weapon.TH_Heavy_Attack_1, true);
+      playerAnimatorManager.PlayTargetAnimation(weapon.TH_Heavy_Attack_1, true);
       lastAttack = weapon.TH_Heavy_Attack_1;
     }
     else
     {
-      animatorHandler.PlayTargetAnimation(weapon.OH_Heavy_Attack_1, true);
+      playerAnimatorManager.PlayTargetAnimation(weapon.OH_Heavy_Attack_1, true);
       lastAttack = weapon.OH_Heavy_Attack_1;
     }  
   }
@@ -68,12 +69,12 @@ public class PlayerAttackState : MonoBehaviour
 
     if(inputHandler.comboFlag)
     {
-      animatorHandler.animator.SetBool("canDoCombo", false);      
+      playerAnimatorManager.animator.SetBool("canDoCombo", false);      
 
       if (lastAttack == weapon.OH_Light_Attack_1)      
-        animatorHandler.PlayTargetAnimation(weapon.OH_Light_Attack_2, true);
+        playerAnimatorManager.PlayTargetAnimation(weapon.OH_Light_Attack_2, true);
       else if(lastAttack == weapon.TH_Light_Attack_1)
-        animatorHandler.PlayTargetAnimation(weapon.TH_Light_Attack_2, true);
+        playerAnimatorManager.PlayTargetAnimation(weapon.TH_Light_Attack_2, true);
     }    
   }  
 
@@ -106,7 +107,7 @@ public class PlayerAttackState : MonoBehaviour
 
       if (playerManager.canDoCombo) return;
 
-      animatorHandler.animator.SetBool("isUsingRightHand", true);
+      playerAnimatorManager.animator.SetBool("isUsingRightHand", true);
       HandleLightAttack(playerInventory.rightWeapon);
     }
   }
@@ -123,11 +124,11 @@ public class PlayerAttackState : MonoBehaviour
         if(playerStats.currentMana >= playerInventory.currentSpell.manaCost)
         {
           // TODO: Attempt to cast spell
-          playerInventory.currentSpell.AttemptToCastSpell(animatorHandler, playerStats);
+          playerInventory.currentSpell.AttemptToCastSpell(playerAnimatorManager, playerStats);
         }
         else
         {
-          animatorHandler.PlayTargetAnimation("Shrug", true);
+          playerAnimatorManager.PlayTargetAnimation("Shrug", true);
         }
       }
     }
@@ -135,7 +136,7 @@ public class PlayerAttackState : MonoBehaviour
 
   private void SuccessfullyCastSpell()
   {
-    playerInventory.currentSpell.SucessfullyCastSpell(animatorHandler, playerStats);
+    playerInventory.currentSpell.SucessfullyCastSpell(playerAnimatorManager, playerStats);
   }
   #endregion
 
@@ -153,7 +154,7 @@ public class PlayerAttackState : MonoBehaviour
       if(enemyCharacterManager != null)
       {
         // TODO: Manipulate position -> rotation -> animation
-        playerManager.transform.position = enemyCharacterManager.backStabCollider.backStabberStandPoint.position;
+        playerManager.transform.position = enemyCharacterManager.backStabCollider.specialAttackerTransform.position;
 
         Vector3 rotationDirection = playerManager.transform.root.eulerAngles;
         rotationDirection = hit.transform.position - playerManager.transform.position;
@@ -167,9 +168,35 @@ public class PlayerAttackState : MonoBehaviour
         int criticalDamage = playerInventory.rightWeapon.criticalDamageMultiplier * rightweapon.currentWeaponDamage;
         enemyCharacterManager.pendingCriticalDamage = criticalDamage;
 
-        animatorHandler.PlayTargetAnimation("BackStab", true);
+        playerAnimatorManager.PlayTargetAnimation("BackStab", true);
         enemyCharacterManager.GetComponent<AnimatorManager>().PlayTargetAnimation("BackStabbed", true);
       }
+    }
+    else if(Physics.Raycast(inputHandler.criticalAttackRayCastStartPoint.position,
+      transform.TransformDirection(Vector3.forward), out hit, 0.5f, riposteLayer))
+    {
+      CharacterManager enemyCharacterManager = hit.transform.gameObject.GetComponentInParent<CharacterManager>();
+      DamageCollider rightweapon = weaponSlotManager.rightHandDamageCollider;
+
+      if(enemyCharacterManager != null && enemyCharacterManager.canRipost)
+      {
+        playerManager.transform.position = enemyCharacterManager.riposteCollider.specialAttackerTransform.position;
+
+        Vector3 rotationDirection = playerManager.transform.root.eulerAngles;
+        rotationDirection = hit.transform.position - playerManager.transform.position;
+        rotationDirection.y = 0;
+        rotationDirection.Normalize();
+
+        Quaternion tr = Quaternion.LookRotation(rotationDirection);
+        Quaternion targetRotation = Quaternion.Slerp(playerManager.transform.rotation, tr, 500 * Time.deltaTime);
+        playerManager.transform.rotation = targetRotation;
+
+        int criticalDamage = playerInventory.rightWeapon.criticalDamageMultiplier * rightweapon.currentWeaponDamage;
+        enemyCharacterManager.pendingCriticalDamage = criticalDamage;
+
+        playerAnimatorManager.PlayTargetAnimation("Riposte", true);
+        enemyCharacterManager.GetComponent<AnimatorManager>().PlayTargetAnimation("Riposted", true);
+      }  
     }
   }
 }
