@@ -10,7 +10,9 @@ public class PursueTargetState : State
   // TODO: If within attack range, return combat stance state
   // TODO: if target is out of range, return this state and continue to chase target
   public override State Tick(EnemyManager enemyManager, EnemyStats enemyStats, EnemyAnimatorManager enemyAnimatorManager)
-  {      
+  {
+    if (enemyManager.isInteracting) return this;
+    
     if (enemyManager.isPerformingAction) 
     {
       enemyAnimatorManager.animator.SetFloat("Vertical", 0, 0.1f, Time.deltaTime);
@@ -25,9 +27,6 @@ public class PursueTargetState : State
       enemyAnimatorManager.animator.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);
 
     HandleRotateTowardsTarget(enemyManager);
-
-    enemyManager.navMeshAgent.transform.localPosition = Vector3.zero;
-    enemyManager.navMeshAgent.transform.localRotation = Quaternion.identity;
 
     if(distanceFromTarget <= enemyManager.maximumAttackRange)    
       return combatStanceState;    

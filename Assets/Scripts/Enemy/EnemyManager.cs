@@ -23,6 +23,11 @@ public class EnemyManager : CharacterManager
   public bool isPerformingAction;
   public bool isInteracting;
 
+  [Header("Combat Flags")]
+  public bool canDoCombo;
+
+
+
   [HideInInspector] public Rigidbody enemyRigidBody;
 
   private EnemyMoveState enemyMoveState;
@@ -44,16 +49,19 @@ public class EnemyManager : CharacterManager
   {
     enemyRigidBody.isKinematic = false;
   }
-  private void FixedUpdate() 
-  {
-    HandleStateMachine();
-  }
   private void Update() 
   {
     HandleRecoveryTimer();
+    HandleStateMachine();
 
     isInteracting = enemyAnimatorManager.animator.GetBool("isInteracting");
+    canDoCombo = enemyAnimatorManager.animator.GetBool("canDoCombo");
     enemyAnimatorManager.animator.SetBool("isDead", enemyStats.isDead);
+  }
+  private void LateUpdate()
+  {
+    navMeshAgent.transform.localPosition = Vector3.zero;
+    navMeshAgent.transform.localRotation = Quaternion.identity;
   }
 
   private void HandleStateMachine()

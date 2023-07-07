@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "TPA/Enemy Actions/Make New Attack Action")]
 public class EnemyAttackAction : EnemyAction
 {
+  public bool canCombo;
+  public EnemyAttackAction comboAction;
   public int attackScore = 3;
   public float recoveryTime = 2f;
 

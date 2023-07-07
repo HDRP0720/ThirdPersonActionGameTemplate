@@ -21,7 +21,7 @@ public class EnemyAnimatorManager : AnimatorManager
     enemyManager.pendingCriticalDamage = 0;
   }
 
-  // animation event
+  // animation events
   public void AwardSoulsOnDeath()
   {
     SoulCountsUI soulCountsUI = FindObjectOfType<SoulCountsUI>();
@@ -36,6 +36,36 @@ public class EnemyAnimatorManager : AnimatorManager
         soulCountsUI.SetSoulCount(playerStats.soulCount);
       }
     }   
+  }
+
+  public void ActivateRotation()
+  {
+    animator.SetBool("canRotate", true);
+  }
+
+  public void StopRotation()
+  {
+    animator.SetBool("canRotate", false);
+  }
+
+  public void EnableCombo()
+  {
+    animator.SetBool("canDoCombo", true);
+  }
+
+  public void DisableCombo()
+  {
+    animator.SetBool("canDoCombo", false);
+  }
+
+  public void EnableIsInvulnerable()
+  {
+    animator.SetBool("isInvulnerable", true);
+  }
+
+  public void DisableIsInvulnerable()
+  {
+    animator.SetBool("isInvulnerable", false);
   }
 
   public void EnableIsParrying()

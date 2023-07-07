@@ -199,7 +199,7 @@ public class PlayerAttackState : MonoBehaviour
       }
     }
     else if(Physics.Raycast(inputHandler.criticalAttackRayCastStartPoint.position,
-      transform.TransformDirection(Vector3.forward), out hit, 1.0f, riposteLayer))
+      transform.TransformDirection(Vector3.forward), out hit, 3.0f, riposteLayer))
     {
       CharacterManager enemyCharacterManager = hit.transform.gameObject.GetComponentInParent<CharacterManager>();
       DamageCollider rightweapon = weaponSlotManager.rightHandDamageCollider;
