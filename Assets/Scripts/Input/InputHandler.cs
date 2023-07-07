@@ -51,6 +51,7 @@ public class InputHandler : MonoBehaviour
   private PlayerAnimatorManager playerAnimatorManager;
   private PlayerAttackState playerAttackState;
   private WeaponSlotManager weaponSlotManager;
+  private BlockingCollider blockingCollider;
 
   private CameraHandler cameraHandler;
   private UIManager uiManager;
@@ -67,6 +68,7 @@ public class InputHandler : MonoBehaviour
     playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
     playerAttackState = GetComponentInChildren<PlayerAttackState>();
     weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
+    blockingCollider = GetComponentInChildren<BlockingCollider>();
 
     cameraHandler = FindObjectOfType<CameraHandler>();
     uiManager = FindObjectOfType<UIManager>();
@@ -161,13 +163,11 @@ public class InputHandler : MonoBehaviour
 
   private void HandleCombatInput(float delta)
   {
-    // RB Input handles the RIGHT hand weapon's light attack
     if(lightAttack_Input)
     {
       playerAttackState.HandleLightAction();
     }
 
-    // RT Input handles the RIGHT hand weapon's heavy attack
     if(heavyAttack_Input)
     {
       if (playerManager.isInteracting) return;
@@ -185,6 +185,10 @@ public class InputHandler : MonoBehaviour
     else
     {
       playerManager.isBlocking = false;
+      if(blockingCollider.blockingCollider.enabled)
+      {
+        blockingCollider.DisableBlockingCollider();
+      }
     }
 
     if(parry_Input)

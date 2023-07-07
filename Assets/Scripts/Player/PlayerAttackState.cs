@@ -10,8 +10,10 @@ public class PlayerAttackState : MonoBehaviour
   private PlayerManager playerManager;
   private PlayerInventory playerInventory;
   private PlayerStats playerStats;
-  private PlayerAnimatorManager playerAnimatorManager;
   private InputHandler inputHandler;
+
+  private PlayerAnimatorManager playerAnimatorManager;
+  private PlayerEquipmentManager playerEquipmentManager;
   private WeaponSlotManager weaponSlotManager;
 
   public string lastAttack;
@@ -19,11 +21,12 @@ public class PlayerAttackState : MonoBehaviour
   private void Awake() 
   {
     playerManager = GetComponentInParent<PlayerManager>();
-    playerInventory = GetComponentInParent<PlayerInventory>();
+    playerInventory = GetComponentInParent<PlayerInventory>();    
     playerStats = GetComponentInParent<PlayerStats>();
-    playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
     inputHandler = GetComponentInParent<InputHandler>();
-    
+
+    playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
+    playerEquipmentManager = GetComponent<PlayerEquipmentManager>();    
     weaponSlotManager= GetComponent<WeaponSlotManager>();
   }
 
@@ -179,6 +182,7 @@ public class PlayerAttackState : MonoBehaviour
     if(playerManager.isBlocking) return;
 
     playerAnimatorManager.PlayTargetAnimation("BlockStart", false, true);
+    playerEquipmentManager.OpenBlockingCollider();
     playerManager.isBlocking = true;
   }
   #endregion

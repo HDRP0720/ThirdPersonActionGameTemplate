@@ -12,6 +12,9 @@ public class WeaponItem : Item
   public int baseDamage = 25;
   public int criticalDamageMultiplier = 4;
 
+  [Header("# Blocking Damage Absorption")][Range(0, 1)]
+  public float damageAbsorptionRate;
+
   [Header("# Idle Animations")]
   public string TH_Idle;
 

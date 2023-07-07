@@ -33,6 +33,9 @@ public class DamageCollider : MonoBehaviour
     if(other.tag == "Player")
     {
       CharacterManager playerCharacterManager = other.GetComponent<CharacterManager>();
+      BlockingCollider shieldCollider = other.transform.GetComponentInChildren<BlockingCollider>();
+      PlayerStats playerStats = other.GetComponent<PlayerStats>();
+
       if(playerCharacterManager != null)
       {
         if(playerCharacterManager.isParrying)
@@ -40,9 +43,17 @@ public class DamageCollider : MonoBehaviour
           characterManager.GetComponentInChildren<AnimatorManager>().PlayTargetAnimation("Parried", true);
           return;
         }
+        else if(shieldCollider != null && playerCharacterManager.isBlocking)
+        {
+          float damageAfterBlocking = currentWeaponDamage - (currentWeaponDamage * shieldCollider.blockingDamageAbsorption);
+          if(playerStats != null)
+          {
+            playerStats.TakeDamage(Mathf.RoundToInt(damageAfterBlocking), "BlockGuard");
+            return;
+          }
+        }
       }
-
-      PlayerStats playerStats = other.GetComponent<PlayerStats>();
+      
       if(playerStats != null)      
         playerStats.TakeDamage(currentWeaponDamage);      
     }

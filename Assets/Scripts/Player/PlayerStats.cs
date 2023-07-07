@@ -77,7 +77,7 @@ public class PlayerStats : CharacterStats
     }
   }
 
-  public void TakeDamage(int damage)
+  public void TakeDamage(int damage, string damageAnimation ="Damage_01")
   {
     if(isDead) return;
 
@@ -87,7 +87,7 @@ public class PlayerStats : CharacterStats
 
     healthBarUI.SetCurrentHealth(currentHealth);
 
-    animatorHandler.PlayTargetAnimation("Damage_01", true);
+    animatorHandler.PlayTargetAnimation(damageAnimation, true);
 
     if(currentHealth <= 0)
     {
