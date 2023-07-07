@@ -8,10 +8,10 @@ public class CombatStanceState : State
   public PursueTargetState pursueTargetState;
 
   public override State Tick(EnemyManager enemyManager, EnemyStats enemyStats, EnemyAnimatorManager enemyAnimatorManager)
-  {
+  {    
     float distanceFromTarget = Vector3.Distance(enemyManager.currentTarget.transform.position, enemyManager.transform.position);
 
-    HandleRotateTowardsTarget(enemyManager);
+    HandleRotateTowardsTarget(enemyManager);    
 
     if(enemyManager.isPerformingAction)
       enemyAnimatorManager.animator.SetFloat("Vertical", 0, 0.1f, Time.deltaTime);

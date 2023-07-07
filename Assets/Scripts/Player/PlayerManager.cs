@@ -77,7 +77,7 @@ public class PlayerManager : CharacterManager
     inputHandler.rollFlag = false;
 
     inputHandler.lightAttack_Input = false;
-    inputHandler.heavyAttack_Input = false;
+    inputHandler.heavyAttack_Input = false;   
 
     inputHandler.d_Pad_Up = false;
     inputHandler.d_Pad_Down = false;
@@ -87,6 +87,7 @@ public class PlayerManager : CharacterManager
     inputHandler.loot_Input = false;
     inputHandler.jump_Input = false;
     inputHandler.inventory_Input = false;
+    inputHandler.parry_Input = false;
 
     if(isInAir)
       playerController.inAirTimer += Time.deltaTime;

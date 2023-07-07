@@ -27,6 +27,9 @@ public class WeaponItem : Item
 
   [Space] public string TH_Heavy_Attack_1;
 
+  [Header("Weapon Art for parry")]
+  public string parry_art;
+
   [Header("# Stamina Costs")]
   public int baseStamina;
   public float lightAttackMultiplier;
@@ -37,4 +40,5 @@ public class WeaponItem : Item
   public bool isFaithCaster;
   public bool isPyroCaster;
   public bool isMeleeWeapon;
+  public bool isShield;
 }

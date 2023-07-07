@@ -136,6 +136,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "CriticalAttack",
+                    "type": "Button",
+                    "id": "d804bcf6-7a95-43ad-b55f-8ef3550ca244",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Parry",
+                    "type": "Button",
+                    "id": "85015633-b5ca-416c-bee9-0f334aaf062e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Loot",
                     "type": "Button",
                     "id": "a68b7e64-edec-4b48-8376-500a106c1842",
@@ -193,15 +211,6 @@
                     "name": "TwoHand",
                     "type": "Button",
                     "id": "a86e22b6-cac3-493b-8bee-35be62941240",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "CriticalAttack",
-                    "type": "Button",
-                    "id": "d804bcf6-7a95-43ad-b55f-8ef3550ca244",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -360,6 +369,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "CriticalAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9d02129b-7ba9-4cbe-9852-161b3c43ce67",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Parry",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -90,6 +90,18 @@ public class PlayerAttackState : MonoBehaviour
       PerformLightMagicAction(playerInventory.rightWeapon);
     }   
   }
+
+  public void HandleParryAction()
+  {
+    if(playerInventory.leftWeapon.isShield)
+    {
+      PerformParryAction(inputHandler.twoHandFlag);
+    }
+    else if(playerInventory.leftWeapon.isMeleeWeapon)
+    {
+      // TODO: do a light attack;
+    }
+  }
   #endregion
 
   #region Attack Actions
@@ -134,6 +146,20 @@ public class PlayerAttackState : MonoBehaviour
     }
   }
 
+  private void PerformParryAction(bool isTwoHanding)
+  {
+    if(playerManager.isInteracting) return;
+
+    if(isTwoHanding)
+    {
+      // TODO: if player use two-handed weapon, perform parry art for right weapon
+    }
+    else
+    {
+      playerAnimatorManager.PlayTargetAnimation(playerInventory.leftWeapon.parry_art, true);
+    }
+  }
+
   private void SuccessfullyCastSpell()
   {
     playerInventory.currentSpell.SucessfullyCastSpell(playerAnimatorManager, playerStats);
@@ -173,12 +199,12 @@ public class PlayerAttackState : MonoBehaviour
       }
     }
     else if(Physics.Raycast(inputHandler.criticalAttackRayCastStartPoint.position,
-      transform.TransformDirection(Vector3.forward), out hit, 0.5f, riposteLayer))
+      transform.TransformDirection(Vector3.forward), out hit, 1.0f, riposteLayer))
     {
       CharacterManager enemyCharacterManager = hit.transform.gameObject.GetComponentInParent<CharacterManager>();
       DamageCollider rightweapon = weaponSlotManager.rightHandDamageCollider;
 
-      if(enemyCharacterManager != null && enemyCharacterManager.canRipost)
+      if(enemyCharacterManager != null && enemyCharacterManager.canBeRiposted)
       {
         playerManager.transform.position = enemyCharacterManager.riposteCollider.specialAttackerTransform.position;
 

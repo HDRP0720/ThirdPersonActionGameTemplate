@@ -6386,6 +6386,7 @@ MonoBehaviour:
   jump_Input: 0
   inventory_Input: 0
   criticalAttack_Input: 0
+  parry_Input: 0
   lockOn_Input: 0
   lockOnLeft_Input: 0
   lockOnRight_Input: 0
@@ -6445,7 +6446,9 @@ MonoBehaviour:
   lockOnTransform: {fileID: 1228082480}
   backStabCollider: {fileID: 98521439}
   riposteCollider: {fileID: 1356138736}
-  canRipost: 0
+  canBeRiposted: 0
+  canBeParried: 0
+  isParrying: 0
   pendingCriticalDamage: 0
   isInteracting: 0
   isSprinting: 0
@@ -6470,15 +6473,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSpell: {fileID: 11400000, guid: ea0e0004d19c08b448b52cdd039a36f1, type: 2}
   rightWeapon: {fileID: 11400000, guid: 9144780c53c7ec141aeacd193a88cc72, type: 2}
-  leftWeapon: {fileID: 11400000, guid: dc0a4576cd01e8445bf937704c02593d, type: 2}
+  leftWeapon: {fileID: 11400000, guid: 7d77562097774d1499ef5d123f3973a6, type: 2}
   unarmedWeapon: {fileID: 11400000, guid: 2cb13363f59d8204d894a5fa7017b812, type: 2}
   weaponsInRightHandSlots:
   - {fileID: 11400000, guid: 9144780c53c7ec141aeacd193a88cc72, type: 2}
   - {fileID: 11400000, guid: 92d3ce33f420f784bb509d9d69f3ba70, type: 2}
   - {fileID: 11400000, guid: 2cb13363f59d8204d894a5fa7017b812, type: 2}
   weaponsInLeftHandSlots:
+  - {fileID: 11400000, guid: 7d77562097774d1499ef5d123f3973a6, type: 2}
   - {fileID: 11400000, guid: dc0a4576cd01e8445bf937704c02593d, type: 2}
-  - {fileID: 11400000, guid: 2cb13363f59d8204d894a5fa7017b812, type: 2}
   currentRightWeaponIndex: 0
   currentLeftWeaponIndex: 0
   weaponsInventory: []
@@ -11635,7 +11638,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1805189713
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12510,7 +12513,9 @@ MonoBehaviour:
   lockOnTransform: {fileID: 117829144}
   backStabCollider: {fileID: 994315482}
   riposteCollider: {fileID: 1854034362}
-  canRipost: 1
+  canBeRiposted: 1
+  canBeParried: 0
+  isParrying: 0
   pendingCriticalDamage: 0
   detectionRadius: 10
   minimumDetectionAngle: -50

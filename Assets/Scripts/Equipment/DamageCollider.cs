@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class DamageCollider : MonoBehaviour
 {
-  Collider damageCollider;
   public int currentWeaponDamage = 25;
+
+  [HideInInspector] public CharacterManager characterManager;
+
+  private Collider damageCollider;
 
   private void Awake()
   {
     damageCollider = GetComponent<Collider>();
     damageCollider.gameObject.SetActive(true);
     damageCollider.isTrigger = true;
-    damageCollider.enabled = false;
+    damageCollider.enabled = false; 
   }
 
   public void EnableDamageCollider()
@@ -29,6 +32,16 @@ public class DamageCollider : MonoBehaviour
   {
     if(other.tag == "Player")
     {
+      CharacterManager playerCharacterManager = other.GetComponent<CharacterManager>();
+      if(playerCharacterManager != null)
+      {
+        if(playerCharacterManager.isParrying)
+        {
+          characterManager.GetComponentInChildren<AnimatorManager>().PlayTargetAnimation("Parried", true);
+          return;
+        }
+      }
+
       PlayerStats playerStats = other.GetComponent<PlayerStats>();
       if(playerStats != null)      
         playerStats.TakeDamage(currentWeaponDamage);      
@@ -36,6 +49,16 @@ public class DamageCollider : MonoBehaviour
 
     if(other.tag == "Enemy")
     {
+      CharacterManager enemyCharacterManager = other.GetComponent<CharacterManager>();
+      if (enemyCharacterManager != null)
+      {
+        if (enemyCharacterManager.isParrying)
+        {
+          characterManager.GetComponentInChildren<AnimatorManager>().PlayTargetAnimation("Parried", true);
+          return;
+        }
+      }
+
       EnemyStats enemyStats = other.GetComponent<EnemyStats>();
       if(enemyStats != null)
         enemyStats.TakeDamage(currentWeaponDamage);

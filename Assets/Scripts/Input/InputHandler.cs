@@ -19,6 +19,7 @@ public class InputHandler : MonoBehaviour
   public bool jump_Input;
   public bool inventory_Input;
   public bool criticalAttack_Input;
+  public bool parry_Input;
 
   public bool lockOn_Input;
   public bool lockOnLeft_Input;
@@ -92,6 +93,7 @@ public class InputHandler : MonoBehaviour
       inputActions.PlayerActions.Jump.performed += i => jump_Input = true;
       inputActions.PlayerActions.Inventory.performed += i => inventory_Input = true;
       inputActions.PlayerActions.CriticalAttack.performed += i => criticalAttack_Input = true;
+      inputActions.PlayerActions.Parry.performed += i => parry_Input = true;
 
       inputActions.PlayerActions.LockOn.performed += i => lockOn_Input = true;
       inputActions.PlayerActions.LockOnLeftTarget.performed += i => lockOnLeft_Input = true;
@@ -171,6 +173,19 @@ public class InputHandler : MonoBehaviour
 
       playerAnimatorManager.animator.SetBool("isUsingRightHand", true);
       playerAttackState.HandleHeavyAttack(playerInventory.rightWeapon);
+    }
+
+    if(parry_Input)
+    {
+      if(twoHandFlag)
+      {
+
+      }
+      else
+      {
+        playerAttackState.HandleParryAction();
+      }
+      // TODO: Handle weapon arts
     }
   }
 

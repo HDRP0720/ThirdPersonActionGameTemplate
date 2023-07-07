@@ -158,6 +158,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""CriticalAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""d804bcf6-7a95-43ad-b55f-8ef3550ca244"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Parry"",
+                    ""type"": ""Button"",
+                    ""id"": ""85015633-b5ca-416c-bee9-0f334aaf062e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Loot"",
                     ""type"": ""Button"",
                     ""id"": ""a68b7e64-edec-4b48-8376-500a106c1842"",
@@ -215,15 +233,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""TwoHand"",
                     ""type"": ""Button"",
                     ""id"": ""a86e22b6-cac3-493b-8bee-35be62941240"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""CriticalAttack"",
-                    ""type"": ""Button"",
-                    ""id"": ""d804bcf6-7a95-43ad-b55f-8ef3550ca244"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -384,6 +393,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""CriticalAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9d02129b-7ba9-4cbe-9852-161b3c43ce67"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Parry"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -531,6 +551,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_Roll = m_PlayerActions.FindAction("Roll", throwIfNotFound: true);
         m_PlayerActions_LightAttack = m_PlayerActions.FindAction("LightAttack", throwIfNotFound: true);
         m_PlayerActions_HeavyAttack = m_PlayerActions.FindAction("HeavyAttack", throwIfNotFound: true);
+        m_PlayerActions_CriticalAttack = m_PlayerActions.FindAction("CriticalAttack", throwIfNotFound: true);
+        m_PlayerActions_Parry = m_PlayerActions.FindAction("Parry", throwIfNotFound: true);
         m_PlayerActions_Loot = m_PlayerActions.FindAction("Loot", throwIfNotFound: true);
         m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
         m_PlayerActions_Inventory = m_PlayerActions.FindAction("Inventory", throwIfNotFound: true);
@@ -538,7 +560,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_LockOnLeftTarget = m_PlayerActions.FindAction("LockOnLeftTarget", throwIfNotFound: true);
         m_PlayerActions_LockOnRightTarget = m_PlayerActions.FindAction("LockOnRightTarget", throwIfNotFound: true);
         m_PlayerActions_TwoHand = m_PlayerActions.FindAction("TwoHand", throwIfNotFound: true);
-        m_PlayerActions_CriticalAttack = m_PlayerActions.FindAction("CriticalAttack", throwIfNotFound: true);
         // Player Quickslots
         m_PlayerQuickslots = asset.FindActionMap("Player Quickslots", throwIfNotFound: true);
         m_PlayerQuickslots_DPadUp = m_PlayerQuickslots.FindAction("D-Pad Up", throwIfNotFound: true);
@@ -663,6 +684,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Roll;
     private readonly InputAction m_PlayerActions_LightAttack;
     private readonly InputAction m_PlayerActions_HeavyAttack;
+    private readonly InputAction m_PlayerActions_CriticalAttack;
+    private readonly InputAction m_PlayerActions_Parry;
     private readonly InputAction m_PlayerActions_Loot;
     private readonly InputAction m_PlayerActions_Jump;
     private readonly InputAction m_PlayerActions_Inventory;
@@ -670,7 +693,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_LockOnLeftTarget;
     private readonly InputAction m_PlayerActions_LockOnRightTarget;
     private readonly InputAction m_PlayerActions_TwoHand;
-    private readonly InputAction m_PlayerActions_CriticalAttack;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -678,6 +700,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Roll => m_Wrapper.m_PlayerActions_Roll;
         public InputAction @LightAttack => m_Wrapper.m_PlayerActions_LightAttack;
         public InputAction @HeavyAttack => m_Wrapper.m_PlayerActions_HeavyAttack;
+        public InputAction @CriticalAttack => m_Wrapper.m_PlayerActions_CriticalAttack;
+        public InputAction @Parry => m_Wrapper.m_PlayerActions_Parry;
         public InputAction @Loot => m_Wrapper.m_PlayerActions_Loot;
         public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
         public InputAction @Inventory => m_Wrapper.m_PlayerActions_Inventory;
@@ -685,7 +709,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @LockOnLeftTarget => m_Wrapper.m_PlayerActions_LockOnLeftTarget;
         public InputAction @LockOnRightTarget => m_Wrapper.m_PlayerActions_LockOnRightTarget;
         public InputAction @TwoHand => m_Wrapper.m_PlayerActions_TwoHand;
-        public InputAction @CriticalAttack => m_Wrapper.m_PlayerActions_CriticalAttack;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -704,6 +727,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @HeavyAttack.started += instance.OnHeavyAttack;
             @HeavyAttack.performed += instance.OnHeavyAttack;
             @HeavyAttack.canceled += instance.OnHeavyAttack;
+            @CriticalAttack.started += instance.OnCriticalAttack;
+            @CriticalAttack.performed += instance.OnCriticalAttack;
+            @CriticalAttack.canceled += instance.OnCriticalAttack;
+            @Parry.started += instance.OnParry;
+            @Parry.performed += instance.OnParry;
+            @Parry.canceled += instance.OnParry;
             @Loot.started += instance.OnLoot;
             @Loot.performed += instance.OnLoot;
             @Loot.canceled += instance.OnLoot;
@@ -725,9 +754,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @TwoHand.started += instance.OnTwoHand;
             @TwoHand.performed += instance.OnTwoHand;
             @TwoHand.canceled += instance.OnTwoHand;
-            @CriticalAttack.started += instance.OnCriticalAttack;
-            @CriticalAttack.performed += instance.OnCriticalAttack;
-            @CriticalAttack.canceled += instance.OnCriticalAttack;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -741,6 +767,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @HeavyAttack.started -= instance.OnHeavyAttack;
             @HeavyAttack.performed -= instance.OnHeavyAttack;
             @HeavyAttack.canceled -= instance.OnHeavyAttack;
+            @CriticalAttack.started -= instance.OnCriticalAttack;
+            @CriticalAttack.performed -= instance.OnCriticalAttack;
+            @CriticalAttack.canceled -= instance.OnCriticalAttack;
+            @Parry.started -= instance.OnParry;
+            @Parry.performed -= instance.OnParry;
+            @Parry.canceled -= instance.OnParry;
             @Loot.started -= instance.OnLoot;
             @Loot.performed -= instance.OnLoot;
             @Loot.canceled -= instance.OnLoot;
@@ -762,9 +794,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @TwoHand.started -= instance.OnTwoHand;
             @TwoHand.performed -= instance.OnTwoHand;
             @TwoHand.canceled -= instance.OnTwoHand;
-            @CriticalAttack.started -= instance.OnCriticalAttack;
-            @CriticalAttack.performed -= instance.OnCriticalAttack;
-            @CriticalAttack.canceled -= instance.OnCriticalAttack;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -862,6 +891,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnRoll(InputAction.CallbackContext context);
         void OnLightAttack(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
+        void OnCriticalAttack(InputAction.CallbackContext context);
+        void OnParry(InputAction.CallbackContext context);
         void OnLoot(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
@@ -869,7 +900,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnLockOnLeftTarget(InputAction.CallbackContext context);
         void OnLockOnRightTarget(InputAction.CallbackContext context);
         void OnTwoHand(InputAction.CallbackContext context);
-        void OnCriticalAttack(InputAction.CallbackContext context);
     }
     public interface IPlayerQuickslotsActions
     {
