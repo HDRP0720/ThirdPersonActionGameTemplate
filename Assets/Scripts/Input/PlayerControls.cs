@@ -237,6 +237,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShieldBlock"",
+                    ""type"": ""Button"",
+                    ""id"": ""794649f7-f755-4b7c-8213-21bb2cf070c8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -404,6 +413,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Parry"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f54d4400-7892-43ca-89fb-9177dbd92a42"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShieldBlock"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -560,6 +580,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_LockOnLeftTarget = m_PlayerActions.FindAction("LockOnLeftTarget", throwIfNotFound: true);
         m_PlayerActions_LockOnRightTarget = m_PlayerActions.FindAction("LockOnRightTarget", throwIfNotFound: true);
         m_PlayerActions_TwoHand = m_PlayerActions.FindAction("TwoHand", throwIfNotFound: true);
+        m_PlayerActions_ShieldBlock = m_PlayerActions.FindAction("ShieldBlock", throwIfNotFound: true);
         // Player Quickslots
         m_PlayerQuickslots = asset.FindActionMap("Player Quickslots", throwIfNotFound: true);
         m_PlayerQuickslots_DPadUp = m_PlayerQuickslots.FindAction("D-Pad Up", throwIfNotFound: true);
@@ -693,6 +714,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_LockOnLeftTarget;
     private readonly InputAction m_PlayerActions_LockOnRightTarget;
     private readonly InputAction m_PlayerActions_TwoHand;
+    private readonly InputAction m_PlayerActions_ShieldBlock;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -709,6 +731,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @LockOnLeftTarget => m_Wrapper.m_PlayerActions_LockOnLeftTarget;
         public InputAction @LockOnRightTarget => m_Wrapper.m_PlayerActions_LockOnRightTarget;
         public InputAction @TwoHand => m_Wrapper.m_PlayerActions_TwoHand;
+        public InputAction @ShieldBlock => m_Wrapper.m_PlayerActions_ShieldBlock;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -754,6 +777,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @TwoHand.started += instance.OnTwoHand;
             @TwoHand.performed += instance.OnTwoHand;
             @TwoHand.canceled += instance.OnTwoHand;
+            @ShieldBlock.started += instance.OnShieldBlock;
+            @ShieldBlock.performed += instance.OnShieldBlock;
+            @ShieldBlock.canceled += instance.OnShieldBlock;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -794,6 +820,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @TwoHand.started -= instance.OnTwoHand;
             @TwoHand.performed -= instance.OnTwoHand;
             @TwoHand.canceled -= instance.OnTwoHand;
+            @ShieldBlock.started -= instance.OnShieldBlock;
+            @ShieldBlock.performed -= instance.OnShieldBlock;
+            @ShieldBlock.canceled -= instance.OnShieldBlock;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -900,6 +929,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnLockOnLeftTarget(InputAction.CallbackContext context);
         void OnLockOnRightTarget(InputAction.CallbackContext context);
         void OnTwoHand(InputAction.CallbackContext context);
+        void OnShieldBlock(InputAction.CallbackContext context);
     }
     public interface IPlayerQuickslotsActions
     {

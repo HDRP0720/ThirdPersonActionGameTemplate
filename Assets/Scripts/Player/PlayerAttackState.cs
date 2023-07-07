@@ -91,6 +91,11 @@ public class PlayerAttackState : MonoBehaviour
     }   
   }
 
+  public void HandleBlockingAction()
+  {
+    PerformBlockingAction();
+  }
+
   public void HandleParryAction()
   {
     if(playerInventory.leftWeapon.isShield)
@@ -163,6 +168,18 @@ public class PlayerAttackState : MonoBehaviour
   private void SuccessfullyCastSpell()
   {
     playerInventory.currentSpell.SucessfullyCastSpell(playerAnimatorManager, playerStats);
+  }
+  #endregion
+
+  #region Defense Action
+  private void PerformBlockingAction()
+  {
+    if(playerManager.isInteracting) return;
+
+    if(playerManager.isBlocking) return;
+
+    playerAnimatorManager.PlayTargetAnimation("BlockStart", false, true);
+    playerManager.isBlocking = true;
   }
   #endregion
 
