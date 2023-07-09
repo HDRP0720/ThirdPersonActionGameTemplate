@@ -140,17 +140,29 @@ public class PlayerAttackState : MonoBehaviour
     {
       if(playerInventory.currentSpell != null && playerInventory.currentSpell.isFaithSpell)
       {
-        // TODO: CHeck for MP
         if(playerStats.currentMana >= playerInventory.currentSpell.manaCost)
-        {
-          // TODO: Attempt to cast spell
-          playerInventory.currentSpell.AttemptToCastSpell(playerAnimatorManager, playerStats);
+        { 
+          playerInventory.currentSpell.AttemptToCastSpell(playerAnimatorManager, playerStats, weaponSlotManager);
         }
         else
         {
           playerAnimatorManager.PlayTargetAnimation("Shrug", true);
         }
       }
+    }
+    else if(weapon.isPyroCaster)
+    {
+      if (playerInventory.currentSpell != null && playerInventory.currentSpell.isPyroSpell)
+      {
+        if (playerStats.currentMana >= playerInventory.currentSpell.manaCost)
+        {
+          playerInventory.currentSpell.AttemptToCastSpell(playerAnimatorManager, playerStats, weaponSlotManager);
+        }
+        else
+        {
+          playerAnimatorManager.PlayTargetAnimation("Shrug", true);
+        }
+      }  
     }
   }
 
@@ -171,6 +183,7 @@ public class PlayerAttackState : MonoBehaviour
   private void SuccessfullyCastSpell()
   {
     playerInventory.currentSpell.SucessfullyCastSpell(playerAnimatorManager, playerStats);
+    playerAnimatorManager.animator.SetBool("isFiringSpell", true);
   }
   #endregion
 

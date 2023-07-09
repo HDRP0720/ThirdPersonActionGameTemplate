@@ -17,6 +17,9 @@ public class CharacterManager : MonoBehaviour
   public bool isParrying;
   public bool isBlocking;
 
+  [Header("# Spell Flags")]
+  public bool isFiringSpell;
+
   // Damage will be inflicted during an animation event
   // Used in backstab or riposte animations
   public int pendingCriticalDamage;

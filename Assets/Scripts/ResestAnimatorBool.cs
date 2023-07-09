@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class ResestAnimatorBool : StateMachineBehaviour
 {
-  public string targetBool;
-  public bool status;
+  public string isInteractingBool = "isInteracting";
+  public bool isInteractingStatus = false;
+
+  public string isFiringSpellBool = "isFiringSpell";
+  public bool isFiringSpellStatus = false;
+
+  public string canRotateBool = "canRotate";
+  public bool canRotateStatus = true;
 
   public override void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex) 
   {
-    animator.SetBool(targetBool, status);
+    animator.SetBool(isInteractingBool, isInteractingStatus);
+    animator.SetBool(isFiringSpellBool, isFiringSpellStatus);
+    animator.SetBool(canRotateBool, canRotateStatus);
   }
   
   // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

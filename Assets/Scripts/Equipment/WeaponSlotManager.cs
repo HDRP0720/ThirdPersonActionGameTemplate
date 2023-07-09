@@ -9,8 +9,8 @@ public class WeaponSlotManager : MonoBehaviour
   public DamageCollider leftHandDamageCollider;
   public DamageCollider rightHandDamageCollider;
 
-  private WeaponHolderSlot leftHandSlot;
-  private WeaponHolderSlot rightHandSlot;
+  public WeaponHolderSlot leftHandSlot;
+  public WeaponHolderSlot rightHandSlot;
   private WeaponHolderSlot backSlot; 
 
   private QuickSlotsUI quickSlotsUI;
