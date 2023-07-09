@@ -9,7 +9,7 @@ public class AttackState : State
   public EnemyAttackAction[] enemyAttacks;
   public EnemyAttackAction currentAttack;
 
-  private bool isComboing = false;
+  private bool willDoComboingOnNext = false;
 
   public override State Tick(EnemyManager enemyManager, EnemyStats enemyStats, EnemyAnimatorManager enemyAnimatorManager)
   {
@@ -19,10 +19,10 @@ public class AttackState : State
     }
     else if(enemyManager.isInteracting && enemyManager.canDoCombo)
     {
-      if (isComboing)
+      if (willDoComboingOnNext)
       {
-        enemyAnimatorManager.PlayTargetAnimation(currentAttack.actionAnimation, true);
-        isComboing = false;
+        willDoComboingOnNext = false;
+        enemyAnimatorManager.PlayTargetAnimation(currentAttack.actionAnimation, true);        
       }
     }
     
@@ -52,8 +52,9 @@ public class AttackState : State
             // enemyAnimatorManager.animator.SetFloat("Horizontal", 0, 0.1f, Time.deltaTime);
             enemyAnimatorManager.PlayTargetAnimation(currentAttack.actionAnimation, true);
             enemyManager.isPerformingAction = true;
+            RollForComboChance(enemyManager);
 
-            if(currentAttack.canCombo)
+            if(currentAttack.canCombo && willDoComboingOnNext)
             {
               currentAttack = currentAttack.comboAction;
               return this;
@@ -145,6 +146,15 @@ public class AttackState : State
       enemyManager.navMeshAgent.SetDestination(enemyManager.currentTarget.transform.position);
       enemyManager.enemyRigidBody.velocity = targetVelocity;
       enemyManager.transform.rotation = Quaternion.Slerp(enemyManager.transform.rotation, enemyManager.navMeshAgent.transform.rotation, enemyManager.rotationSpeed / Time.deltaTime);
+    }
+  }
+
+  private void RollForComboChance(EnemyManager enemyManager)
+  {
+    float comboChance = Random.Range(0, 100);
+    if(enemyManager.allowEnemyToPerformCombos && comboChance <= enemyManager.comboChancePercentage)
+    {
+      willDoComboingOnNext = true;
     }
   }
 }

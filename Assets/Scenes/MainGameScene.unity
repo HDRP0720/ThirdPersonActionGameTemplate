@@ -12533,6 +12533,8 @@ MonoBehaviour:
   isPerformingAction: 0
   isInteracting: 0
   canDoCombo: 0
+  allowEnemyToPerformCombos: 1
+  comboChancePercentage: 100
   enemyRigidBody: {fileID: 0}
 --- !u!114 &1995065291
 MonoBehaviour:

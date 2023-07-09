@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyManager : CharacterManager
 {
-  [Header("Enemy Settings")]
+  [Header("# Enemy Settings")]
   public float detectionRadius = 20f;
   public float minimumDetectionAngle = -50f;
   public float maximumDetetionAngle = 50f;
@@ -23,10 +23,12 @@ public class EnemyManager : CharacterManager
   public bool isPerformingAction;
   public bool isInteracting;
 
-  [Header("Combat Flags")]
+  [Header("# Combat Flags")]
   public bool canDoCombo;
 
-
+  [Header("# Enemy Combat Settings")]
+  public bool allowEnemyToPerformCombos;
+  public float comboChancePercentage;
 
   [HideInInspector] public Rigidbody enemyRigidBody;
 
