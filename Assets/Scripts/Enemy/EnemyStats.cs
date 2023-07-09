@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class EnemyStats : CharacterStats
 {
+  [Header("# Kill Reward for Player")]
   public int soulsAwardedOnDeath = 50;
+
+  [Header("# Enemy Health UI")]
+  public EnemyHealthBarUI enemyHealthBarUI;
 
   private EnemyAnimatorManager enemyAnimatorManager;
 
@@ -16,6 +20,8 @@ public class EnemyStats : CharacterStats
   {
     maxHealth = SetMaxHealthFromHealthLevel();
     currentHealth = maxHealth; 
+
+    enemyHealthBarUI.SetMaxHealth(maxHealth);
   }
 
   private int SetMaxHealthFromHealthLevel()
@@ -29,7 +35,9 @@ public class EnemyStats : CharacterStats
   {
     if (isDead) return;
 
-    currentHealth -= damage;  
+    currentHealth -= damage;
+
+    enemyHealthBarUI.SetHealth(currentHealth);
 
     if (currentHealth <= 0)
     {
@@ -43,6 +51,9 @@ public class EnemyStats : CharacterStats
     if(isDead) return;
     
     currentHealth -= damage;
+
+    enemyHealthBarUI.SetHealth(currentHealth);
+    
     enemyAnimatorManager.PlayTargetAnimation("Damage_01", true);
 
     if(currentHealth <= 0)
