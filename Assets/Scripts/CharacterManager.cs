@@ -17,6 +17,9 @@ public class CharacterManager : MonoBehaviour
   public bool isParrying;
   public bool isBlocking;
 
+  [Header("# Movement Flags")]
+  public bool isRotatingWithRootMotion;
+
   [Header("# Spell Flags")]
   public bool isFiringSpell;
 

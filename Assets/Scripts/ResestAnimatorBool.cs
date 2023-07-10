@@ -10,6 +10,9 @@ public class ResestAnimatorBool : StateMachineBehaviour
   public string isFiringSpellBool = "isFiringSpell";
   public bool isFiringSpellStatus = false;
 
+  public string isRotatingWithRootMotionBool = "isRotatingWithRootMotion";
+  public bool isRotatingWithRootMotionStatus = true;
+
   public string canRotateBool = "canRotate";
   public bool canRotateStatus = true;
 
@@ -17,6 +20,7 @@ public class ResestAnimatorBool : StateMachineBehaviour
   {
     animator.SetBool(isInteractingBool, isInteractingStatus);
     animator.SetBool(isFiringSpellBool, isFiringSpellStatus);
+    animator.SetBool(isRotatingWithRootMotionBool, isRotatingWithRootMotionStatus);
     animator.SetBool(canRotateBool, canRotateStatus);
   }
   

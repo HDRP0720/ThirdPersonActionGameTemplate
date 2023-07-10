@@ -49,7 +49,7 @@ public class AttackState : State
           if(enemyManager.currentRecoveryTime <= 0 && !enemyManager.isPerformingAction)
           {
             enemyAnimatorManager.animator.SetFloat("Vertical", 0, 0.1f, Time.deltaTime);
-            // enemyAnimatorManager.animator.SetFloat("Horizontal", 0, 0.1f, Time.deltaTime);
+            enemyAnimatorManager.animator.SetFloat("Horizontal", 0, 0.1f, Time.deltaTime);
             enemyAnimatorManager.PlayTargetAnimation(currentAttack.actionAnimation, true);
             enemyManager.isPerformingAction = true;
             RollForComboChance(enemyManager);
