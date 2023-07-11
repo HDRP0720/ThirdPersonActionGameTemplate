@@ -5,13 +5,21 @@ using UnityEngine;
 public class PursueTargetState : State
 {
   public CombatStanceState combatStanceState;
+  public RotateTowardsTargetState rotateTowardsTargetState;
 
-  // TODO: Chase the target
-  // TODO: If within attack range, return combat stance state
-  // TODO: if target is out of range, return this state and continue to chase target
   public override State Tick(EnemyManager enemyManager, EnemyStats enemyStats, EnemyAnimatorManager enemyAnimatorManager)
   {
-    if (enemyManager.isInteracting) return this;
+    Vector3 targetDirection = enemyManager.currentTarget.transform.position - enemyManager.transform.position;
+    float distanceFromTarget = Vector3.Distance(enemyManager.currentTarget.transform.position, enemyManager.transform.position);
+    float viewableAngle = Vector3.SignedAngle(targetDirection, enemyManager.transform.forward, Vector3.up);
+
+    HandleRotateTowardsTarget(enemyManager);
+
+    if(viewableAngle > 65 || viewableAngle < -65)
+      return rotateTowardsTargetState;
+
+    if (enemyManager.isInteracting) 
+      return this;
     
     if (enemyManager.isPerformingAction) 
     {
@@ -19,16 +27,10 @@ public class PursueTargetState : State
       return this;
     }  
 
-    Vector3 targetDirection = enemyManager.currentTarget.transform.position - enemyManager.transform.position;
-    float distanceFromTarget = Vector3.Distance(enemyManager.currentTarget.transform.position, enemyManager.transform.position);
-    float viewableAngle = Vector3.Angle(targetDirection, enemyManager.transform.forward);
-
-    if (distanceFromTarget > enemyManager.maximumAttackRange)    
+    if (distanceFromTarget > enemyManager.maximumAggroRadius)    
       enemyAnimatorManager.animator.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);
 
-    HandleRotateTowardsTarget(enemyManager);
-
-    if(distanceFromTarget <= enemyManager.maximumAttackRange)    
+    if(distanceFromTarget <= enemyManager.maximumAggroRadius)    
       return combatStanceState;    
     else    
       return this;    

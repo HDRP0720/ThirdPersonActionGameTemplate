@@ -153,7 +153,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1722288084}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3531101
 MonoBehaviour:
@@ -167,11 +167,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65e0980e0081e2444b65ccf1b5abd32e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateTowardsTargetState: {fileID: 1070425862}
   combatStanceState: {fileID: 627830536}
-  enemyAttacks:
-  - {fileID: 11400000, guid: 22fcb041c60687a41a829ade422d101a, type: 2}
-  - {fileID: 11400000, guid: 940804a5c14d3c7488b0302487a7f638, type: 2}
+  pursueTargetState: {fileID: 462131821}
   currentAttack: {fileID: 0}
+  hasPerformedAttack: 0
 --- !u!1 &98521436
 GameObject:
   m_ObjectHideFlags: 0
@@ -6288,6 +6288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combatStanceState: {fileID: 627830536}
+  rotateTowardsTargetState: {fileID: 1070425862}
 --- !u!1 &471228077
 GameObject:
   m_ObjectHideFlags: 0
@@ -6502,6 +6503,7 @@ MonoBehaviour:
   isParrying: 0
   isBlocking: 0
   isRotatingWithRootMotion: 0
+  canRotate: 0
   isFiringSpell: 0
   pendingCriticalDamage: 0
   isInteracting: 0
@@ -7231,7 +7233,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1722288084}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &627830536
 MonoBehaviour:
@@ -7247,6 +7249,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackState: {fileID: 3531101}
   pursueTargetState: {fileID: 462131821}
+  enemyAttacks:
+  - {fileID: 11400000, guid: 22fcb041c60687a41a829ade422d101a, type: 2}
+  - {fileID: 11400000, guid: 940804a5c14d3c7488b0302487a7f638, type: 2}
 --- !u!1 &638283904
 GameObject:
   m_ObjectHideFlags: 0
@@ -8639,7 +8644,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1722288084}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1070425862
 MonoBehaviour:
@@ -8653,6 +8658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c7e6d2d96151604aa1bd1e83e7c5f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combatStanceState: {fileID: 627830536}
 --- !u!1 &1075808114
 GameObject:
   m_ObjectHideFlags: 0
@@ -9549,7 +9555,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1722288084}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1252632955
 MonoBehaviour:
@@ -11466,10 +11472,10 @@ Transform:
   m_Children:
   - {fileID: 1236797575}
   - {fileID: 462131820}
+  - {fileID: 1070425861}
   - {fileID: 627830535}
   - {fileID: 3531100}
   - {fileID: 1252632954}
-  - {fileID: 1070425861}
   m_Father: {fileID: 1995065285}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12964,15 +12970,16 @@ MonoBehaviour:
   isParrying: 0
   isBlocking: 0
   isRotatingWithRootMotion: 0
+  canRotate: 0
   isFiringSpell: 0
   pendingCriticalDamage: 0
   detectionRadius: 10
   minimumDetectionAngle: -50
   maximumDetetionAngle: 50
-  maximumAttackRange: 1.5
+  maximumAggroRadius: 1.5
   rotationSpeed: 15
   currentRecoveryTime: 0
-  currentState: {fileID: 1070425862}
+  currentState: {fileID: 1236797576}
   navMeshAgent: {fileID: 0}
   currentTarget: {fileID: 0}
   isPerformingAction: 0

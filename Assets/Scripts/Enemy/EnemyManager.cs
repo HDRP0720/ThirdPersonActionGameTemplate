@@ -10,7 +10,7 @@ public class EnemyManager : CharacterManager
   public float minimumDetectionAngle = -50f;
   public float maximumDetetionAngle = 50f;
 
-  public float maximumAttackRange = 1.5f;
+  public float maximumAggroRadius = 5f;
   public float rotationSpeed = 15f;
 
   public float currentRecoveryTime = 0;
@@ -58,6 +58,7 @@ public class EnemyManager : CharacterManager
 
     isRotatingWithRootMotion = enemyAnimatorManager.animator.GetBool("isRotatingWithRootMotion");
     isInteracting = enemyAnimatorManager.animator.GetBool("isInteracting");
+    canRotate = enemyAnimatorManager.animator.GetBool("canRotate");
     canDoCombo = enemyAnimatorManager.animator.GetBool("canDoCombo");
     enemyAnimatorManager.animator.SetBool("isDead", enemyStats.isDead);
   }
