@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerAnimatorManager : AnimatorManager
 {
   private PlayerManager playerManager;
+  private PlayerController playerController;
   private PlayerStats playerStats;
   private InputHandler inputHandler;
   private Rigidbody playerRigidbody;
@@ -17,6 +18,7 @@ public class PlayerAnimatorManager : AnimatorManager
     animator = GetComponent<Animator>();
 
     playerManager = GetComponentInParent<PlayerManager>();
+    playerController = GetComponentInParent<PlayerController>();
     playerStats = GetComponentInParent<PlayerStats>();
     inputHandler = GetComponentInParent<InputHandler>();       
     playerRigidbody = GetComponentInParent<Rigidbody>();
@@ -69,7 +71,6 @@ public class PlayerAnimatorManager : AnimatorManager
   {
     animator.SetBool("canRotate", true);
   }
-
   public void StopRotation()
   {
     animator.SetBool("canRotate", false);
@@ -79,7 +80,6 @@ public class PlayerAnimatorManager : AnimatorManager
   {
     animator.SetBool("canDoCombo", true);
   }
-
   public void DisableCombo()
   {
     animator.SetBool("canDoCombo", false);
@@ -89,7 +89,6 @@ public class PlayerAnimatorManager : AnimatorManager
   {
     animator.SetBool("isInvulnerable", true);
   }
-
   public void DisableIsInvulnerable()
   {
     animator.SetBool("isInvulnerable", false);
@@ -99,7 +98,6 @@ public class PlayerAnimatorManager : AnimatorManager
   {
     playerManager.isParrying = true;
   }
-
   public void DisableIsParrying()
   {
     playerManager.isParrying = false;
@@ -109,7 +107,6 @@ public class PlayerAnimatorManager : AnimatorManager
   {
     playerManager.canBeRiposted = true;
   }
-
   public void DisableCanBeRiposted()
   {
     playerManager.canBeRiposted = false;
@@ -119,6 +116,18 @@ public class PlayerAnimatorManager : AnimatorManager
   {
     playerStats.TakeDamageWithoutAnimation(playerManager.pendingCriticalDamage);
     playerManager.pendingCriticalDamage = 0;
+  }
+  
+  public void EnableCollision()
+  {
+    playerController.characterCollider.enabled = true;
+    playerController.characterCollisionBlockerCollider.enabled = true;
+    
+  }
+  public void DisableCollision()
+  {
+    playerController.characterCollider.enabled = false;
+    playerController.characterCollisionBlockerCollider.enabled = false;
   }
 
   private void OnAnimatorMove()

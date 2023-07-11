@@ -140,5 +140,15 @@ public class PlayerManager : CharacterManager
     transform.position = playerStandingPosition.position;
     playerAnimatorManager.PlayTargetAnimation("PickupItem", true);
   }
+  public void PassThroughFogWallInteraction(Transform fogwallEntrance)
+  {
+    rb.velocity = Vector3.zero;
+    Vector3 rotationDirection = fogwallEntrance.transform.forward;
+    Quaternion turnRotation = Quaternion.LookRotation(rotationDirection);
+    transform.rotation = turnRotation;
+
+    playerAnimatorManager.PlayTargetAnimation("Pass Through", true);
+    transform.forward += Vector3.forward * 2;
+  }
   #endregion
 }

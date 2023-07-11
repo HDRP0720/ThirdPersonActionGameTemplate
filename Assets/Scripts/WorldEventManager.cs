@@ -6,6 +6,7 @@ public class WorldEventManager : MonoBehaviour
 {
   public BossHealthBarUI bossHealthBarUI;
   public EnemyBossManager bossManager;
+  public List<FogWall> fogWalls;
 
   public bool bossFightIsActive;
   public bool bossHasBeenAwakened;
@@ -21,8 +22,11 @@ public class WorldEventManager : MonoBehaviour
     bossFightIsActive = true;
     bossHasBeenAwakened = true;
     bossHealthBarUI.SetBossHealthBarToActive();
-
-    // TODO: Activate Fog Wall
+ 
+    foreach (var fogWall in fogWalls)
+    {
+      fogWall.ActivateFogWall();
+    }
   }
 
   public void BossHasBeenDefeated()
@@ -30,6 +34,9 @@ public class WorldEventManager : MonoBehaviour
     bossHasBeenDefeated = true;
     bossFightIsActive = false;
 
-    // TODO: Deactivate Fog Wall
+    foreach (var fogWall in fogWalls)
+    {
+      fogWall.DeactivateFogWall();
+    }
   }
 }
