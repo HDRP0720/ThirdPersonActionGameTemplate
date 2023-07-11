@@ -16,10 +16,14 @@ public class EnemyBossManager : MonoBehaviour
     bossHealthBarUI = FindObjectOfType<BossHealthBarUI>();
     enemyStats = GetComponent<EnemyStats>();
   }
-
   private void Start() 
   {
     bossHealthBarUI.SetBossName(bossName);
     bossHealthBarUI.SetBossMaxHealth(enemyStats.maxHealth);
+  }
+
+  public void UpdateBossHealthBar(int currentHealth)
+  {
+    bossHealthBarUI.SetBossCurrentHealth(currentHealth);
   }
 }

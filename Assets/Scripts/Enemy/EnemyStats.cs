@@ -10,10 +10,14 @@ public class EnemyStats : CharacterStats
   [Header("# Enemy Health UI")]
   public EnemyHealthBarUI enemyHealthBarUI;
 
+  public bool isBoss = false;
+
+  private EnemyBossManager enemyBossManager;
   private EnemyAnimatorManager enemyAnimatorManager;
 
   private void Awake()
-  {    
+  {
+    enemyBossManager = GetComponent<EnemyBossManager>();
     enemyAnimatorManager = GetComponent<EnemyAnimatorManager>();
 
     maxHealth = SetMaxHealthFromHealthLevel();
@@ -21,7 +25,8 @@ public class EnemyStats : CharacterStats
   }
   private void Start() 
   {
-    enemyHealthBarUI.SetMaxHealth(maxHealth);
+    if(!isBoss)
+      enemyHealthBarUI.SetMaxHealth(maxHealth);
   }
 
   private int SetMaxHealthFromHealthLevel()
@@ -52,7 +57,14 @@ public class EnemyStats : CharacterStats
     
     currentHealth -= damage;
 
-    enemyHealthBarUI.SetHealth(currentHealth);
+    if(!isBoss)
+    {
+      enemyHealthBarUI.SetHealth(currentHealth);
+    }
+    else if(isBoss && enemyBossManager != null)
+    {
+      enemyBossManager.UpdateBossHealthBar(currentHealth);
+    }
     
     enemyAnimatorManager.PlayTargetAnimation("Damage_01", true);
 
