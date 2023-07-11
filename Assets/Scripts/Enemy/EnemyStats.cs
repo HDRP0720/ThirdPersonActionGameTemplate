@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyStats : CharacterStats
 {
-  [Header("# Kill Reward for Player")]
+  [Header("# Kill Rewards for Player")]
   public int soulsAwardedOnDeath = 50;
 
   [Header("# Enemy Health UI")]
@@ -15,12 +15,12 @@ public class EnemyStats : CharacterStats
   private void Awake()
   {    
     enemyAnimatorManager = GetComponent<EnemyAnimatorManager>();
+
+    maxHealth = SetMaxHealthFromHealthLevel();
+    currentHealth = maxHealth;
   }
   private void Start() 
   {
-    maxHealth = SetMaxHealthFromHealthLevel();
-    currentHealth = maxHealth; 
-
     enemyHealthBarUI.SetMaxHealth(maxHealth);
   }
 
