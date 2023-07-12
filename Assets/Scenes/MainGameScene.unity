@@ -939,7 +939,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 108617332}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d441b074e529632428b9899029e36079, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e7b6dd6456199e4a8e10ce4b0f86176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackState: {fileID: 995640456}
@@ -947,6 +947,10 @@ MonoBehaviour:
   enemyAttacks:
   - {fileID: 11400000, guid: 22fcb041c60687a41a829ade422d101a, type: 2}
   - {fileID: 11400000, guid: 940804a5c14d3c7488b0302487a7f638, type: 2}
+  hasPhaseShifted: 0
+  secondPhaseEnemyAttacks:
+  - {fileID: 11400000, guid: d274e57645cdb87479883b9d86d22c27, type: 2}
+  - {fileID: 11400000, guid: bf3fd47ea19001d44b71a4cabb2e421c, type: 2}
 --- !u!1 &117829143
 GameObject:
   m_ObjectHideFlags: 0
@@ -14245,6 +14249,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossName: Sir KindNick
+  particleFX: {fileID: 6520451237959882183, guid: 52ff3ccca10c910419abeab5bb3a7d61,
+    type: 3}
 --- !u!1 &1378296360
 GameObject:
   m_ObjectHideFlags: 0
@@ -18318,7 +18324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1951325696}
   m_Layer: 0
-  m_Name: EnemyState
+  m_Name: BossState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

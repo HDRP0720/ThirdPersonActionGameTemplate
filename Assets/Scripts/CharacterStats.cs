@@ -22,4 +22,9 @@ public class CharacterStats : MonoBehaviour
   [Space] public int soulCount = 0;
 
   public bool isDead;
+
+  public virtual void TakeDamage(int damage, string damageAnimation) 
+  {
+
+  }
 }

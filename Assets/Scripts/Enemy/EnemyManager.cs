@@ -28,6 +28,7 @@ public class EnemyManager : CharacterManager
 
   [Header("# Enemy Combat Settings")]
   public bool allowEnemyToPerformCombos;
+  public bool isPhaseShifting;
   public float comboChancePercentage;
 
   [HideInInspector] public Rigidbody enemyRigidBody;
@@ -57,9 +58,12 @@ public class EnemyManager : CharacterManager
     HandleStateMachine();
 
     isRotatingWithRootMotion = enemyAnimatorManager.animator.GetBool("isRotatingWithRootMotion");
+    isInvulnerable = enemyAnimatorManager.animator.GetBool("isInvulnerable");
     isInteracting = enemyAnimatorManager.animator.GetBool("isInteracting");
+    isPhaseShifting = enemyAnimatorManager.animator.GetBool("isPhaseShifting");
     canRotate = enemyAnimatorManager.animator.GetBool("canRotate");
     canDoCombo = enemyAnimatorManager.animator.GetBool("canDoCombo");
+
     enemyAnimatorManager.animator.SetBool("isDead", enemyStats.isDead);
   }
   private void LateUpdate()

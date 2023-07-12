@@ -12,11 +12,13 @@ public class EnemyStats : CharacterStats
 
   public bool isBoss = false;
 
+  private EnemyManager enemyManager;
   private EnemyBossManager enemyBossManager;
   private EnemyAnimatorManager enemyAnimatorManager;
 
   private void Awake()
   {
+    enemyManager = GetComponent<EnemyManager>();
     enemyBossManager = GetComponent<EnemyBossManager>();
     enemyAnimatorManager = GetComponent<EnemyAnimatorManager>();
 
@@ -42,7 +44,10 @@ public class EnemyStats : CharacterStats
 
     currentHealth -= damage;
 
-    enemyHealthBarUI.SetHealth(currentHealth);
+    if (!isBoss)
+      enemyHealthBarUI.SetHealth(currentHealth);
+    else if (isBoss && enemyBossManager != null)
+      enemyBossManager.UpdateBossHealthBar(currentHealth, maxHealth);
 
     if (currentHealth <= 0)
     {
@@ -51,27 +56,21 @@ public class EnemyStats : CharacterStats
     }
   }
 
-  public void TakeDamage(int damage)
+  public override void TakeDamage(int damage, string damageAnimation = "Damage_01")
   {
-    if(isDead) return;
+    if(isDead) return;   
     
     currentHealth -= damage;
 
-    if(!isBoss)
-    {
-      enemyHealthBarUI.SetHealth(currentHealth);
-    }
-    else if(isBoss && enemyBossManager != null)
-    {
-      enemyBossManager.UpdateBossHealthBar(currentHealth);
-    }
+    if(!isBoss)    
+      enemyHealthBarUI.SetHealth(currentHealth);    
+    else if(isBoss && enemyBossManager != null)    
+      enemyBossManager.UpdateBossHealthBar(currentHealth, maxHealth);
     
     enemyAnimatorManager.PlayTargetAnimation("Damage_01", true);
 
     if(currentHealth <= 0)
-    {
       HandleDeath();
-    }
   }
   private void HandleDeath()
   {

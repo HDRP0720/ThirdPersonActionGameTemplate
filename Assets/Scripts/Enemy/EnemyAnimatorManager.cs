@@ -5,12 +5,14 @@ using UnityEngine;
 public class EnemyAnimatorManager : AnimatorManager
 {
   private EnemyManager enemyManager;
+  private EnemyBossManager enemyBossManager;
   private EnemyStats enemyStats;
 
   private void Awake() 
   {
     enemyManager = GetComponent<EnemyManager>();
     enemyStats = GetComponent<EnemyStats>();
+    enemyBossManager = GetComponent<EnemyBossManager>();
 
     animator = GetComponent<Animator>();
   }
@@ -88,6 +90,13 @@ public class EnemyAnimatorManager : AnimatorManager
     enemyManager.canBeRiposted = false;
   }
 
+  public void InstantiateBossParticleVFX()
+  {
+    BossFXTransform bossFXTransform = GetComponentInChildren<BossFXTransform>();
+
+    GameObject phaseFX = Instantiate(enemyBossManager.particleFX, bossFXTransform.transform);
+  }
+ 
   private void OnAnimatorMove()
   {
     float delta = Time.deltaTime;

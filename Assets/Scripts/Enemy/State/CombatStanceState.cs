@@ -9,10 +9,10 @@ public class CombatStanceState : State
 
   public EnemyAttackAction[] enemyAttacks;
 
-  private bool randomDestinationSet = false;
+  protected bool randomDestinationSet = false;
 
-  private float verticalMovementValue = 0f;
-  private float horizontalMovementValue = 0f;
+  protected float verticalMovementValue = 0f;
+  protected float horizontalMovementValue = 0f;
 
   public override State Tick(EnemyManager enemyManager, EnemyStats enemyStats, EnemyAnimatorManager enemyAnimatorManager)
   {
@@ -56,7 +56,7 @@ public class CombatStanceState : State
     return this;
   }
 
-  private void HandleRotateTowardsTarget(EnemyManager enemyManager)
+  protected void HandleRotateTowardsTarget(EnemyManager enemyManager)
   {
     if (enemyManager.isPerformingAction)
     {
@@ -84,12 +84,12 @@ public class CombatStanceState : State
     }
   }
 
-  private void DecideCirclingAction(EnemyAnimatorManager enemyAnimatorManager)
+  protected void DecideCirclingAction(EnemyAnimatorManager enemyAnimatorManager)
   {
     WalkAroundTarget(enemyAnimatorManager);
   }
 
-  private void WalkAroundTarget(EnemyAnimatorManager enemyAnimatorManager)
+  protected void WalkAroundTarget(EnemyAnimatorManager enemyAnimatorManager)
   {
     // verticalMovementValue = 0.5f;
     verticalMovementValue = Random.Range(-1, 1);
@@ -106,7 +106,7 @@ public class CombatStanceState : State
       horizontalMovementValue = -0.5f;
   }
 
-  private void GetNewAttack(EnemyManager enemyManager)
+  protected virtual void GetNewAttack(EnemyManager enemyManager)
   {
     Vector3 targetsDirection = enemyManager.currentTarget.transform.position - transform.position;
     float viewableAngle = Vector3.Angle(targetsDirection, transform.forward);
