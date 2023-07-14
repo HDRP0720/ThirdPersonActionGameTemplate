@@ -8220,6 +8220,7 @@ MonoBehaviour:
   loot_Input: 0
   jump_Input: 0
   inventory_Input: 0
+  drink_Input: 0
   criticalAttack_Input: 0
   parry_Input: 0
   block_Input: 0
@@ -8314,6 +8315,8 @@ MonoBehaviour:
   currentSpell: {fileID: 11400000, guid: 7b415c816abf9174cb2f359305df55aa, type: 2}
   rightWeapon: {fileID: 11400000, guid: 9144780c53c7ec141aeacd193a88cc72, type: 2}
   leftWeapon: {fileID: 11400000, guid: 7d77562097774d1499ef5d123f3973a6, type: 2}
+  currentConsumableItem: {fileID: 11400000, guid: 21f31f2b0e79c5b48b11b5929bd2988c,
+    type: 2}
   unarmedWeapon: {fileID: 11400000, guid: 2cb13363f59d8204d894a5fa7017b812, type: 2}
   weaponsInRightHandSlots:
   - {fileID: 11400000, guid: 4b83e25510a2a0f4991de636ebbe967a, type: 2}
@@ -20259,6 +20262,7 @@ GameObject:
   - component: {fileID: 1076311419492005555}
   - component: {fileID: 1076311419492005559}
   - component: {fileID: 1076311419492005563}
+  - component: {fileID: 1076311419492005565}
   m_Layer: 0
   m_Name: Characters_POLYGON_Knights
   m_TagString: Untagged
@@ -21726,6 +21730,21 @@ Transform:
   m_Father: {fileID: 1076311419492005524}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1076311419492005565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076311419491969682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 337717217dd6f7445870f568ce8689e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentVFX: {fileID: 0}
+  instaniatedItemPrefab: {fileID: 0}
+  amountToBeHealed: 0
 --- !u!4 &1076311419492005566
 Transform:
   m_ObjectHideFlags: 0

@@ -246,6 +246,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Drink"",
+                    ""type"": ""Button"",
+                    ""id"": ""4a11027a-9788-4ec5-a69e-602f80f73f8a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -424,6 +433,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""ShieldBlock"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b84ccf2b-d5dc-4f93-b151-226c97efd196"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drink"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -581,6 +601,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_LockOnRightTarget = m_PlayerActions.FindAction("LockOnRightTarget", throwIfNotFound: true);
         m_PlayerActions_TwoHand = m_PlayerActions.FindAction("TwoHand", throwIfNotFound: true);
         m_PlayerActions_ShieldBlock = m_PlayerActions.FindAction("ShieldBlock", throwIfNotFound: true);
+        m_PlayerActions_Drink = m_PlayerActions.FindAction("Drink", throwIfNotFound: true);
         // Player Quickslots
         m_PlayerQuickslots = asset.FindActionMap("Player Quickslots", throwIfNotFound: true);
         m_PlayerQuickslots_DPadUp = m_PlayerQuickslots.FindAction("D-Pad Up", throwIfNotFound: true);
@@ -715,6 +736,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_LockOnRightTarget;
     private readonly InputAction m_PlayerActions_TwoHand;
     private readonly InputAction m_PlayerActions_ShieldBlock;
+    private readonly InputAction m_PlayerActions_Drink;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -732,6 +754,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @LockOnRightTarget => m_Wrapper.m_PlayerActions_LockOnRightTarget;
         public InputAction @TwoHand => m_Wrapper.m_PlayerActions_TwoHand;
         public InputAction @ShieldBlock => m_Wrapper.m_PlayerActions_ShieldBlock;
+        public InputAction @Drink => m_Wrapper.m_PlayerActions_Drink;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -780,6 +803,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @ShieldBlock.started += instance.OnShieldBlock;
             @ShieldBlock.performed += instance.OnShieldBlock;
             @ShieldBlock.canceled += instance.OnShieldBlock;
+            @Drink.started += instance.OnDrink;
+            @Drink.performed += instance.OnDrink;
+            @Drink.canceled += instance.OnDrink;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -823,6 +849,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @ShieldBlock.started -= instance.OnShieldBlock;
             @ShieldBlock.performed -= instance.OnShieldBlock;
             @ShieldBlock.canceled -= instance.OnShieldBlock;
+            @Drink.started -= instance.OnDrink;
+            @Drink.performed -= instance.OnDrink;
+            @Drink.canceled -= instance.OnDrink;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -930,6 +959,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnLockOnRightTarget(InputAction.CallbackContext context);
         void OnTwoHand(InputAction.CallbackContext context);
         void OnShieldBlock(InputAction.CallbackContext context);
+        void OnDrink(InputAction.CallbackContext context);
     }
     public interface IPlayerQuickslotsActions
     {

@@ -18,6 +18,8 @@ public class InputHandler : MonoBehaviour
   public bool loot_Input;
   public bool jump_Input;
   public bool inventory_Input;
+  public bool drink_Input;
+
   public bool criticalAttack_Input;
   public bool parry_Input;
   public bool block_Input;
@@ -49,6 +51,7 @@ public class InputHandler : MonoBehaviour
   private PlayerInventory playerInventory;
 
   private PlayerAnimatorManager playerAnimatorManager;
+  private PlayerEffectsManager playerEffectsManager;
   private PlayerAttackState playerAttackState;
   private WeaponSlotManager weaponSlotManager;
   private BlockingCollider blockingCollider;
@@ -66,6 +69,7 @@ public class InputHandler : MonoBehaviour
     playerStats = GetComponent<PlayerStats>();
 
     playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
+    playerEffectsManager = GetComponentInChildren<PlayerEffectsManager>();
     playerAttackState = GetComponentInChildren<PlayerAttackState>();
     weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
     blockingCollider = GetComponentInChildren<BlockingCollider>();
@@ -98,7 +102,8 @@ public class InputHandler : MonoBehaviour
       inputActions.PlayerActions.Jump.performed += i => jump_Input = true;
       inputActions.PlayerActions.Inventory.performed += i => inventory_Input = true;
       inputActions.PlayerActions.CriticalAttack.performed += i => criticalAttack_Input = true;
-      inputActions.PlayerActions.Parry.performed += i => parry_Input = true;     
+      inputActions.PlayerActions.Parry.performed += i => parry_Input = true;
+      inputActions.PlayerActions.Drink.performed += i => drink_Input = true;
 
       inputActions.PlayerActions.LockOn.performed += i => lockOn_Input = true;
       inputActions.PlayerActions.LockOnLeftTarget.performed += i => lockOnLeft_Input = true;
@@ -122,6 +127,7 @@ public class InputHandler : MonoBehaviour
     HandleLockOnInput();
     HandleTwoHandInput();
     HandleCriticalAttackInput();
+    HandleUseConsumableInput();
   }
 
   private void HandleMoveInput(float delta)
@@ -307,6 +313,15 @@ public class InputHandler : MonoBehaviour
       criticalAttack_Input = false;
 
       playerAttackState.AttemptBackStabOrRiposte();
+    }
+  }
+
+  private void HandleUseConsumableInput()
+  {
+    if(drink_Input)
+    {
+      drink_Input = false;
+      playerInventory.currentConsumableItem.AttemptToConsumeItem(playerAnimatorManager, weaponSlotManager, playerEffectsManager);
     }
   }
 }

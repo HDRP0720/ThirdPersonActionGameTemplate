@@ -8,6 +8,8 @@ public class PlayerInventory : MonoBehaviour
   public WeaponItem rightWeapon;
   public WeaponItem leftWeapon;
 
+  public ConsumableItem currentConsumableItem;
+
   public WeaponItem unarmedWeapon;
 
   public WeaponItem[] weaponsInRightHandSlots = new WeaponItem[1];
