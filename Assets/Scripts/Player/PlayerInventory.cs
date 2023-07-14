@@ -4,20 +4,30 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
+  [Header("# Current Spell")]
   public SpellItem currentSpell;
+
+  [Header("# Current Consumable Item")]
+  public ConsumableItem currentConsumableItem;
+
+  [Header("# Current Equipment")]
+  public HelmetEquipment currentHelmetEquipment;
+
+  [Header("# Current Weapons")]
   public WeaponItem rightWeapon;
   public WeaponItem leftWeapon;
 
-  public ConsumableItem currentConsumableItem;
-
   public WeaponItem unarmedWeapon;
 
+  [Space]
   public WeaponItem[] weaponsInRightHandSlots = new WeaponItem[1];
   public WeaponItem[] weaponsInLeftHandSlots = new WeaponItem[1];
-
+  
+  [Space]
   public int currentRightWeaponIndex = -1;
   public int currentLeftWeaponIndex = -1;
 
+  [Space]
   public List<WeaponItem> weaponsInventory;
 
   private WeaponSlotManager weaponSlotManager;
