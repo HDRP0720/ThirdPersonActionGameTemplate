@@ -7354,6 +7354,7 @@ MonoBehaviour:
   canBeParried: 0
   isParrying: 0
   isBlocking: 0
+  isInvulnerable: 0
   isRotatingWithRootMotion: 0
   canRotate: 0
   isFiringSpell: 0
@@ -7371,6 +7372,7 @@ MonoBehaviour:
   isInteracting: 0
   canDoCombo: 0
   allowEnemyToPerformCombos: 1
+  isPhaseShifting: 0
   comboChancePercentage: 100
   enemyRigidBody: {fileID: 0}
 --- !u!54 &339099806
@@ -8284,6 +8286,7 @@ MonoBehaviour:
   canBeParried: 0
   isParrying: 0
   isBlocking: 0
+  isInvulnerable: 0
   isRotatingWithRootMotion: 0
   canRotate: 0
   isFiringSpell: 0
@@ -8295,7 +8298,6 @@ MonoBehaviour:
   canDoCombo: 0
   isUsingRightHand: 0
   isUsingLeftHand: 0
-  isInvulnerable: 0
   interactableUI: {fileID: 0}
 --- !u!114 &479365183
 MonoBehaviour:
@@ -8309,13 +8311,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 208090d79d91c6c42aa5a9783b5dc344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentSpell: {fileID: 11400000, guid: ea0e0004d19c08b448b52cdd039a36f1, type: 2}
+  currentSpell: {fileID: 11400000, guid: 7b415c816abf9174cb2f359305df55aa, type: 2}
   rightWeapon: {fileID: 11400000, guid: 9144780c53c7ec141aeacd193a88cc72, type: 2}
   leftWeapon: {fileID: 11400000, guid: 7d77562097774d1499ef5d123f3973a6, type: 2}
   unarmedWeapon: {fileID: 11400000, guid: 2cb13363f59d8204d894a5fa7017b812, type: 2}
   weaponsInRightHandSlots:
-  - {fileID: 11400000, guid: 92d3ce33f420f784bb509d9d69f3ba70, type: 2}
   - {fileID: 11400000, guid: 4b83e25510a2a0f4991de636ebbe967a, type: 2}
+  - {fileID: 11400000, guid: 92d3ce33f420f784bb509d9d69f3ba70, type: 2}
   - {fileID: 11400000, guid: 9144780c53c7ec141aeacd193a88cc72, type: 2}
   - {fileID: 11400000, guid: 2cb13363f59d8204d894a5fa7017b812, type: 2}
   weaponsInLeftHandSlots:
@@ -14145,6 +14147,7 @@ MonoBehaviour:
   canBeParried: 0
   isParrying: 0
   isBlocking: 0
+  isInvulnerable: 0
   isRotatingWithRootMotion: 0
   canRotate: 0
   isFiringSpell: 0
@@ -14162,6 +14165,7 @@ MonoBehaviour:
   isInteracting: 0
   canDoCombo: 0
   allowEnemyToPerformCombos: 1
+  isPhaseShifting: 0
   comboChancePercentage: 100
   enemyRigidBody: {fileID: 0}
 --- !u!54 &1375328343
@@ -18928,6 +18932,7 @@ MonoBehaviour:
   canBeParried: 0
   isParrying: 0
   isBlocking: 0
+  isInvulnerable: 0
   isRotatingWithRootMotion: 0
   canRotate: 0
   isFiringSpell: 0
@@ -18945,6 +18950,7 @@ MonoBehaviour:
   isInteracting: 0
   canDoCombo: 0
   allowEnemyToPerformCombos: 1
+  isPhaseShifting: 0
   comboChancePercentage: 100
   enemyRigidBody: {fileID: 0}
 --- !u!114 &1995065291

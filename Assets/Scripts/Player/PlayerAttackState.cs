@@ -7,6 +7,7 @@ public class PlayerAttackState : MonoBehaviour
   private LayerMask backStabLayer = 1 << 13;
   private LayerMask riposteLayer = 1 << 14;
 
+  private CameraHandler cameraHandler;
   private PlayerManager playerManager;
   private PlayerInventory playerInventory;
   private PlayerStats playerStats;
@@ -20,6 +21,7 @@ public class PlayerAttackState : MonoBehaviour
 
   private void Awake() 
   {
+    cameraHandler = FindObjectOfType<CameraHandler>();
     playerManager = GetComponentInParent<PlayerManager>();
     playerInventory = GetComponentInParent<PlayerInventory>();    
     playerStats = GetComponentInParent<PlayerStats>();
@@ -182,7 +184,7 @@ public class PlayerAttackState : MonoBehaviour
 
   private void SuccessfullyCastSpell()
   {
-    playerInventory.currentSpell.SucessfullyCastSpell(playerAnimatorManager, playerStats);
+    playerInventory.currentSpell.SucessfullyCastSpell(playerAnimatorManager, playerStats, cameraHandler, weaponSlotManager);
     playerAnimatorManager.animator.SetBool("isFiringSpell", true);
   }
   #endregion

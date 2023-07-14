@@ -26,7 +26,7 @@ public class SpellItem : Item
 
   }
 
-  public virtual void SucessfullyCastSpell(PlayerAnimatorManager animatorHandler, PlayerStats playerStats)
+  public virtual void SucessfullyCastSpell(PlayerAnimatorManager animatorHandler, PlayerStats playerStats, CameraHandler cameraHandler, WeaponSlotManager weaponSlotManager)
   {
     Debug.Log("You successfully cast a spell");
     playerStats.DeductMana(manaCost);

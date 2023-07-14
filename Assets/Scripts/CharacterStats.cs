@@ -23,7 +23,7 @@ public class CharacterStats : MonoBehaviour
 
   public bool isDead;
 
-  public virtual void TakeDamage(int damage, string damageAnimation) 
+  public virtual void TakeDamage(int damage, string damageAnimation = "Damage_01") 
   {
 
   }
