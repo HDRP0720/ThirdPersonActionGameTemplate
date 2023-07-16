@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 0}
   itemName: Knight's Helmet
-  physicalDefense: 0
-  torsoModelId: Male_Torso_03
+  physicalDefense: 12
+  torsoModelId: Male_Torso_05

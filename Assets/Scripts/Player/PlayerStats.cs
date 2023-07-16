@@ -79,11 +79,11 @@ public class PlayerStats : CharacterStats
 
   public override void TakeDamage(int damage, string damageAnimation ="Damage_01")
   {
+    base.TakeDamage(damage, damageAnimation);
+
     if(isDead) return;
 
-    if(playerManager.isInvulnerable) return;
-
-    currentHealth -= damage;
+    if(playerManager.isInvulnerable) return;  
 
     healthBarUI.SetCurrentHealth(currentHealth);
 
