@@ -84,12 +84,14 @@ public class WeaponSlotManager : MonoBehaviour
   {
     leftHandDamageCollider = leftHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
     leftHandDamageCollider.currentWeaponDamage = playerInventory.leftWeapon.baseDamage;
+    leftHandDamageCollider.poiseBreak = playerInventory.leftWeapon.poiseBreak;
   }
 
   private void LoadRightWeaponDamageCollider()
   {
     rightHandDamageCollider = rightHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
     rightHandDamageCollider.currentWeaponDamage = playerInventory.rightWeapon.baseDamage;
+    rightHandDamageCollider.poiseBreak = playerInventory.rightWeapon.poiseBreak;
   }
 
   public void OpenDamageCollider()
@@ -106,8 +108,11 @@ public class WeaponSlotManager : MonoBehaviour
 
   public void CloseDamageCollider()
   {
-    leftHandDamageCollider.DisableDamageCollider();
-    rightHandDamageCollider.DisableDamageCollider();
+    if(rightHandDamageCollider != null)
+      rightHandDamageCollider.DisableDamageCollider();
+
+    if(leftHandDamageCollider != null)
+      leftHandDamageCollider.DisableDamageCollider();
   } 
   #endregion
 
@@ -120,6 +125,18 @@ public class WeaponSlotManager : MonoBehaviour
   public void DrainStaminaHeavyAttack()
   {
     playerStats.TakeStamina(Mathf.RoundToInt(attackingWeapon.baseStamina * attackingWeapon.heavyAttackMultiplier));
+  }
+  #endregion
+
+  #region Handle Weapon's Poise Bonus
+  public void GrantAttackPoiseBonus()
+  {
+    playerStats.totalPoiseDefence = playerStats.totalPoiseDefence + attackingWeapon.offensivePoiseBonus;
+  }
+
+  public void ResetAttackPoiseBonus()
+  {
+    playerStats.totalPoiseDefence = playerStats.armorPoiseBonus;
   }
   #endregion
 }

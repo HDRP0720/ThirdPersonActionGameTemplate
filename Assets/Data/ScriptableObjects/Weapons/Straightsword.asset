@@ -17,6 +17,11 @@ MonoBehaviour:
   weaponPrefab: {fileID: 5958254220968776463, guid: 1d26bac05fb341f41a25dcaf08400a43,
     type: 3}
   isUnarmed: 0
+  baseDamage: 10
+  criticalDamageMultiplier: 4
+  poiseBreak: 25
+  offensivePoiseBonus: 0
+  damageAbsorptionRate: 0
   TH_Idle: TH_Idle_01
   OH_Light_Attack_1: OH_Light_Attack_01
   OH_Light_Attack_2: OH_Light_Attack_02
@@ -24,6 +29,7 @@ MonoBehaviour:
   TH_Light_Attack_1: TH_Light_Attack_01
   TH_Light_Attack_2: TH_Light_Attack_02
   TH_Heavy_Attack_1: TH_Heavy_Attack_01
+  parry_art: 
   baseStamina: 20
   lightAttackMultiplier: 1
   heavyAttackMultiplier: 2
@@ -31,3 +37,4 @@ MonoBehaviour:
   isFaithCaster: 0
   isPyroCaster: 0
   isMeleeWeapon: 1
+  isShield: 0

@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class DamageCollider : MonoBehaviour
 {
-  public int currentWeaponDamage = 25;
   public bool enabledDamageColliderOnStartUp = false;
+
+  [Header("# Damage")]
+  public int currentWeaponDamage = 25;
+
+  [Header("# Poise")]
+  public float poiseBreak;
+  public float offensivePoiseBonus;
 
   [HideInInspector] public CharacterManager characterManager;
 
@@ -33,18 +39,18 @@ public class DamageCollider : MonoBehaviour
   {
     if(other.tag == "Player")
     {
-      CharacterManager playerCharacterManager = other.GetComponent<CharacterManager>();
+      CharacterManager playerManager = other.GetComponent<CharacterManager>();
       BlockingCollider shieldCollider = other.transform.GetComponentInChildren<BlockingCollider>();
-      PlayerStats playerStats = other.GetComponent<PlayerStats>();
+      PlayerStats playerStats = other.GetComponent<PlayerStats>();   
 
-      if(playerCharacterManager != null)
+      if(playerManager != null)
       {
-        if(playerCharacterManager.isParrying)
+        if(playerManager.isParrying)
         {
           characterManager.GetComponentInChildren<AnimatorManager>().PlayTargetAnimation("Parried", true);
           return;
         }
-        else if(shieldCollider != null && playerCharacterManager.isBlocking)
+        else if(shieldCollider != null && playerManager.isBlocking)
         {
           float damageAfterBlocking = currentWeaponDamage - (currentWeaponDamage * shieldCollider.blockingDamageAbsorption);
           if(playerStats != null)
@@ -55,8 +61,20 @@ public class DamageCollider : MonoBehaviour
         }
       }
       
-      if(playerStats != null)      
-        playerStats.TakeDamage(currentWeaponDamage);      
+      if(playerStats != null)
+      {
+        playerStats.poiseResetTimer = playerStats.totalPoiseResetTime;
+        playerStats.totalPoiseDefence = playerStats.totalPoiseDefence - poiseBreak;
+        Debug.Log($"Player's Poise is currently {playerStats.totalPoiseDefence}");
+        if (playerStats.totalPoiseDefence > poiseBreak)
+        {
+          playerStats.TakeDamageWithoutAnimation(currentWeaponDamage);     
+        }
+        else
+        {
+          playerStats.TakeDamage(currentWeaponDamage);
+        }
+      }
     }
 
     if(other.tag == "Enemy")
@@ -74,16 +92,31 @@ public class DamageCollider : MonoBehaviour
       EnemyStats enemyStats = other.GetComponent<EnemyStats>();
       if(enemyStats != null)
       {
+        enemyStats.poiseResetTimer = enemyStats.totalPoiseResetTime;
+        enemyStats.totalPoiseDefence = enemyStats.totalPoiseDefence - poiseBreak;
+        Debug.Log($"Enemy Poise is currently {enemyStats.totalPoiseDefence}");
+
         if(enemyStats.isBoss)
         {
-          enemyStats.TakeDamageWithoutAnimation(currentWeaponDamage);
+          if (enemyStats.totalPoiseDefence > poiseBreak)
+          {
+            enemyStats.TakeDamageWithoutAnimation(currentWeaponDamage);
+          }
+          else
+          {
+            enemyStats.TakeDamageWithoutAnimation(currentWeaponDamage);
+            enemyStats.BreakGuard();
+          }
         }
         else
         {
-          enemyStats.TakeDamage(currentWeaponDamage);
-        } 
-      }
-   
+          if (enemyStats.totalPoiseDefence > poiseBreak)          
+            enemyStats.TakeDamageWithoutAnimation(currentWeaponDamage);          
+          else          
+            enemyStats.TakeDamage(currentWeaponDamage);          
+        }
+        
+      }   
     }   
   }
 }

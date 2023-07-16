@@ -7597,6 +7597,11 @@ MonoBehaviour:
   staminaLevel: 10
   maxStamina: 0
   currentStamina: 0
+  totalPoiseDefence: 0
+  offensivePoiseBonus: 0
+  armorPoiseBonus: 0
+  totalPoiseResetTime: 15
+  poiseResetTimer: 0
   damageAbsorptionHead: 0
   damageAbsorptionBody: 0
   damageAbsorptionHand: 0
@@ -8679,9 +8684,9 @@ MonoBehaviour:
   leftWeapon: {fileID: 11400000, guid: 7d77562097774d1499ef5d123f3973a6, type: 2}
   unarmedWeapon: {fileID: 11400000, guid: 2cb13363f59d8204d894a5fa7017b812, type: 2}
   weaponsInRightHandSlots:
-  - {fileID: 11400000, guid: 4b83e25510a2a0f4991de636ebbe967a, type: 2}
   - {fileID: 11400000, guid: 92d3ce33f420f784bb509d9d69f3ba70, type: 2}
   - {fileID: 11400000, guid: 9144780c53c7ec141aeacd193a88cc72, type: 2}
+  - {fileID: 11400000, guid: 4b83e25510a2a0f4991de636ebbe967a, type: 2}
   - {fileID: 11400000, guid: 2cb13363f59d8204d894a5fa7017b812, type: 2}
   weaponsInLeftHandSlots:
   - {fileID: 11400000, guid: 7d77562097774d1499ef5d123f3973a6, type: 2}
@@ -8710,6 +8715,11 @@ MonoBehaviour:
   staminaLevel: 10
   maxStamina: 0
   currentStamina: 0
+  totalPoiseDefence: 0
+  offensivePoiseBonus: 0
+  armorPoiseBonus: 0
+  totalPoiseResetTime: 15
+  poiseResetTimer: 0
   damageAbsorptionHead: 0
   damageAbsorptionBody: 0
   damageAbsorptionHand: 0
@@ -15105,6 +15115,11 @@ MonoBehaviour:
   staminaLevel: 10
   maxStamina: 0
   currentStamina: 0
+  totalPoiseDefence: 0
+  offensivePoiseBonus: 0
+  armorPoiseBonus: 75
+  totalPoiseResetTime: 15
+  poiseResetTimer: 0
   damageAbsorptionHead: 0
   damageAbsorptionBody: 0
   damageAbsorptionHand: 0
@@ -20231,6 +20246,11 @@ MonoBehaviour:
   staminaLevel: 10
   maxStamina: 0
   currentStamina: 0
+  totalPoiseDefence: 0
+  offensivePoiseBonus: 0
+  armorPoiseBonus: 0
+  totalPoiseResetTime: 15
+  poiseResetTimer: 0
   damageAbsorptionHead: 0
   damageAbsorptionBody: 0
   damageAbsorptionHand: 0

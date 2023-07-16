@@ -10,9 +10,6 @@ public class PassThroughFogWall : Interactable
   {
     worldEventManager = FindObjectOfType<WorldEventManager>();
   }
-  private void Update() {
-    Debug.Log(Vector3.forward);
-  }
 
   public override void Interact(PlayerManager playerManager)
   {

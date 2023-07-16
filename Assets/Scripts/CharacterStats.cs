@@ -19,21 +19,32 @@ public class CharacterStats : MonoBehaviour
   public float maxStamina;
   public float currentStamina;
 
+  [Header("# Poise Parameters")]
+  public float totalPoiseDefence;
+  public float offensivePoiseBonus;
+  public float armorPoiseBonus;
+  public float totalPoiseResetTime = 15f;
+  public float poiseResetTimer = 0f;
+
   [Header("# Armor Absorptions")]
   public float damageAbsorptionHead;
   public float damageAbsorptionBody;
   public float damageAbsorptionHand;
   public float damageAbsorptionLegs;
+  // TODO: Magic, Fire, Water, Lightning, Darkness Absorption
 
-  // TODO: Magic Absorption
-  // TODO: Fire Absorption
-  // TODO: Water Absorption
-  // TODO: Lightning Absorption
-  // TODO: Darkness Absorption
-
-  [Space] public int soulCount = 0;
-
+  [Space] 
+  public int soulCount = 0;
   public bool isDead;
+
+  private void Start() 
+  {
+    totalPoiseDefence = armorPoiseBonus;
+  }
+  protected virtual void Update() 
+  {
+    HandlePoiseResetTimer();
+  }
 
   public virtual void TakeDamage(int damage, string damageAnimation = "Damage_01") 
   {
@@ -44,16 +55,28 @@ public class CharacterStats : MonoBehaviour
       (1 - damageAbsorptionLegs / 100);
 
     damage = Mathf.RoundToInt(damage - (damage * totalDamageAbsorptionRate));    
-    Debug.Log($"Total Damage Absorption: {totalDamageAbsorptionRate}"); // Check
+    // Debug.Log($"Total Damage Absorption: {totalDamageAbsorptionRate}");
 
     int finalDamage = damage; // + fireDamage + magicDamage +....
-    Debug.Log($"Final Damage : {finalDamage}");
+    // Debug.Log($"Final Damage : {finalDamage}");
 
     currentHealth -= finalDamage;
     if(currentHealth <= 0)
     {
       currentHealth = 0;
       isDead = true;
+    }
+  }
+
+  public virtual void HandlePoiseResetTimer()
+  {
+    if(poiseResetTimer > 0)
+    {
+      poiseResetTimer -= Time.deltaTime;
+    }
+    else
+    {
+      totalPoiseDefence = armorPoiseBonus;
     }
   }
 }

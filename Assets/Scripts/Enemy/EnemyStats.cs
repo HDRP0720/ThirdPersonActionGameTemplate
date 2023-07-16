@@ -56,6 +56,11 @@ public class EnemyStats : CharacterStats
     }
   }
 
+  public void BreakGuard()
+  {
+    enemyAnimatorManager.PlayTargetAnimation("Break Guard", true);
+  }
+
   public override void TakeDamage(int damage, string damageAnimation = "Damage_01")
   {
     base.TakeDamage(damage, damageAnimation);
