@@ -9,8 +9,9 @@ public class PlayerEquipmentManager : MonoBehaviour
   [Header("Default Equipment Models")]
   public GameObject nakedHeadModel;
   public GameObject nakedTorsoModel;
-  // TODO: public string nakedlHandModel;
-  // TODO: public string nakedLegModel;
+  public string nakedHipModel;
+  public string nakedLeftLegModel;
+  public string nakedRightLegModel;
 
   private InputHandler inputHandler;
   private PlayerInventory playerInventory;
@@ -18,8 +19,10 @@ public class PlayerEquipmentManager : MonoBehaviour
   // Equipment Model Changers for Helmet, Chest, Leg, Hand
   private HelmetModelChanger helmetModelChanger;
   private TorsoModelChanger torsoModelChanger;
+  private HipModelChanger hipModelChanger;
+  private LeftLegModelChanger leftLegModelChanger;
+  private RightLegModelChanger rightLegModelChanger;
   // TODO: hand
-  // TODO: leg
 
   private void Awake() 
   {
@@ -28,6 +31,9 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     helmetModelChanger = GetComponentInChildren<HelmetModelChanger>();
     torsoModelChanger = GetComponentInChildren<TorsoModelChanger>();
+    hipModelChanger = GetComponentInChildren<HipModelChanger>();
+    leftLegModelChanger = GetComponentInChildren<LeftLegModelChanger>();
+    rightLegModelChanger = GetComponentInChildren<RightLegModelChanger>();
   }
   private void Start() 
   {
@@ -48,13 +54,31 @@ public class PlayerEquipmentManager : MonoBehaviour
     
     // TORSO
     torsoModelChanger.UnEquipAllTorsoModels();
-    if (playerInventory.currentTorsoEquipment != null)
+    if(playerInventory.currentTorsoEquipment != null)
     {
       nakedTorsoModel.SetActive(false);
       torsoModelChanger.EquipTorsoModelByName(playerInventory.currentTorsoEquipment.torsoModelId);
     }
     else
       nakedTorsoModel.SetActive(true);
+
+    // Hip & Leg
+    hipModelChanger.UnEquipAllHipModels();
+    leftLegModelChanger.UnEquipAllLeftLegModels();
+    rightLegModelChanger.UnEquipAllRightLegModels();
+
+    if(playerInventory.currentLegEquipment != null)
+    {
+      hipModelChanger.EquipHipModelByID(playerInventory.currentLegEquipment.hipModelId);
+      leftLegModelChanger.EquipLeftLegModelByID(playerInventory.currentLegEquipment.leftLegModelId);
+      rightLegModelChanger.EquipRightLegModelByID(playerInventory.currentLegEquipment.rightLegModelId);
+    }
+    else
+    {
+      hipModelChanger.EquipHipModelByID(nakedHipModel);
+      leftLegModelChanger.EquipLeftLegModelByID(nakedLeftLegModel);
+      rightLegModelChanger.EquipRightLegModelByID(nakedRightLegModel);
+    }    
   }
 
   public void OpenBlockingCollider()
