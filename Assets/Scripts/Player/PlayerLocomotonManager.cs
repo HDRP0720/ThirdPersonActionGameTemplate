@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerLocomotonManager : MonoBehaviour
 {
   [HideInInspector] public Transform myTransform;
 
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
   private CameraHandler cameraHandler;
 
   private PlayerManager playerManager;
-  private PlayerStats playerStats;
+  private PlayerStatsManager playerStats;
   private PlayerAnimatorManager playerAnimatorManager;
 
   private Vector3 normalVector;
@@ -50,15 +50,13 @@ public class PlayerController : MonoBehaviour
     cameraHandler = FindObjectOfType<CameraHandler>();
 
     playerManager = GetComponent<PlayerManager>();
-    playerStats = GetComponent<PlayerStats>();
-    playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
+    playerStats = GetComponent<PlayerStatsManager>();
+    playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
   }
   private void Start() 
   {
     cameraTransform = Camera.main.transform;
     myTransform = transform;
-
-    playerAnimatorManager.Init();
 
     playerManager.isGrounded = true;
     ignoreForGroundCheck = ~(1 << 8 | 1 << 11);

@@ -7,15 +7,15 @@ public class WeaponInventorySlot : MonoBehaviour
 {
   public Image weaponIcon;
 
-  private PlayerInventory playerInventory;
+  private PlayerInventoryManager playerInventory;
   private UIManager uiManager;
-  private WeaponSlotManager weaponSlotManager;
+  private PlayerWeaponSlotManager weaponSlotManager;
   private WeaponItem weaponItem;
 
   private void Awake() 
   {
-    playerInventory = FindObjectOfType<PlayerInventory>();
-    weaponSlotManager = FindObjectOfType<WeaponSlotManager>();
+    playerInventory = FindObjectOfType<PlayerInventoryManager>();
+    weaponSlotManager = FindObjectOfType<PlayerWeaponSlotManager>();
     uiManager = FindObjectOfType<UIManager>();
   }
 

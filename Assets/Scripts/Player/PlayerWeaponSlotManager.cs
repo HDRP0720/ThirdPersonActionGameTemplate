@@ -2,43 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponSlotManager : MonoBehaviour
+public class PlayerWeaponSlotManager : CharacterWeaponSlotManager
 {
+  [Header("# Current Attacking Weapon")]
   public WeaponItem attackingWeapon;
 
-  public DamageCollider leftHandDamageCollider;
-  public DamageCollider rightHandDamageCollider;
 
-  public WeaponHolderSlot leftHandSlot;
-  public WeaponHolderSlot rightHandSlot;
-  private WeaponHolderSlot backSlot; 
 
   private QuickSlotsUI quickSlotsUI;
 
   private PlayerManager playerManager;
   private InputHandler inputHandler;  
   private PlayerAnimatorManager playerAnimatorManager;
-  private PlayerInventory playerInventory;
-  private PlayerStats playerStats;
+  private PlayerInventoryManager playerInventory;
+  private PlayerStatsManager playerStats;
 
   private void Awake()
   {
     quickSlotsUI = FindObjectOfType<QuickSlotsUI>();
 
-    playerManager = GetComponentInParent<PlayerManager>();
-    inputHandler = GetComponentInParent<InputHandler>();    
-    playerAnimatorManager = GetComponentInParent<PlayerAnimatorManager>();
-    playerInventory = GetComponentInParent<PlayerInventory>();
-    playerStats = GetComponentInParent<PlayerStats>();   
+    playerManager = GetComponent<PlayerManager>();
+    inputHandler = GetComponent<InputHandler>();    
+    playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
+    playerInventory = GetComponent<PlayerInventoryManager>();
+    playerStats = GetComponent<PlayerStatsManager>();   
     
+    LoadWeaponHolderSlots();
+  }
+
+  private void LoadWeaponHolderSlots()
+  {
     WeaponHolderSlot[] weaponHolderSlots = GetComponentsInChildren<WeaponHolderSlot>();
-    foreach(WeaponHolderSlot weaponSlot in weaponHolderSlots)
+    foreach (WeaponHolderSlot weaponSlot in weaponHolderSlots)
     {
-      if(weaponSlot.isLeftHandSlot)
+      if (weaponSlot.isLeftHandSlot)
         leftHandSlot = weaponSlot;
-      else if(weaponSlot.isRightHandSlot)
+      else if (weaponSlot.isRightHandSlot)
         rightHandSlot = weaponSlot;
-      else if(weaponSlot.isBackSlot)
+      else if (weaponSlot.isBackSlot)
         backSlot = weaponSlot;
     }
   }
@@ -51,32 +52,57 @@ public class WeaponSlotManager : MonoBehaviour
 
   public void LoadWeaponOnSlot(WeaponItem weaponItem, bool isLeft)
   {
-    if(isLeft)
+    if(weaponItem != null)
     {
-      leftHandSlot.currentWeapon = weaponItem;
-      leftHandSlot.LoadWeaponModel(weaponItem);
-      LoadLeftWeaponDamageCollider();
-      quickSlotsUI.UpdateWeaponQuickSlotUI(true, weaponItem);
-    }
-    else
-    {
-      if(inputHandler.twoHandFlag)
+      if (isLeft)
       {
-        backSlot.LoadWeaponModel(leftHandSlot.currentWeapon);
-        leftHandSlot.UnloadWeaponAndDestroy();       
-        playerAnimatorManager.animator.CrossFade(weaponItem.TH_Idle, 0.2f);
+        leftHandSlot.currentWeapon = weaponItem;
+        leftHandSlot.LoadWeaponModel(weaponItem);
+        LoadLeftWeaponDamageCollider();
+        quickSlotsUI.UpdateWeaponQuickSlotUI(true, weaponItem);
       }
       else
       {
-        playerAnimatorManager.animator.CrossFade("Both Arms Empty", 0.2f);
-        backSlot.UnloadWeaponAndDestroy();
-      }
+        if (inputHandler.twoHandFlag)
+        {
+          backSlot.LoadWeaponModel(leftHandSlot.currentWeapon);
+          leftHandSlot.UnloadWeaponAndDestroy();
+          playerAnimatorManager.animator.CrossFade(weaponItem.TH_Idle, 0.2f);
+        }
+        else
+        {
+          playerAnimatorManager.animator.CrossFade("Both Arms Empty", 0.2f);
+          backSlot.UnloadWeaponAndDestroy();
+        }
 
-      rightHandSlot.currentWeapon = weaponItem;
-      rightHandSlot.LoadWeaponModel(weaponItem);
-      LoadRightWeaponDamageCollider();
-      quickSlotsUI.UpdateWeaponQuickSlotUI(false, weaponItem);
+        rightHandSlot.currentWeapon = weaponItem;
+        rightHandSlot.LoadWeaponModel(weaponItem);
+        LoadRightWeaponDamageCollider();
+        quickSlotsUI.UpdateWeaponQuickSlotUI(false, weaponItem);
+      }
     }
+    else
+    {
+      weaponItem = unarmedWeapon;
+      if(isLeft)
+      {
+        playerInventory.leftWeapon = unarmedWeapon;
+
+        leftHandSlot.currentWeapon = weaponItem;
+        leftHandSlot.LoadWeaponModel(weaponItem);
+        LoadLeftWeaponDamageCollider();
+        quickSlotsUI.UpdateWeaponQuickSlotUI(true, weaponItem);
+      }
+      else
+      {
+        playerInventory.rightWeapon = unarmedWeapon;
+
+        rightHandSlot.currentWeapon = weaponItem;
+        rightHandSlot.LoadWeaponModel(weaponItem);
+        LoadRightWeaponDamageCollider();
+        quickSlotsUI.UpdateWeaponQuickSlotUI(false, weaponItem);
+      }
+    }   
   }
 
   #region Handle Weapon's Damage Collider

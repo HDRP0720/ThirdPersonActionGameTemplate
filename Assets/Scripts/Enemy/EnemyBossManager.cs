@@ -13,14 +13,14 @@ public class EnemyBossManager : MonoBehaviour
 
 
   private BossHealthBarUI bossHealthBarUI;
-  private EnemyStats enemyStats;
+  private EnemyStatsManager enemyStats;
   private EnemyAnimatorManager enemyAnimatorManager;
   private BossCombatStanceState bossCombatStanceState;
 
   private void Awake() 
   {
     bossHealthBarUI = FindObjectOfType<BossHealthBarUI>();
-    enemyStats = GetComponent<EnemyStats>();
+    enemyStats = GetComponent<EnemyStatsManager>();
     enemyAnimatorManager = GetComponent<EnemyAnimatorManager>();
     bossCombatStanceState = GetComponentInChildren<BossCombatStanceState>();
   }

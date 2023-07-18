@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyMoveState : MonoBehaviour
+public class EnemyLocomotionManager : MonoBehaviour
 {
   public LayerMask detectionLayer;
   

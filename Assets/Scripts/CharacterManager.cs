@@ -11,16 +11,25 @@ public class CharacterManager : MonoBehaviour
   public SpecialAttackCollider backStabCollider;
   public SpecialAttackCollider riposteCollider;
 
+  [Header("# Interation Flag")]
+  public bool isInteracting;
+
   [Header("# Combat Flags")]
   public bool canBeRiposted;
   public bool canBeParried;
+  public bool canDoCombo;
   public bool isParrying;
   public bool isBlocking;
   public bool isInvulnerable;
+  public bool isUsingRightHand;
+  public bool isUsingLeftHand;
 
   [Header("# Movement Flags")]
   public bool isRotatingWithRootMotion;
   public bool canRotate;
+  public bool isSprinting;
+  public bool isInAir;
+  public bool isGrounded;
 
   [Header("# Spell Flags")]
   public bool isFiringSpell;

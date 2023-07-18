@@ -8,13 +8,13 @@ public class PlayerEffectsManager : MonoBehaviour
   public GameObject instaniatedItemPrefab;
   public int amountToBeHealed;
 
-  private PlayerStats playerStats;
-  private WeaponSlotManager weaponSlotManager;
+  private PlayerStatsManager playerStats;
+  private PlayerWeaponSlotManager weaponSlotManager;
 
   private void Awake() 
   {
-    playerStats = GetComponentInParent<PlayerStats>();
-    weaponSlotManager = GetComponent<WeaponSlotManager>();
+    playerStats = GetComponent<PlayerStatsManager>();
+    weaponSlotManager = GetComponent<PlayerWeaponSlotManager>();
   }
 
   public void HealPlayerFromEffect()

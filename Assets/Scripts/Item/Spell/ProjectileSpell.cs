@@ -16,7 +16,7 @@ public class ProjectileSpell : SpellItem
 
   private Rigidbody rigidbody;
 
-  public override void AttemptToCastSpell(PlayerAnimatorManager animatorHandler, PlayerStats playerStats, WeaponSlotManager weaponSlotManager)
+  public override void AttemptToCastSpell(PlayerAnimatorManager animatorHandler, PlayerStatsManager playerStats, PlayerWeaponSlotManager weaponSlotManager)
   {
     base.AttemptToCastSpell(animatorHandler, playerStats, weaponSlotManager);
 
@@ -25,7 +25,7 @@ public class ProjectileSpell : SpellItem
     animatorHandler.PlayTargetAnimation(spellAnimation, true);
   }
 
-  public override void SucessfullyCastSpell(PlayerAnimatorManager animatorHandler, PlayerStats playerStats, CameraHandler cameraHandler, WeaponSlotManager weaponSlotManager)
+  public override void SucessfullyCastSpell(PlayerAnimatorManager animatorHandler, PlayerStatsManager playerStats, CameraHandler cameraHandler, PlayerWeaponSlotManager weaponSlotManager)
   {
     base.SucessfullyCastSpell(animatorHandler, playerStats, cameraHandler, weaponSlotManager);
     GameObject castSpellVFX = Instantiate(spellCastFX, weaponSlotManager.rightHandSlot.transform.position, cameraHandler.cameraPivotTransform.rotation);

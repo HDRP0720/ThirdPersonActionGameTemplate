@@ -4,23 +4,16 @@ using UnityEngine;
 
 public class EnemyAnimatorManager : AnimatorManager
 {
-  private EnemyManager enemyManager;
   private EnemyBossManager enemyBossManager;
-  private EnemyStats enemyStats;
+  private Rigidbody enemyRigidbody;
 
-  private void Awake() 
+  protected override void Awake() 
   {
-    enemyManager = GetComponent<EnemyManager>();
-    enemyStats = GetComponent<EnemyStats>();
-    enemyBossManager = GetComponent<EnemyBossManager>();
+    base.Awake();
 
     animator = GetComponent<Animator>();
-  }
-
-  public override void TakeCriticalDamageAnimationEvent()
-  {
-    enemyStats.TakeDamageWithoutAnimation(enemyManager.pendingCriticalDamage);
-    enemyManager.pendingCriticalDamage = 0;
+    enemyBossManager = GetComponent<EnemyBossManager>();
+    enemyRigidbody = GetComponent<Rigidbody>();
   }
 
   // animation events
@@ -28,10 +21,10 @@ public class EnemyAnimatorManager : AnimatorManager
   {
     SoulCountsUI soulCountsUI = FindObjectOfType<SoulCountsUI>();
 
-    PlayerStats playerStats = FindObjectOfType<PlayerStats>();
+    PlayerStatsManager playerStats = FindObjectOfType<PlayerStatsManager>();
     if (playerStats != null)
     {
-      playerStats.AddSouls(enemyStats.soulsAwardedOnDeath);
+      playerStats.AddSouls(characterStatsManager.soulsAwardedOnDeath);
 
       if (soulCountsUI != null)
       {
@@ -40,55 +33,6 @@ public class EnemyAnimatorManager : AnimatorManager
     }   
   }
 
-  public void ActivateRotation()
-  {
-    animator.SetBool("canRotate", true);
-  }
-
-  public void StopRotation()
-  {
-    animator.SetBool("canRotate", false);
-  }
-
-  public void EnableCombo()
-  {
-    animator.SetBool("canDoCombo", true);
-  }
-
-  public void DisableCombo()
-  {
-    animator.SetBool("canDoCombo", false);
-  }
-
-  public void EnableIsInvulnerable()
-  {
-    animator.SetBool("isInvulnerable", true);
-  }
-
-  public void DisableIsInvulnerable()
-  {
-    animator.SetBool("isInvulnerable", false);
-  }
-
-  public void EnableIsParrying()
-  {
-    enemyManager.isParrying = true;
-  }
-
-  public void DisableIsParrying()
-  {
-    enemyManager.isParrying = false;
-  }
-
-  public void EnableCanBeRiposted()
-  {
-    enemyManager.canBeRiposted = true;
-  }
-
-  public void DisableCanBeRiposted()
-  {
-    enemyManager.canBeRiposted = false;
-  }
 
   public void InstantiateBossParticleVFX()
   {
@@ -101,15 +45,15 @@ public class EnemyAnimatorManager : AnimatorManager
   {
     float delta = Time.deltaTime;
 
-    enemyManager.enemyRigidBody.drag = 0;
+    enemyRigidbody.drag = 0;
 
     Vector3 deltaPosition = animator.deltaPosition;
     deltaPosition.y = 0;
     Vector3 velocity = deltaPosition / delta;
 
-    enemyManager.enemyRigidBody.velocity = velocity;
+    enemyRigidbody.velocity = velocity;
 
-    if(enemyManager.isRotatingWithRootMotion)    
-      enemyManager.transform.rotation *= animator.deltaRotation;    
+    if(characterManager.isRotatingWithRootMotion)
+      characterManager.transform.rotation *= animator.deltaRotation;    
   }
 }

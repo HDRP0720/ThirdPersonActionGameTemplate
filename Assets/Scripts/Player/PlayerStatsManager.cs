@@ -2,22 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : CharacterStats
+public class PlayerStatsManager : CharacterStatsManager
 {
-  public HealthBarUI healthBarUI;
-  public ManaBarUI manaBarUI;
-  public StaminaBarUI staminaBarUI;
-
   public float staminaRegenerationAmount = 1;
   public float staminaRegenTimer = 0;
 
   private PlayerManager playerManager;
-  private PlayerAnimatorManager animatorHandler;
+  private PlayerAnimatorManager playerAnimatorManager;
+
+  private HealthBarUI healthBarUI;
+  private ManaBarUI manaBarUI;
+  private StaminaBarUI staminaBarUI;
 
   private void Awake()
   {
     playerManager = GetComponent<PlayerManager>();
-    animatorHandler = GetComponentInChildren<PlayerAnimatorManager>();
+    playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
+
+    healthBarUI = FindObjectOfType<HealthBarUI>();
+    manaBarUI = FindObjectOfType<ManaBarUI>();
+    staminaBarUI = FindObjectOfType<StaminaBarUI>();
   }
   private void Start() 
   {
@@ -76,35 +80,26 @@ public class PlayerStats : CharacterStats
     return maxStamina;
   }
 
-  public void TakeDamageWithoutAnimation(int damage)
+  public override void TakeDamageWithoutAnimation(int damage)
   {
-    if (isDead) return;
-
-    currentHealth -= damage;
-
-    if (currentHealth <= 0)
-    {
-      currentHealth = 0;
-      isDead = true;
-    }
+    base.TakeDamageWithoutAnimation(damage);
+    healthBarUI.SetCurrentHealth(currentHealth);
   }
 
   public override void TakeDamage(int damage, string damageAnimation ="Damage_01")
   {
-    base.TakeDamage(damage, damageAnimation);
-
-    if(isDead) return;
+    base.TakeDamage(damage, damageAnimation);    
 
     if(playerManager.isInvulnerable) return;  
 
     healthBarUI.SetCurrentHealth(currentHealth);
 
-    animatorHandler.PlayTargetAnimation(damageAnimation, true);
+    playerAnimatorManager.PlayTargetAnimation(damageAnimation, true);
 
     if(currentHealth <= 0)
     {
       currentHealth = 0;
-      animatorHandler.PlayTargetAnimation("Dead_01", true);
+      playerAnimatorManager.PlayTargetAnimation("Dead_01", true);
       isDead = true;
     }
   }

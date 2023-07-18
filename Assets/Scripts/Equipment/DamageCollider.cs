@@ -41,7 +41,7 @@ public class DamageCollider : MonoBehaviour
     {
       CharacterManager playerManager = other.GetComponent<CharacterManager>();
       BlockingCollider shieldCollider = other.transform.GetComponentInChildren<BlockingCollider>();
-      PlayerStats playerStats = other.GetComponent<PlayerStats>();   
+      PlayerStatsManager playerStats = other.GetComponent<PlayerStatsManager>();   
 
       if(playerManager != null)
       {
@@ -89,7 +89,7 @@ public class DamageCollider : MonoBehaviour
         }
       }
 
-      EnemyStats enemyStats = other.GetComponent<EnemyStats>();
+      EnemyStatsManager enemyStats = other.GetComponent<EnemyStatsManager>();
       if(enemyStats != null)
       {
         enemyStats.poiseResetTimer = enemyStats.totalPoiseResetTime;

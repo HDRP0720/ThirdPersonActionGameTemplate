@@ -19,6 +19,10 @@ public class PlayerEquipmentManager : MonoBehaviour
   public GameObject nakedLeftLegModel;
   public GameObject nakedRightLegModel;
 
+  private InputHandler inputHandler;
+  private PlayerInventoryManager playerInventory;
+  private PlayerStatsManager playerStats;
+
   // Equipment Model Changers for Helmet, Chest, Legs, Hands
   private HelmetModelChanger helmetModelChanger;
   private TorsoModelChanger torsoModelChanger;
@@ -28,15 +32,11 @@ public class PlayerEquipmentManager : MonoBehaviour
   private LeftLegModelChanger leftLegModelChanger;
   private RightLegModelChanger rightLegModelChanger;
 
-  private InputHandler inputHandler;
-  private PlayerInventory playerInventory;
-  private PlayerStats playerStats;
-
   private void Awake() 
   {
-    inputHandler = GetComponentInParent<InputHandler>();
-    playerInventory = GetComponentInParent<PlayerInventory>();
-    playerStats = GetComponentInParent<PlayerStats>();
+    inputHandler = GetComponent<InputHandler>();
+    playerInventory = GetComponent<PlayerInventoryManager>();
+    playerStats = GetComponent<PlayerStatsManager>();
 
     helmetModelChanger = GetComponentInChildren<HelmetModelChanger>();
     torsoModelChanger = GetComponentInChildren<TorsoModelChanger>();

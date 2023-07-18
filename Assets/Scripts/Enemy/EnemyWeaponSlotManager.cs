@@ -2,22 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyWeaponSlotManager : MonoBehaviour
+public class EnemyWeaponSlotManager : CharacterWeaponSlotManager
 {
   public WeaponItem rightHandWeapon;
   public WeaponItem leftHandWeapon;
 
-  WeaponHolderSlot leftHandSlot;
-  WeaponHolderSlot rightHandSlot;
+  private EnemyStatsManager enemyStatsManager;
 
-  DamageCollider leftHandDamageCollider;
-  DamageCollider rightHandDamageCollider;
-
-  private EnemyStats enemyStats;
-
-  private void Awake() 
+  private void Awake()
   {
-    enemyStats = GetComponentInParent<EnemyStats>();
+    enemyStatsManager = GetComponent<EnemyStatsManager>();
     
     LoadWeaponHolderSlots();
   }
@@ -109,11 +103,11 @@ public class EnemyWeaponSlotManager : MonoBehaviour
 
   public void GrantAttackPoiseBonus()
   {
-    enemyStats.totalPoiseDefence = enemyStats.totalPoiseDefence + enemyStats.offensivePoiseBonus;
+    enemyStatsManager.totalPoiseDefence = enemyStatsManager.totalPoiseDefence + enemyStatsManager.offensivePoiseBonus;
   }
 
   public void ResetAttackPoiseBonus()
   {
-    enemyStats.totalPoiseDefence = enemyStats.armorPoiseBonus;
+    enemyStatsManager.totalPoiseDefence = enemyStatsManager.armorPoiseBonus;
   }
 }

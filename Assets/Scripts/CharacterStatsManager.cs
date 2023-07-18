@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStats : MonoBehaviour
+public class CharacterStatsManager : MonoBehaviour
 {
   [Header("# Health Parameters")]
   public int healthLevel = 10;
@@ -33,6 +33,9 @@ public class CharacterStats : MonoBehaviour
   public float damageAbsorptionLegs;
   // TODO: Magic, Fire, Water, Lightning, Darkness Absorption
 
+  [Header("# Kill Rewards for Player")]
+  public int soulsAwardedOnDeath = 50;
+  
   [Space] 
   public int soulCount = 0;
   public bool isDead;
@@ -48,6 +51,8 @@ public class CharacterStats : MonoBehaviour
 
   public virtual void TakeDamage(int damage, string damageAnimation = "Damage_01") 
   {
+    if (isDead) return;
+
     float totalDamageAbsorptionRate = 1 - 
       (1 - damageAbsorptionHead / 100) * 
       (1 - damageAbsorptionBody / 100) *
@@ -62,6 +67,18 @@ public class CharacterStats : MonoBehaviour
 
     currentHealth -= finalDamage;
     if(currentHealth <= 0)
+    {
+      currentHealth = 0;
+      isDead = true;
+    }
+  }
+
+  public virtual void TakeDamageWithoutAnimation(int damage)
+  {
+    if (isDead) return;
+
+    currentHealth -= damage;
+    if (currentHealth <= 0)
     {
       currentHealth = 0;
       isDead = true;

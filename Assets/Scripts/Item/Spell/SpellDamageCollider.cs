@@ -10,7 +10,7 @@ public class SpellDamageCollider : DamageCollider
 
   private bool hasCollided = false;
   private Rigidbody rb;
-  private CharacterStats spellTarget;
+  private CharacterStatsManager spellTarget;
   private Vector3 impactNormal; // used to rotate impactParticle
 
   private void Awake() 
@@ -33,7 +33,7 @@ public class SpellDamageCollider : DamageCollider
   {
     if(!hasCollided)
     {
-      spellTarget = other.transform.GetComponent<CharacterStats>();
+      spellTarget = other.transform.GetComponent<CharacterStatsManager>();
       if(spellTarget != null)      
         spellTarget.TakeDamage(currentWeaponDamage);
       

@@ -14,7 +14,7 @@ public class AttackState : State
 
   private bool willDoComboingOnNext = false;
 
-  public override State Tick(EnemyManager enemyManager, EnemyStats enemyStats, EnemyAnimatorManager enemyAnimatorManager)
+  public override State Tick(EnemyManager enemyManager, EnemyStatsManager enemyStats, EnemyAnimatorManager enemyAnimatorManager)
   {
     HandleRotateTowardsTargetWhileAttack(enemyManager);
 

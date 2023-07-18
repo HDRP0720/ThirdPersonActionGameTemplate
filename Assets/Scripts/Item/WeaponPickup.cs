@@ -6,6 +6,13 @@ public class WeaponPickup : Interactable
 { 
   public WeaponItem weapon;
 
+  private InteractableUI interactableUI;
+
+  private void Awake() 
+  {
+    interactableUI = FindObjectOfType<InteractableUI>();
+  }
+
   public override void Interact(PlayerManager playerManager)
   {
     base.Interact(playerManager);
@@ -16,7 +23,7 @@ public class WeaponPickup : Interactable
 
   private void PickUpItem(PlayerManager playerManager)
   {
-    PlayerInventory playerInventory = playerManager.GetComponent<PlayerInventory>();
+    PlayerInventoryManager playerInventory = playerManager.GetComponent<PlayerInventoryManager>();
     Rigidbody playerRigidbody = playerManager.GetComponent<Rigidbody>();
     PlayerAnimatorManager animatorHandler = playerManager.GetComponent<PlayerAnimatorManager>();
 
@@ -24,9 +31,9 @@ public class WeaponPickup : Interactable
     animatorHandler.PlayTargetAnimation("PickupItem", true);
     playerInventory.weaponsInventory.Add(weapon);
 
-    playerManager.interactableUI.itemTextField.text = weapon.itemName;
-    playerManager.interactableUI.itemImage.sprite = weapon.itemIcon;
-    playerManager.interactableUI.itemPopup.SetActive(true);
+    interactableUI.itemTextField.text = weapon.itemName;
+    interactableUI.itemImage.sprite = weapon.itemIcon;
+    interactableUI.itemPopup.SetActive(true);
 
     Destroy(gameObject);
   }

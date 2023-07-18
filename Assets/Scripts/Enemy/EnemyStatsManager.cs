@@ -2,23 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStats : CharacterStats
+public class EnemyStatsManager : CharacterStatsManager
 {
-  [Header("# Kill Rewards for Player")]
-  public int soulsAwardedOnDeath = 50;
-
   [Header("# Enemy Health UI")]
   public EnemyHealthBarUI enemyHealthBarUI;
 
   public bool isBoss = false;
 
-  private EnemyManager enemyManager;
   private EnemyBossManager enemyBossManager;
   private EnemyAnimatorManager enemyAnimatorManager;
 
   private void Awake()
   {
-    enemyManager = GetComponent<EnemyManager>();
     enemyBossManager = GetComponent<EnemyBossManager>();
     enemyAnimatorManager = GetComponent<EnemyAnimatorManager>();
 
@@ -38,22 +33,14 @@ public class EnemyStats : CharacterStats
     return maxHealth;
   }
 
-  public void TakeDamageWithoutAnimation(int damage)
+  public override void TakeDamageWithoutAnimation(int damage)
   {
-    if (isDead) return;
-
-    currentHealth -= damage;
+    base.TakeDamageWithoutAnimation(damage);
 
     if (!isBoss)
       enemyHealthBarUI.SetHealth(currentHealth);
     else if (isBoss && enemyBossManager != null)
       enemyBossManager.UpdateBossHealthBar(currentHealth, maxHealth);
-
-    if (currentHealth <= 0)
-    {
-      currentHealth = 0;
-      isDead = true;
-    }
   }
 
   public void BreakGuard()

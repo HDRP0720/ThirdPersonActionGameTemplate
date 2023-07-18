@@ -47,13 +47,13 @@ public class InputHandler : MonoBehaviour
   private PlayerControls inputActions;
 
   private PlayerManager playerManager;
-  private PlayerStats playerStats;
-  private PlayerInventory playerInventory;
+  private PlayerStatsManager playerStats;
+  private PlayerInventoryManager playerInventory;
 
   private PlayerAnimatorManager playerAnimatorManager;
   private PlayerEffectsManager playerEffectsManager;
-  private PlayerAttackState playerAttackState;
-  private WeaponSlotManager weaponSlotManager;
+  private PlayerCombatManager playerAttackState;
+  private PlayerWeaponSlotManager weaponSlotManager;
   private BlockingCollider blockingCollider;
 
   private CameraHandler cameraHandler;
@@ -65,13 +65,13 @@ public class InputHandler : MonoBehaviour
   private void Awake() 
   {   
     playerManager = GetComponent<PlayerManager>();    
-    playerInventory = GetComponent<PlayerInventory>();
-    playerStats = GetComponent<PlayerStats>();
+    playerInventory = GetComponent<PlayerInventoryManager>();
+    playerStats = GetComponent<PlayerStatsManager>();
+    playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
+    playerEffectsManager = GetComponent<PlayerEffectsManager>();
+    playerAttackState = GetComponent<PlayerCombatManager>();
+    weaponSlotManager = GetComponent<PlayerWeaponSlotManager>();
 
-    playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
-    playerEffectsManager = GetComponentInChildren<PlayerEffectsManager>();
-    playerAttackState = GetComponentInChildren<PlayerAttackState>();
-    weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
     blockingCollider = GetComponentInChildren<BlockingCollider>();
 
     cameraHandler = FindObjectOfType<CameraHandler>();

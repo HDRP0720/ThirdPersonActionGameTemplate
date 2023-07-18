@@ -4,38 +4,26 @@ using UnityEngine;
 
 public class PlayerManager : CharacterManager
 {
-  public bool isInteracting;
-
-  [Header("# Player Flags")]
-  public bool isSprinting;
-  public bool isInAir;
-  public bool isGrounded;
-  public bool canDoCombo;
-  public bool isUsingRightHand;
-  public bool isUsingLeftHand;
-
-  [HideInInspector]
-  public InteractableUI interactableUI;
-
+  private InteractableUI interactableUI;
   private InputHandler inputHandler;
   private CameraHandler cameraHandler;
-  private PlayerController playerController;
+
+  private PlayerLocomotonManager playerController;
   private PlayerAnimatorManager playerAnimatorManager;
-  private PlayerStats playerStats;
+  private PlayerStatsManager playerStats;
 
   private Rigidbody rb;
 
   private void Awake()
   {
+    interactableUI = FindObjectOfType<InteractableUI>();
     cameraHandler = FindObjectOfType<CameraHandler>();
     backStabCollider = GetComponentInChildren<SpecialAttackCollider>();
 
     inputHandler = GetComponent<InputHandler>();
-    playerController = GetComponent<PlayerController>();
-    playerAnimatorManager = GetComponentInChildren<PlayerAnimatorManager>();
-    playerStats = GetComponent<PlayerStats>();
-
-    interactableUI = FindObjectOfType<InteractableUI>();
+    playerController = GetComponent<PlayerLocomotonManager>();
+    playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
+    playerStats = GetComponent<PlayerStatsManager>();
 
     rb = GetComponent<Rigidbody>();
   }

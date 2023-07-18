@@ -4,24 +4,21 @@ using UnityEngine;
 
 public class PlayerAnimatorManager : AnimatorManager
 {
-  private PlayerManager playerManager;
-  private PlayerController playerController;
-  private PlayerStats playerStats;
   private InputHandler inputHandler;
+  private PlayerLocomotonManager playerLocomotion;
   private Rigidbody playerRigidbody;
 
   private int vertical;
   private int horizontal;
 
-  public void Init()
+  protected override void Awake()
   {
-    animator = GetComponent<Animator>();
+    base.Awake();
 
-    playerManager = GetComponentInParent<PlayerManager>();
-    playerController = GetComponentInParent<PlayerController>();
-    playerStats = GetComponentInParent<PlayerStats>();
-    inputHandler = GetComponentInParent<InputHandler>();       
-    playerRigidbody = GetComponentInParent<Rigidbody>();
+    animator = GetComponent<Animator>();
+    inputHandler = GetComponent<InputHandler>();
+    playerLocomotion = GetComponent<PlayerLocomotonManager>();
+    playerRigidbody = GetComponent<Rigidbody>();
 
     vertical = Animator.StringToHash("Vertical");
     horizontal = Animator.StringToHash("Horizontal");
@@ -66,73 +63,22 @@ public class PlayerAnimatorManager : AnimatorManager
     animator.SetFloat(vertical, v, 0.1f, Time.deltaTime);
     animator.SetFloat(horizontal, h, 0.1f, Time.deltaTime);
   }  
-
-  public void ActivateRotation()
-  {
-    animator.SetBool("canRotate", true);
-  }
-  public void StopRotation()
-  {
-    animator.SetBool("canRotate", false);
-  }
-
-  public void EnableCombo()
-  {
-    animator.SetBool("canDoCombo", true);
-  }
-  public void DisableCombo()
-  {
-    animator.SetBool("canDoCombo", false);
-  }
-
-  public void EnableIsInvulnerable()
-  {
-    animator.SetBool("isInvulnerable", true);
-  }
-  public void DisableIsInvulnerable()
-  {
-    animator.SetBool("isInvulnerable", false);
-  }
-
-  public void EnableIsParrying()
-  {
-    playerManager.isParrying = true;
-  }
-  public void DisableIsParrying()
-  {
-    playerManager.isParrying = false;
-  }
-
-  public void EnableCanBeRiposted()
-  {
-    playerManager.canBeRiposted = true;
-  }
-  public void DisableCanBeRiposted()
-  {
-    playerManager.canBeRiposted = false;
-  }
-
-  public override void TakeCriticalDamageAnimationEvent()
-  {
-    playerStats.TakeDamageWithoutAnimation(playerManager.pendingCriticalDamage);
-    playerManager.pendingCriticalDamage = 0;
-  }
   
   public void EnableCollision()
   {
-    playerController.characterCollider.enabled = true;
-    playerController.characterCollisionBlockerCollider.enabled = true;
+    playerLocomotion.characterCollider.enabled = true;
+    playerLocomotion.characterCollisionBlockerCollider.enabled = true;
     
   }
   public void DisableCollision()
   {
-    playerController.characterCollider.enabled = false;
-    playerController.characterCollisionBlockerCollider.enabled = false;
+    playerLocomotion.characterCollider.enabled = false;
+    playerLocomotion.characterCollisionBlockerCollider.enabled = false;
   }
 
   private void OnAnimatorMove()
   {
-    if (playerManager.isInteracting == false) return;
+    if (characterManager.isInteracting == false) return;
 
     float delta = Time.deltaTime;
 

@@ -23,7 +23,7 @@ public class HandEquipmentSlotUI : MonoBehaviour
   public void AddItem(WeaponItem newWeapon)
   {
     weapon = newWeapon;
-    icon.sprite =weapon.itemIcon;
+    icon.sprite = weapon.itemIcon;
     icon.enabled = true;
     gameObject.SetActive(true);
   }

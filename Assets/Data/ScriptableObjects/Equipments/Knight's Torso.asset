@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf5052127d0c514d9acd8310515404e, type: 3}
   m_Name: Knight's Torso
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 0}
-  itemName: Knight's Helmet
+  itemIcon: {fileID: 21300000, guid: d5a535b5b97f54180a5138a4fc75f474, type: 3}
+  itemName: Knight's Torso
   physicalDefense: 12
   torsoModelId: Male_Torso_05

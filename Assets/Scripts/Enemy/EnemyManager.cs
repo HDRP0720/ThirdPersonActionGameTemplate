@@ -15,16 +15,13 @@ public class EnemyManager : CharacterManager
 
   public float currentRecoveryTime = 0;
 
+  [Header("# Current State")]
   public State currentState;
 
   [HideInInspector] public NavMeshAgent navMeshAgent;
 
-  public CharacterStats currentTarget;
+  public CharacterStatsManager currentTarget;
   public bool isPerformingAction;
-  public bool isInteracting;
-
-  [Header("# Combat Flags")]
-  public bool canDoCombo;
 
   [Header("# Enemy Combat Settings")]
   public bool allowEnemyToPerformCombos;
@@ -33,16 +30,16 @@ public class EnemyManager : CharacterManager
 
   [HideInInspector] public Rigidbody enemyRigidBody;
 
-  private EnemyMoveState enemyMoveState;
+  private EnemyLocomotionManager enemyMoveState;
   private EnemyAnimatorManager enemyAnimatorManager;
-  private EnemyStats enemyStats;
+  private EnemyStatsManager enemyStatsManager;
 
   private void Awake() 
   {
     enemyRigidBody = GetComponent<Rigidbody>();
-    enemyMoveState = GetComponent<EnemyMoveState>();
+    enemyMoveState = GetComponent<EnemyLocomotionManager>();
     enemyAnimatorManager = GetComponent<EnemyAnimatorManager>();
-    enemyStats = GetComponent<EnemyStats>();
+    enemyStatsManager = GetComponent<EnemyStatsManager>();
     backStabCollider = GetComponentInChildren<SpecialAttackCollider>();
 
     navMeshAgent = GetComponentInChildren<NavMeshAgent>();
@@ -64,7 +61,7 @@ public class EnemyManager : CharacterManager
     canRotate = enemyAnimatorManager.animator.GetBool("canRotate");
     canDoCombo = enemyAnimatorManager.animator.GetBool("canDoCombo");
 
-    enemyAnimatorManager.animator.SetBool("isDead", enemyStats.isDead);
+    enemyAnimatorManager.animator.SetBool("isDead", enemyStatsManager.isDead);
   }
   private void LateUpdate()
   {
@@ -76,7 +73,7 @@ public class EnemyManager : CharacterManager
   {
     if(currentState != null)
     {
-      State nextState = currentState.Tick(this, enemyStats, enemyAnimatorManager);
+      State nextState = currentState.Tick(this, enemyStatsManager, enemyAnimatorManager);
       if(nextState != null)
       {
         SwitchToNextState(nextState);

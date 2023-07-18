@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9296bba7e3ff4674ba7e2492d6020afd, type: 3}
   m_Name: Unarmed
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 0}
-  itemName: 
+  itemIcon: {fileID: 21300000, guid: d5a535b5b97f54180a5138a4fc75f474, type: 3}
+  itemName: Unarmed
   weaponPrefab: {fileID: 314151569925265268, guid: 80b386cdf95eccc4695dd90a3c38bf90,
     type: 3}
   isUnarmed: 1
+  baseDamage: 25
+  criticalDamageMultiplier: 4
+  poiseBreak: 0
+  offensivePoiseBonus: 0
+  damageAbsorptionRate: 0
   TH_Idle: TH_Idle_01
   OH_Light_Attack_1: 
   OH_Light_Attack_2: 
@@ -24,6 +29,7 @@ MonoBehaviour:
   TH_Light_Attack_1: 
   TH_Light_Attack_2: 
   TH_Heavy_Attack_1: 
+  parry_art: 
   baseStamina: 0
   lightAttackMultiplier: 0
   heavyAttackMultiplier: 0
@@ -31,3 +37,4 @@ MonoBehaviour:
   isFaithCaster: 0
   isPyroCaster: 0
   isMeleeWeapon: 1
+  isShield: 0

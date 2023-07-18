@@ -11,7 +11,7 @@ public class AmbushState : State
   public LayerMask detectionLayer;
   public PursueTargetState pursueTargetState;
 
-  public override State Tick(EnemyManager enemyManager, EnemyStats enemyStats, EnemyAnimatorManager enemyAnimatorManager)
+  public override State Tick(EnemyManager enemyManager, EnemyStatsManager enemyStats, EnemyAnimatorManager enemyAnimatorManager)
   {
     if(isSleeping && !enemyManager.isInteracting)
       enemyAnimatorManager.PlayTargetAnimation(sleepAnimation, true);    
@@ -20,7 +20,7 @@ public class AmbushState : State
     Collider[] colliders = Physics.OverlapSphere(enemyManager.transform.position, detectionRadius, detectionLayer);
     for (int i = 0; i < colliders.Length; i++)
     {
-      CharacterStats characterStats = colliders[i].transform.GetComponent<CharacterStats>();
+      CharacterStatsManager characterStats = colliders[i].transform.GetComponent<CharacterStatsManager>();
       if(characterStats != null)
       {
         Vector3 targetDirection = characterStats.transform.position - enemyManager.transform.position;
