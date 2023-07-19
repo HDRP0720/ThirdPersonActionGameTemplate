@@ -16,6 +16,7 @@ public class PlayerCombatManager : MonoBehaviour
   private PlayerAnimatorManager playerAnimatorManager;
   private PlayerEquipmentManager playerEquipmentManager;
   private PlayerWeaponSlotManager playerWeaponSlotManager;
+  private PlayerVFXManager playerVFXManager;
 
   public string lastAttack;
 
@@ -30,6 +31,7 @@ public class PlayerCombatManager : MonoBehaviour
     playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
     playerEquipmentManager = GetComponent<PlayerEquipmentManager>();    
     playerWeaponSlotManager= GetComponent<PlayerWeaponSlotManager>();
+    playerVFXManager = GetComponent<PlayerVFXManager>();
   }
 
   public void HandleLightAttack(WeaponItem weapon)
@@ -132,6 +134,13 @@ public class PlayerCombatManager : MonoBehaviour
       playerAnimatorManager.animator.SetBool("isUsingRightHand", true);
       HandleLightAttack(playerInventoryManager.rightWeapon);
     }
+    StartCoroutine(PlayWeaponVFX());
+  }
+
+  private IEnumerator PlayWeaponVFX()
+  {
+    yield return new WaitForSeconds(0.5f);
+    playerVFXManager.PlayWeaponVFX(false);
   }
 
   private void PerformLightMagicAction(WeaponItem weapon)

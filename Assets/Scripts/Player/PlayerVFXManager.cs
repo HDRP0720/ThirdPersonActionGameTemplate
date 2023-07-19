@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerEffectsManager : MonoBehaviour
+public class PlayerVFXManager : CharacterVFXManager
 {
   public GameObject currentVFX;
   public GameObject instaniatedItemPrefab;

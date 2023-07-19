@@ -16,22 +16,18 @@ public class FlaskItem : ConsumableItem
   [Header("Recovery VFX")]
   public GameObject recoveryVFX;
 
-  public override void AttemptToConsumeItem(PlayerAnimatorManager playerAnimatorManager, PlayerWeaponSlotManager weaponSlotManager, PlayerEffectsManager playerEffectsManager)
+  public override void AttemptToConsumeItem(PlayerAnimatorManager playerAnimatorManager, PlayerWeaponSlotManager weaponSlotManager, PlayerVFXManager playerVFXManager)
   {
-    base.AttemptToConsumeItem(playerAnimatorManager, weaponSlotManager, playerEffectsManager);
+    base.AttemptToConsumeItem(playerAnimatorManager, weaponSlotManager, playerVFXManager);
 
     weaponSlotManager.leftHandSlot.UnloadWeapon();
     GameObject flask = Instantiate(itemPrefab, weaponSlotManager.leftHandSlot.transform);
-    playerEffectsManager.currentVFX = recoveryVFX;
-    playerEffectsManager.amountToBeHealed = healthRecoverAmount;
-    playerEffectsManager.instaniatedItemPrefab = flask;
-
-  
-
+    playerVFXManager.currentVFX = recoveryVFX;
+    playerVFXManager.amountToBeHealed = healthRecoverAmount;
+    playerVFXManager.instaniatedItemPrefab = flask;
  
     // TODO: Add health or mana
     // TODO: Instantiate Flask in Hand and Play Drink Animation
     // TODO: Play Recovery VFX When we drink without being hit
-
   }
 }

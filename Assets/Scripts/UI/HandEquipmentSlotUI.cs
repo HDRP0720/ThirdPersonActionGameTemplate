@@ -22,10 +22,13 @@ public class HandEquipmentSlotUI : MonoBehaviour
   }
   public void AddItem(WeaponItem newWeapon)
   {
-    weapon = newWeapon;
-    icon.sprite = weapon.itemIcon;
-    icon.enabled = true;
-    gameObject.SetActive(true);
+    if(newWeapon != null)
+    {
+      weapon = newWeapon;
+      icon.sprite = weapon.itemIcon;
+      icon.enabled = true;
+      gameObject.SetActive(true);
+    }    
   }
 
   public void ClearItem()

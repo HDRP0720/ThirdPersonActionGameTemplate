@@ -51,7 +51,7 @@ public class InputHandler : MonoBehaviour
   private PlayerInventoryManager playerInventory;
 
   private PlayerAnimatorManager playerAnimatorManager;
-  private PlayerEffectsManager playerEffectsManager;
+  private PlayerVFXManager playerVFXManager;
   private PlayerCombatManager playerAttackState;
   private PlayerWeaponSlotManager weaponSlotManager;
   private BlockingCollider blockingCollider;
@@ -68,7 +68,7 @@ public class InputHandler : MonoBehaviour
     playerInventory = GetComponent<PlayerInventoryManager>();
     playerStats = GetComponent<PlayerStatsManager>();
     playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
-    playerEffectsManager = GetComponent<PlayerEffectsManager>();
+    playerVFXManager = GetComponent<PlayerVFXManager>();
     playerAttackState = GetComponent<PlayerCombatManager>();
     weaponSlotManager = GetComponent<PlayerWeaponSlotManager>();
 
@@ -321,7 +321,7 @@ public class InputHandler : MonoBehaviour
     if(drink_Input)
     {
       drink_Input = false;
-      playerInventory.currentConsumableItem.AttemptToConsumeItem(playerAnimatorManager, weaponSlotManager, playerEffectsManager);
+      playerInventory.currentConsumableItem.AttemptToConsumeItem(playerAnimatorManager, weaponSlotManager, playerVFXManager);
     }
   }
 }

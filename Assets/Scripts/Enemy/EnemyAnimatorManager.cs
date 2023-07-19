@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyAnimatorManager : AnimatorManager
 {
   private EnemyBossManager enemyBossManager;
+  private EnemyVFXManager enemyVFXManager;
   private Rigidbody enemyRigidbody;
 
   protected override void Awake() 
@@ -13,6 +14,7 @@ public class EnemyAnimatorManager : AnimatorManager
 
     animator = GetComponent<Animator>();
     enemyBossManager = GetComponent<EnemyBossManager>();
+    enemyVFXManager = GetComponent<EnemyVFXManager>();
     enemyRigidbody = GetComponent<Rigidbody>();
   }
 
@@ -33,14 +35,18 @@ public class EnemyAnimatorManager : AnimatorManager
     }   
   }
 
-
   public void InstantiateBossParticleVFX()
   {
     BossFXTransform bossFXTransform = GetComponentInChildren<BossFXTransform>();
 
     GameObject phaseFX = Instantiate(enemyBossManager.particleFX, bossFXTransform.transform);
   }
- 
+  
+  public void PlayWeaponVFX()
+  {
+    enemyVFXManager.PlayWeaponVFX(false);
+  }
+
   private void OnAnimatorMove()
   {
     float delta = Time.deltaTime;

@@ -44,6 +44,7 @@ public class AttackState : State
   private void AttackTarget(EnemyManager enemyManager, EnemyAnimatorManager enemyAnimatorManager)
   {
     enemyAnimatorManager.PlayTargetAnimation(currentAttack.actionAnimation, true);
+    enemyAnimatorManager.PlayWeaponVFX();
     enemyManager.currentRecoveryTime = currentAttack.recoveryTime;
     hasPerformedAttack = true;
   }

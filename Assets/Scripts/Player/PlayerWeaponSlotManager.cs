@@ -7,8 +7,6 @@ public class PlayerWeaponSlotManager : CharacterWeaponSlotManager
   [Header("# Current Attacking Weapon")]
   public WeaponItem attackingWeapon;
 
-
-
   private QuickSlotsUI quickSlotsUI;
 
   private PlayerManager playerManager;
@@ -16,6 +14,7 @@ public class PlayerWeaponSlotManager : CharacterWeaponSlotManager
   private PlayerAnimatorManager playerAnimatorManager;
   private PlayerInventoryManager playerInventory;
   private PlayerStatsManager playerStats;
+  private PlayerVFXManager playerVFXManager;
 
   private void Awake()
   {
@@ -25,7 +24,8 @@ public class PlayerWeaponSlotManager : CharacterWeaponSlotManager
     inputHandler = GetComponent<InputHandler>();    
     playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
     playerInventory = GetComponent<PlayerInventoryManager>();
-    playerStats = GetComponent<PlayerStatsManager>();   
+    playerStats = GetComponent<PlayerStatsManager>();
+    playerVFXManager = GetComponent<PlayerVFXManager>();
     
     LoadWeaponHolderSlots();
   }
@@ -111,6 +111,7 @@ public class PlayerWeaponSlotManager : CharacterWeaponSlotManager
     leftHandDamageCollider = leftHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
     leftHandDamageCollider.currentWeaponDamage = playerInventory.leftWeapon.baseDamage;
     leftHandDamageCollider.poiseBreak = playerInventory.leftWeapon.poiseBreak;
+    playerVFXManager.leftWeaponVFX = leftHandSlot.currentWeaponModel.GetComponentInChildren<WeaponVFX>();
   }
 
   private void LoadRightWeaponDamageCollider()
@@ -118,6 +119,7 @@ public class PlayerWeaponSlotManager : CharacterWeaponSlotManager
     rightHandDamageCollider = rightHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
     rightHandDamageCollider.currentWeaponDamage = playerInventory.rightWeapon.baseDamage;
     rightHandDamageCollider.poiseBreak = playerInventory.rightWeapon.poiseBreak;
+    playerVFXManager.rightWeaponVFX = rightHandSlot.currentWeaponModel.GetComponentInChildren<WeaponVFX>();
   }
 
   public void OpenDamageCollider()
